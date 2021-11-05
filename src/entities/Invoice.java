@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class Invoice {
-    private InvoiceId;
+    private int invoiceId;
     private Order order;
     private ArrayList<PriceFilters> pricefilters;
     private double finalPrice
@@ -22,15 +22,19 @@ public class Invoice {
         }
     }
 
-    public Invoice(Order order) {
+    public Invoice(Order order, int invoiceId) {
         this.order = order;
         this.finalPrice = order.getTotalPrice();
+        this.invoiceId = invoiceId;
     }
     /*
     //setter for order, DO WE ALLOW THIS???, i dun think we should
     public void setOrder(Order order){
 
     }*/
+    public int getInvoiceid(){
+        return this.invoiceId;
+    }
 
     public Order getOrder(){
         return order;

@@ -1,6 +1,6 @@
 package managers;
 
-Class OrderMgr(){
+Class OrderMgr{
 
     pricate OrderMgr();
     // ask Yan kai whether give order or string (orderid ).. 

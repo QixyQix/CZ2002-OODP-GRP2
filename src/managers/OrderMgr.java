@@ -1,13 +1,13 @@
 package managers;
 
-Class OrderMgr{
+class OrderMgr{
 
-    pricate OrderMgr();
+    private OrderMgr();
     // ask Yan kai whether give order or string (orderid ).. 
     // then who goign to go to database to get
-    public static String createOrder(String orderid));
-    public static void addItem(String orderid));
-    public static void deleteItem(String orderid));
-    public static void order(String orderid));
+    public static String createOrder(String orderid);
+    public static void addItem(String orderid);
+    public static void deleteItem(String orderid);
+    public static void order(String orderid);
     public static void closeOrder(String orderid);
 }

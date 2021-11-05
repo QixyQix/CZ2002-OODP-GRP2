@@ -1,5 +1,9 @@
+package entities;
 
-Class Report{
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+public class Report{
 
     private ArrayList<Invoice> invoiceList;
     private double totalRevenue;
@@ -31,14 +35,14 @@ Class Report{
     }
 
     public ArrayList<Invoice> getInvoiceList(){
-        return this.ArrayList;
+        return this.invoiceList;
     }
 
     public void addInvoiceList(Invoice invoice){
         this.invoiceList.add(invoice);
     }
 
-    public void getTotalRevenue(){
+    public double getTotalRevenue(){
         calculateTotalRevenue();
         return this.totalRevenue;
     }
@@ -46,11 +50,6 @@ Class Report{
     public LocalDate getDate(){
         return this.date;
     }
-
-    public boolean getByMonth(){
-        return this.byMonth;
-    }   
-    
 }
 
     

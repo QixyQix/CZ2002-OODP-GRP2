@@ -1,53 +1,63 @@
 package managers;
 
+import java.util.HashMap;
 import managers.Manager;
+import entities.Invoice;
+import entities.PriceFilter;
+import entities.DiscountFilter;
+import entities.TaxFilter;
+import enums.PriceFilterTypeEnum;
+import enums.TaxFilterNameEnum;
 
-Class InvoiceMgr implements Manager{
+class InvoiceMgr{
 
     private static InvoiceMgr instance;
-    private HashMap<int,Invoice> invoices;
+    private HashMap<Integer,Invoice> invoices;
     private int invoiceid;
 
-    private InvoiceMgr(){};
+    private InvoiceMgr(){
+        importing();
+        // this.invoiceid = this.invoices.size() +1;
+    };
 
-    private void importing(){
-        this.invoices = ... //import from Json;
+    private static void importing(){
+        // this.invoices = ... //import from Json;
+        // this.invoiceid import from json
     }
-    public void exporting(){
+    public static void exporting(){
         // export to Json;
     }
     public static InvoiceMgr getInstance(){
-        if(this.instance == null){
+        if(instance == null){
             importing();
-            this.instance = new InvoiceMgr()
-            this.invoiceid = this.invoices.size() +1;
+            instance = new InvoiceMgr();
         }
-        return this.instance;
+        return instance;
     }
 
-    public Invoice createInvoice(Order order){
+    private Invoice createInvoice(Order order){
         Invoice invoice = new Invoice(order, this.invoiceid);
         invoices.put(this.invoiceid, invoice);
         this.invoiceid +=1;
+        this.choosePriceFilter(this.invoiceid);
         return invoice;
     }
 
-    public void choosePriceFilter(int invoiceid){
+    private void choosePriceFilter(int invoiceid){
         Invoice invoice = this.invoices.get(invoiceid);
         // Need depends on KT & Ben
         Membership membership = invoice.getOrder().getCustomer().getMembership();
-        PriceFilter discount = membership.getDiscount();
+        PriceFilter membershipDiscountFilter = membership.getDiscount();
         // we noted this for membership class
+        invoice.addPriceFilters(membershipDiscountFilter);
         
-        invoice.addPriceFilters();
-
-
-        
-
-        
+        PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
+        PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.SERVICE_CHARGE, 10));
+        invoice.addPriceFilters(gstFilter);
+        invoice.addPriceFilters(serviceChargeFilter);
     }
     
-
-    
-
+    public HashMap<Integer,Invoice> getInvoicesMap() {
+        return this.invoices;
+    }
 }

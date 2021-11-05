@@ -1,13 +1,15 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
+import entities.*;
 
 
 public class Invoice {
     private int invoiceId;
     private Order order;
-    private ArrayList<PriceFilters> pricefilters;
-    private double finalPrice
+    private ArrayList<PriceFilter> priceFilters;
+    private double finalPrice;
 
     private void calculateFinalPrice( boolean print){
         this.finalPrice = order.getTotalPrice();
@@ -40,16 +42,16 @@ public class Invoice {
         return order;
     }
 
-    public ArrayList<PriceFilters> getPriceFilters(){
-        return priceFilters;
+    public ArrayList<PriceFilter> getPriceFilters(){
+        return this.priceFilters;
     }
 
     public void addPriceFilters(PriceFilter filter){
-        pricefilters.add(filter);
+        priceFilters.add(filter);
     }
 
 
-    public void getFinalPrice(){
+    public double getFinalPrice(){
         this.calculateFinalPrice(false);
         return finalPrice;
     }
@@ -69,7 +71,7 @@ public class Invoice {
         System.out.println("................................");
         System.out.println();
 
-        TreeMap<OrderItem, int> items = order.getorderedItems();
+        TreeMap<OrderItem, Integer> items = order.getorderedItems();
         for (OrderItem item : items.keySet()){
             int quantity = items.get(item);
             // need somethings to know is it a package order
@@ -88,9 +90,9 @@ public class Invoice {
         System.out.println("        TOTAL : "  + finalPrice);
         System.out.println("================================");
 
-        System.out.println(" PROMOTIONAL STUFS")
+        System.out.println(" PROMOTIONAL STUFS");
 
-        System.out.println(" InvoiceNumber : " + InvoiceId);
+        System.out.println(" InvoiceNumber : " + this.invoiceId);
         
     }
     

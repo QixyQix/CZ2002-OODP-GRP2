@@ -1,17 +1,5 @@
 package enums;
 
-
-public enum PriceFilterTypeEnum{
-    ABSOLUTE,
-    PERCENTAGE,
-
-}
-
-public enum TaxFilterNameEnum {
-    SERVICE_CHARGE,
-    GST,
-}
-
 public enum DiscountFilterNameEnum{
     GOLD_MEMBERSHIP,
     SILVER_MEMBERSHIP,

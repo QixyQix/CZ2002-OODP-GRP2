@@ -1,12 +1,13 @@
 package entities;
 
 import java.util.ArrayList;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import entities.*;
 
 public class Order {
     private Staff servedBy;
     private double totalPrice;
-    private TreeMap<OrderItem, int> orderedItems;
+    private TreeMap<OrderItem, Integer> orderedItems;
     private ArrayList<OrderItem> pendingItems;
     private Invoice invoice;
     private Customer customer;
@@ -15,7 +16,7 @@ public class Order {
     private String orderid;
 
     public Staff getServeby(){
-        return servedBy;
+        return this.servedBy;
     }
 
     public void setServedby(Staff servedBy){
@@ -24,7 +25,7 @@ public class Order {
 
     public void getTotalPrice(){
         calculateTotalPrice();
-        return totalPrice;
+        return this.totalPrice;
     }
 
     private void calculateTotalPrice(){
@@ -56,7 +57,7 @@ public class Order {
         this.pendingItems.add(item);
     }
     public ArrayList<OrderItem> getPendingItems(){
-        return tnis.pendingItems;
+        return this.pendingItems;
     }
 
     // Suggest no setter for ordereditems (not make sesnse)

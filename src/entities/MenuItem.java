@@ -2,26 +2,20 @@ package entities;
 
 import java.io.Serializable;
 
-import enums.MenuItemState;
-
 public class MenuItem implements Serializable{
     private String type;
     private String name;
     private String description;
     private double price;
-    private int stocks;
-    private MenuItemState state;
     private int id;
 
     public MenuItem(){}
 
-    public MenuItem(String type, String name, String description, double price, int stocks, MenuItemState state, int id) {
+    public MenuItem(String type, String name, String description, double price, int id) {
         this.type = type;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.stocks = stocks;
-        this.state = state;
         this.id = id;
     }
 
@@ -56,22 +50,6 @@ public class MenuItem implements Serializable{
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getStocks() {
-        return this.stocks;
-    }
-
-    public void setStocks(int stocks) {
-        this.stocks = stocks;
-    }
-
-    public MenuItemState getState() {
-        return this.state;
-    }
-
-    public void setState(MenuItemState state) {
-        this.state = state;
     }
 
     public int getId() {

@@ -1,5 +1,7 @@
 package factories;
 
+import java.util.ArrayList;
+
 import entities.MenuItem;
 import entities.MenuPackage;
 import enums.MenuItemState;
@@ -18,16 +20,11 @@ public final class MenuItemFactory {
         return INSTANCE;
     }
 
-    public MenuItem createMenuItem(String itemType, String type, String name, String description, double price, int stocks, MenuItemState state, int id, MenuItem[] packageItems) throws ClassNotFoundException {
-        switch (itemType.toUpperCase()) {
-        case "ALACARTE":
-            MenuItem alaCarteItem = new MenuItem(type, name, description, price, stocks, state, id);
-            return alaCarteItem;
-        case "PACKAGE":
-            MenuItem packageItem = new MenuPackage(type, name, description, price, stocks, state, id);
-            return packageItem;
-        default:
-            throw new ClassNotFoundException();
+    public MenuItem createMenuItem(String type, String name, String description, double price, int id, ArrayList<MenuItem> packageItems) throws ClassNotFoundException {
+        if(packageItems != null){
+            return new MenuPackage(type, name, description, price, id, packageItems);
+        }else{
+            return new MenuItem(type, name, description, price, id);
         }
     }
 

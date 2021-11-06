@@ -1,6 +1,7 @@
 package managers;
 
 import java.util.*;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,36 +9,57 @@ import entities.Reservation;
 import entities.Customer;
 import entities.Table;
 
-public class ReservationMgr {
+public class ReservationMgr implements Serializable{
     private static ReservationMgr instance = null;
-    private  ArrayList<Reservation> reservationList = new ArrayList<>();
+    private  HashMap<Integer, Reservation> reservations;
+    private int reservationID;
 
     private ReservationMgr(){};
 
     public static ReservationMgr getInstance(){
         if(instance == null){
-            instance = new Reservation();
+            instance = new ReservationMgr();
         }
         return instance;
     }
 
-    public static Reservation createReservation(Customer customer, String checkInTime, int noOfPax, Table table ) {
-        // Customer customer;
-        // LocalDateTime date;
-        // int noOfPax;
-        // Table table;
-        // boolean valid;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
-    	LocalDateTime checkInTime = LocalDateTime.parse(checkInTime, formatter);
-        Reservation reservation = new Reservation()
+    public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table ) {
+        Reservation reservation = new Reservation(customer,checkInDateTime,noOfPax,table,false, this.reservationID);
+        reservations.put(this.reservationID, reservation);
+        this.reservationID +=1;
+        return reservation;
 
-        // do{
-        //     System.out.println("Enter Reserved Date (dd/mm/yyyy)");
-
-        // }
     }
-    public static Reservation checkReservation(String contact) {}
-    public static void removeReservation(Reservation reservation) {}
-    public static Reservation [] getAllReservations() {}
+    public Reservation checkReservation(String contact) {
+        Reservation result = new Reservation();
+        LocalDateTime current = LocalDateTime.now();
+        for (Reservation reservation: reservations.values()){
+            LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
+            if (current.isAfter(expiredTime) == true){
+                removeReservation(reservation);
+            }
+            if (reservation.getCustomer().getContact() == contact)
+                result = reservation;
+        }
+        return result;
+    }
+
+    public void removeReservation(Reservation reservationMade) {
+        this.reservations.remove(reservationMade.getreservationID());
+        Table table = reservationMade.getTable();
+        table.setStatus("Avaliable");
+    }
+
+    public HashMap<Integer, Reservation> getAllReservations() {
+        //check if expired 
+        LocalDateTime current = LocalDateTime.now();
+        for (Reservation reservation: reservations.values()){
+            LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
+            if (current.isAfter(expiredTime) == true){
+                removeReservation(reservation);
+            }
+        }
+        return reservations;
+    }
     
 }

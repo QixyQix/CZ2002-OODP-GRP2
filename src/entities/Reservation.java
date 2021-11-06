@@ -8,13 +8,16 @@ public class Reservation {
     private int noOfPax;
     private Table table;
     private boolean expired;
+    private int reservationID;
 
-    public Reservation(Customer customer, LocalDateTime checkInTime, Integer noOfPax,Table table) {
+    public Reservation(){}
+    public Reservation(Customer customer, LocalDateTime checkInTime, Integer noOfPax,Table table, boolean status, int id) {
 		this.customer = customer;
 		this.checkInTime = checkInTime;		
 		this.noOfPax = noOfPax;
 		this.table = table;
-		this.expired = false;	
+		this.expired = status;	
+        this.reservationID = id;
 	}
 
     public Customer getCustomer() {
@@ -54,6 +57,14 @@ public class Reservation {
 
 	public void setExpired(Boolean status) {
 		this.expired = status;
+	}
+
+    public int getreservationID() {
+		return reservationID;
+	}
+
+	public void setreservationID(int id) {
+		this.reservationID = id;
 	}
     
     @Override

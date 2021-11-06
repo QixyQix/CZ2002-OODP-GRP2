@@ -61,6 +61,16 @@ public final class MenuItemMgr {
     }
 
     /**
+     * Checks if an ID is available to be used
+     * Returns true if ID can be assigned to a new object, false otherwise
+     * @param id
+     * @return
+     */
+    public boolean checkIDAvailable(int id){
+        return !this.items.containsKey(id);
+    }
+
+    /**
      * Returns a MenuItem object that that matches the ID
      * @param id
      * @return

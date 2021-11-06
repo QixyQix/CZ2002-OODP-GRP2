@@ -47,6 +47,9 @@ public final class MenuItemUI extends UserInterface{
             case 2:
                 createMenuItem();
                 break;
+            case 4:
+                deleteMenuItem();
+                break;
             }
         } while (option != -1);
     }
@@ -55,7 +58,8 @@ public final class MenuItemUI extends UserInterface{
         System.out.println("====Menu Item Manager====");
         System.out.println("(1) Show current MenuItems");
         System.out.println("(2) Create a Menu Item");
-        System.out.println("(3) Delete a Menu Item");
+        System.out.println("(3) Edit a Menu Item");
+        System.out.println("(4) Delete a Menu Item");
         System.out.println("(-1) Exit");
         System.out.println("Enter your selection: ");
     }
@@ -128,6 +132,19 @@ public final class MenuItemUI extends UserInterface{
             System.out.println("Menu Item Created");
         }catch(Exception ex){
             System.out.println("An error occured while creating menu item");
+        }
+    }
+
+    private void deleteMenuItem(){
+        while(true){
+            int idToRemove = super.getInputInt("Enter ID of item to delete: ",0,Integer.MAX_VALUE);
+            try{
+                MenuItemMgr.getInstance().deleteMenuItemByID(idToRemove);
+                System.out.println("Item removed");
+                break;
+            }catch(Exception ex){
+                System.out.println("Invalid ID");
+            }
         }
     }
 

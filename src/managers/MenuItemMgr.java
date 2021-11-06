@@ -87,12 +87,12 @@ public final class MenuItemMgr {
      * @return
      * @throws IDNotFoundException
      */
-    public MenuItem[] getAllMenuItems() throws IDNotFoundException{
-        MenuItem[] items = new MenuItem[this.items.size()];
+    public ArrayList<MenuItem> getAllMenuItems() throws IDNotFoundException{
+        ArrayList<MenuItem> items = new ArrayList<MenuItem>();
         
         int i = 0;
         for(int id:this.items.keySet()){
-            items[i] = getMenuItemByID(id);
+            items.add(getMenuItemByID(id));
         }
 
         return items;

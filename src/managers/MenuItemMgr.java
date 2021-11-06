@@ -18,6 +18,9 @@ public final class MenuItemMgr {
     private static MenuItemMgr INSTANCE;
     private HashMap<Integer, MenuItem> items;
 
+    /**
+     * Constructor
+     */
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
@@ -28,6 +31,10 @@ public final class MenuItemMgr {
         }
     }
 
+    /**
+     * Returns the MenuItemMgr instance and creates an instance if it does not exist
+     * @return
+     */
     public static MenuItemMgr getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new MenuItemMgr();
@@ -53,6 +60,12 @@ public final class MenuItemMgr {
 
     }
 
+    /**
+     * Returns a MenuItem object that that matches the ID
+     * @param id
+     * @return
+     * @throws IDNotFoundException
+     */
     public MenuItem getMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();
@@ -61,6 +74,27 @@ public final class MenuItemMgr {
         return this.items.get(id);
     }
 
+    /***
+     * Returns an array of MenuItem objects that are stored in the MenuItemMgr
+     * @return
+     * @throws IDNotFoundException
+     */
+    public MenuItem[] getAllMenuItems() throws IDNotFoundException{
+        MenuItem[] items = new MenuItem[this.items.size()];
+        
+        int i = 0;
+        for(int id:this.items.keySet()){
+            items[i] = getMenuItemByID(id);
+        }
+
+        return items;
+    }
+
+    /***
+     * Serializes and saves the MenuItem objects into the data/menuItems folder
+     * Creates the data/menuItems folder if it does not exist
+     * @throws IOException
+     */
     public void saveData() throws IOException {
         //Create directory & clear exisring data if needed
         File dataDirectory = new File("./data/menuItems");
@@ -84,6 +118,11 @@ public final class MenuItemMgr {
         }
     }
 
+    /***
+     * Reads Serialized MenuItem data in the data/menuItems folder and stores it into the items HashMap
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void loadSavedData() throws IOException, ClassNotFoundException {
         File dataDirectory = new File("./data/menuItems");
         File fileList[] = dataDirectory.listFiles();

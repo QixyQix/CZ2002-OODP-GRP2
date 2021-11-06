@@ -6,10 +6,10 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.MenuItem;
-import enums.MenuItemState;
 import exceptions.DuplicateIDException;
 import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
@@ -43,15 +43,13 @@ public final class MenuItemMgr {
         return INSTANCE;
     }
 
-    public void createMenuItem(String type, String name, String description, double price, int stocks,
-            MenuItemState state, int id, MenuItem[] packageItems) throws DuplicateIDException {
+    public void createMenuItem(String type, String name, String description, double price, int id, ArrayList<MenuItem> packageItems) throws DuplicateIDException {
         if (this.items.containsKey(id)) {
             throw new DuplicateIDException();
         }
 
         try {
-            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem("ALACARTE", type, name, description, price,
-                    stocks, state, id, packageItems);
+            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, id, packageItems);
 
             this.items.put(newItem.getId(), newItem);
         } catch (Exception ex) {

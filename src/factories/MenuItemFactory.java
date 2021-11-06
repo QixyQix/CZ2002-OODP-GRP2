@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import entities.MenuItem;
 import entities.MenuPackage;
-import enums.MenuItemState;
 
 public final class MenuItemFactory {
     private static MenuItemFactory INSTANCE;

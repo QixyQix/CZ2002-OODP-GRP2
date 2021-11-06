@@ -6,11 +6,12 @@ import java.util.Scanner;
 import entities.MenuItem;
 import managers.MenuItemMgr;
 
-public final class MenuItemUI {
+public final class MenuItemUI extends UserInterface{
     private static MenuItemUI INSTANCE;
     private Scanner sc;
 
     private MenuItemUI() {
+        super();
         this.sc = new Scanner(System.in);
     }
 
@@ -62,7 +63,7 @@ public final class MenuItemUI {
     private void showCurrentMenuItems() {
         System.out.println("MENU ITEMS:");
         try {
-            MenuItem[] items = MenuItemMgr.getInstance().getAllMenuItems();
+            ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
 
             for (MenuItem item : items) {
                 System.out.println("ID: " + item.getId() + " | Type: " + item.getType() + " | Name: " + item.getName()
@@ -86,60 +87,36 @@ public final class MenuItemUI {
         double price =0.0;
         ArrayList<MenuItem> packageItems = null;
 
-        System.out.println("Is this a package? Enter P for package.");
-        if (sc.nextLine().equals("P")) {
+        if(super.getInputString("Is this a package? Enter P for package.").equals("P")){
             createPackage = true;
             packageItems = new ArrayList<MenuItem>();
         }
 
-        do {
-            try {
-                System.out.println("Enter an ID for the Menu Item");
-                id = sc.nextInt();
-                sc.nextLine();
-                if (!MenuItemMgr.getInstance().checkIDAvailable(id)) {
-                    System.out.println("ID " + id + " has already been taken. Please enter another ID.");
-                    continue;
-                }
-            } catch (Exception ex) {
-                System.out.println("Enter a valid ID");
+        while(true){
+            id = super.getInputInt("Enter an ID for the Menu Item",0, Integer.MAX_VALUE);
+            if(!MenuItemMgr.getInstance().checkIDAvailable(id)){
+                System.out.println("ID " + id + " has already been taken. Please enter another ID.");
+                continue;
+            }else{
+                break;
             }
-        } while (invalid);
+        }
 
-        System.out.println("Enter the item type: ");
-        type = sc.nextLine();
+        type = super.getInputString("Enter the item type: ");
+        name = super.getInputString("Enter the item name: ");
+        description = super.getInputString("Enter the item description: ");
+        price = super.getInputDouble("Enter the item price: ", 0.0, Double.MAX_VALUE);
 
-        System.out.println("Enter a name: ");
-        name = sc.nextLine();
-
-        System.out.println("Enter a description: ");
-        description = sc.nextLine();
-
-        do {
-            invalid = true;
-            System.out.println("Enter a price: ");
-            try {
-                price = sc.nextDouble();
-                sc.nextLine();
-
-                if (price < 0.01) {
-                    System.out.println("Please enter a price greater than 0.01");
-                    continue;
-                }
-                invalid = false;
-            } catch (Exception ex) {
-                System.out.println("Please enter a valid double");
-            }
-        } while (invalid);
 
         if(createPackage){
             System.out.println("Enter the IDs of items to be included in package (-1) to end: ");
             int idToAdd = 0;
             do{
+                idToAdd = super.getInputInt("Enter ID: ", -1, Integer.MAX_VALUE);
                 try{
-                    idToAdd = sc.nextInt();
-                    sc.nextLine();
-                    packageItems.add(MenuItemMgr.getInstance().getMenuItemByID(idToAdd));
+                    MenuItem itemToAdd = MenuItemMgr.getInstance().getMenuItemByID(idToAdd);
+                    packageItems.add(itemToAdd);
+                    System.out.println("Added item "+itemToAdd.getName() + " to package");
                 }catch(Exception ex){
                     System.out.println("Please enter a valid ID");
                 }
@@ -148,6 +125,7 @@ public final class MenuItemUI {
 
         try{
             MenuItemMgr.getInstance().createMenuItem(type, name, description, price, id, packageItems);
+            System.out.println("Menu Item Created");
         }catch(Exception ex){
             System.out.println("An error occured while creating menu item");
         }

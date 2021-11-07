@@ -14,11 +14,19 @@ public class MenuPackage extends MenuItem {
         this.items = items;
     }
 
+    public ArrayList<MenuItem> getItems(){
+        return this.items;
+    }
+
+    public void setItems(ArrayList<MenuItem> items){
+        this.items = items;
+    }
+
     @Override
     public String getDescription() {
-        String mainDesc = super.getDescription() + "\n This package consists of the following items:\n";
+        String mainDesc = super.getDescription() + "\nThis package consists of the following items:\n";
         for (MenuItem item : this.items) {
-            mainDesc+= item.getName() + "\n";
+            mainDesc+= item.getName() +", ";
         }
         return mainDesc;
     }

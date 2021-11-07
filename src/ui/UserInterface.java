@@ -1,7 +1,6 @@
 package ui;
 
 import java.util.Scanner;
-import java.util.function.IntPredicate;
 
 public class UserInterface {
     private Scanner sc;

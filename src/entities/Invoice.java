@@ -16,11 +16,11 @@ public class Invoice {
         double rawPrice = finalPrice;
         double addPrice;
         PriceFilter filter;
-        for(int i =0; i<pricefilters.size();i++){
-            filter = pricefilters.get(i);
+        for(int i =0; i< this.priceFilters.size();i++){
+            filter = this.priceFilters.get(i);
             addPrice = filter.execute(rawPrice);
             if(print) System.out.println(filter.getDescription() + ": " + addPrice);
-            finalPrice += addPrice
+            finalPrice += addPrice;
         }
     }
 
@@ -63,16 +63,16 @@ public class Invoice {
         System.out.println(" Our Address Line 2 ");
         System.out.println("Tel: XXX-XXX-XXXX ");
         System.out.println();
-        System.out.println("Server: "+);
-        System.out.println("Table: "+ order.getTableID() );
+        System.out.println("Server: "+ "");
+        System.out.println("Table: "+ order.getTable() ); // TO ADD Table
         System.out.println("Date: "+ order.getDate().toLocalDate().toString() );
         System.out.println("Time: "+ order.getDate().toLocalTime().toString() );
 
         System.out.println("................................");
         System.out.println();
 
-        TreeMap<OrderItem, Integer> items = order.getorderedItems();
-        for (OrderItem item : items.keySet()){
+        TreeMap<MenuItem, Integer> items = order.getOrderedItems();
+        for (MenuItem item : items.keySet()){
             int quantity = items.get(item);
             // need somethings to know is it a package order
             System.out.println(quantity + " " + item.getName() + " " + item.getPrice()*quantity);

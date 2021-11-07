@@ -1,5 +1,5 @@
 package entities;
-
+import java.util.TreeMap;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import entities.*;
@@ -7,8 +7,8 @@ import entities.*;
 public class Order {
     private Staff servedBy;
     private double totalPrice;
-    private TreeMap<OrderItem, Integer> orderedItems;
-    private ArrayList<OrderItem> pendingItems;
+    private TreeMap<MenuItem, Integer> orderedItems;
+    private ArrayList<MenuItem> pendingItems;
     private Invoice invoice;
     private Customer customer;
     private Table table;
@@ -23,14 +23,14 @@ public class Order {
         this.servedBy = servedBy;
     }
 
-    public void getTotalPrice(){
+    public double getTotalPrice(){
         calculateTotalPrice();
         return this.totalPrice;
     }
 
     private void calculateTotalPrice(){
         this.totalPrice = 0;
-        for (OrderItem item : this.orderedItems.keySet()){
+        for (MenuItem item : this.orderedItems.keySet()){
             int quantity = this.orderedItems.get(item);
             double price = item.getPrice();
             this.totalPrice += quantity*price;
@@ -38,8 +38,8 @@ public class Order {
     }   
 
     public void addToOrderedItems(){
-        for(int i =0 ; i<pendingItems(); i++){
-            OrderItem item = this.pendingItems.get(i);
+        for(int i =0 ; i<pendingItems.size(); i++){
+            MenuItem item = this.pendingItems.get(i);
             int val = 0;
             if( this.orderedItems.containsKey(item))  val= this.orderedItems.get(item);
             val +=1;
@@ -49,14 +49,14 @@ public class Order {
         this.pendingItems.clear();
     }
 
-    public void getOrderedItems(){
+    public TreeMap<MenuItem, Integer> getOrderedItems(){
         return this.orderedItems;
     }
 
-    public void addPendingItems(OrderItem item){
+    public void addPendingItems(MenuItem item){
         this.pendingItems.add(item);
     }
-    public ArrayList<OrderItem> getPendingItems(){
+    public ArrayList<MenuItem> getPendingItems(){
         return this.pendingItems;
     }
 
@@ -82,15 +82,15 @@ public class Order {
         return this.table;
     }
 
-    public void setTableid(Table table){
+    public void setTable(Table table){
         this.table = table;
     }
 
-    public Date getDate(){
+    public LocalDateTime getDate(){
         return this.date;
     }
 
-    public Date setDate(){
+    public LocalDateTime setDate(){
         this.date = LocalDateTime.now();
     }
 

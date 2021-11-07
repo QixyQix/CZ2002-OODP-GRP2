@@ -14,13 +14,13 @@ public class SalesReportMgr {
         // this.invoiceid = this.invoices.size() +1;
     };
 
-    private static void importing(){
-        // this.invoices = ... //import from Json;
-        // this.invoiceid import from json
+    private void importing(){
+        // this.invoices = ... //import from serialization;
+        // this.invoiceid import from serialization
     }
 
-    public static void exporting(){
-        // export to Json;
+    public  void exporting(){
+        // export to serialization;
     }
 
     public static SalesReportMgr getInstance(){
@@ -32,7 +32,7 @@ public class SalesReportMgr {
     }
 
     public void createReport(LocalDate targetDay) {
-
+        
     }
 
     public void getReport(LocalDate startDate, LocalDate endDate) {

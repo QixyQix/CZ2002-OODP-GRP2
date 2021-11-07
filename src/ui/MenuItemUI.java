@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entities.MenuItem;
+import entities.MenuPackage;
 import managers.MenuItemMgr;
 
 public final class MenuItemUI extends UserInterface {
@@ -114,18 +115,7 @@ public final class MenuItemUI extends UserInterface {
         price = super.getInputDouble("Enter the item price: ", 0.0, Double.MAX_VALUE);
 
         if (createPackage) {
-            System.out.println("Enter the IDs of items to be included in package (-1) to end: ");
-            int idToAdd = 0;
-            do {
-                idToAdd = super.getInputInt("Enter ID: ", -1, Integer.MAX_VALUE);
-                try {
-                    MenuItem itemToAdd = MenuItemMgr.getInstance().getMenuItemByID(idToAdd);
-                    packageItems.add(itemToAdd);
-                    System.out.println("Added item " + itemToAdd.getName() + " to package");
-                } catch (Exception ex) {
-                    System.out.println("Please enter a valid ID");
-                }
-            } while (idToAdd > 0);
+            packageItems = buildPackageItems();
         }
 
         try {
@@ -165,14 +155,16 @@ public final class MenuItemUI extends UserInterface {
 
         loop = true;
         do {
-            // TODO Manage package items
             System.out.println("== EDIT ITEM ID: " + itemToEdit.getId() + " ==");
             System.out.println("(1) type: " + itemToEdit.getType());
             System.out.println("(2) name: " + itemToEdit.getName());
             System.out.println("(3) description: " + itemToEdit.getDescription());
             System.out.println("(4) price: " + itemToEdit.getPrice());
+            if (itemToEdit instanceof MenuPackage) {
+                System.out.println("(5) Change package items");
+            }
             System.out.println("(-1) Exit");
-            int choice = super.getInputInt("Enter number of corresponding property to edit", -1, 4);
+            int choice = super.getInputInt("Enter number of corresponding property to edit", -1, 5);
             switch (choice) {
             case 1:
                 String newType = super.getInputString("Enter new value for type:");
@@ -194,6 +186,16 @@ public final class MenuItemUI extends UserInterface {
                 itemToEdit.setPrice(newPrice);
                 System.out.println("New price saved.");
                 break;
+            case 5:
+                if (itemToEdit instanceof MenuPackage) {
+                    MenuPackage packageItem = (MenuPackage) itemToEdit;
+                    ArrayList<MenuItem> items = new ArrayList<MenuItem>();
+                    items = buildPackageItems();
+                    packageItem.setItems(items);
+                    System.out.println("Items updated.");
+                }else{
+                    System.out.println("This is not a package");
+                }
             case -1:
                 loop = false;
                 break;
@@ -202,6 +204,28 @@ public final class MenuItemUI extends UserInterface {
                 break;
             }
         } while (loop);
+    }
+
+    private ArrayList<MenuItem> buildPackageItems() {
+        System.out.println("Enter the IDs of items to be included in package (-1) to end: ");
+        int idToAdd = 0;
+        ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();
+        do {
+            idToAdd = super.getInputInt("Enter ID: ", -1, Integer.MAX_VALUE);
+            try {
+                MenuItem itemToAdd = MenuItemMgr.getInstance().getMenuItemByID(idToAdd);
+                if (itemToAdd instanceof MenuPackage) {
+                    System.out.println("Not allowed to add a package to a package");
+                } else {
+                    packageItems.add(itemToAdd);
+                    System.out.println("Added item " + itemToAdd.getName() + " to package");
+                }
+            } catch (Exception ex) {
+                System.out.println("Please enter a valid ID");
+            }
+        } while (idToAdd > 0);
+
+        return packageItems;
     }
 
 }

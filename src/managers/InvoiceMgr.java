@@ -1,11 +1,11 @@
 package managers;
 
 import java.util.HashMap;
-import managers.Manager;
 import entities.Invoice;
 import entities.PriceFilter;
 import entities.DiscountFilter;
 import entities.TaxFilter;
+import entities.Order;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
@@ -20,16 +20,15 @@ class InvoiceMgr{
         // this.invoiceid = this.invoices.size() +1;
     };
 
-    private static void importing(){
-        // this.invoices = ... //import from Json;
-        // this.invoiceid import from json
+    private void importing(){
+        // this.invoices = ... //import from Serialization;
+        // this.invoiceid import from Serialization 
     }
-    public static void exporting(){
+    public void exporting(){
         // export to Json;
     }
     public static InvoiceMgr getInstance(){
         if(instance == null){
-            importing();
             instance = new InvoiceMgr();
         }
         return instance;

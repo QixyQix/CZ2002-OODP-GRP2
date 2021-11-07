@@ -13,8 +13,8 @@ public class Table {
     private TableState state;
     private String id;
     
-    public void getSeatingCapacity(){
-        return this.seatingCapacity
+    public int getSeatingCapacity(){
+        return this.seatingCapacity;
     }
     public void setSeatingCapacity(int seatingCapacity){
         this.seatingCapacity=seatingCapacity;
@@ -46,4 +46,3 @@ public class Table {
     // public void getAttribute(){
         
     // }
-}

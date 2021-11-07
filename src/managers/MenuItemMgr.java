@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.MenuItem;
+import entities.MenuPackage;
 import exceptions.DuplicateIDException;
 import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
@@ -109,7 +110,21 @@ public final class MenuItemMgr {
             throw new IDNotFoundException();
         }
         this.items.remove(id);
-        //TODO Remove alacarte items from packages
+        for (int key : this.items.keySet()) {
+            MenuItem item = this.items.get(key);
+            if (item instanceof MenuPackage) {
+                MenuPackage menuPackage = (MenuPackage) item;
+                ArrayList<MenuItem> packageItems = menuPackage.getItems();
+                for (int i = 0; i < packageItems.size(); i++) {
+                    if (packageItems.get(i).getId() == id) {
+                        packageItems.remove(i);
+                        System.out.println("Removed from package "+menuPackage.getName()+" items");
+                        i--;
+                    }
+                }
+            }
+        }
+        // TODO Remove alacarte items from packages
     }
 
     /***

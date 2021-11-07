@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import enums.MenuItemState;
 
-public class Package extends MenuItem {
+public class MenuPackage extends MenuItem {
     private ArrayList<MenuItem> items;
 
-    public Package(String type, String name, String description, double price, int stocks, MenuItemState state,
+    public MenuPackage(){
+        super();
+    }
+
+    public MenuPackage(String type, String name, String description, double price, int stocks, MenuItemState state,
             String id) {
         super(type, name, description, price, stocks, state, id);
         this.items = new ArrayList<MenuItem>();

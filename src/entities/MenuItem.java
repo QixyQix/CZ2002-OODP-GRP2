@@ -11,6 +11,7 @@ public class MenuItem {
     private MenuItemState state;
     private String id;
 
+    public MenuItem(){}
 
     public MenuItem(String type, String name, String description, double price, int stocks, MenuItemState state, String id) {
         this.type = type;

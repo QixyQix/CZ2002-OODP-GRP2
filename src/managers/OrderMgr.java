@@ -1,13 +1,22 @@
 package managers;
 
-class OrderMgr{
+import java.util.HashMap;
+import entities.Order;
+import entities.MenuItem;
 
-    private OrderMgr();
-    // ask Yan kai whether give order or string (orderid ).. 
-    // then who goign to go to database to get
-    public static String createOrder(String orderid);
-    public static void addItem(String orderid);
-    public static void deleteItem(String orderid);
-    public static void order(String orderid);
-    public static void closeOrder(String orderid);
+public final class OrderMgr {
+    private static OrderMgr INSTANCE;
+    private HashMap<Integer, MenuItem> items;
+    
+    public static OrderMgr getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new OrderMgr();
+        }
+
+        return INSTANCE;
+    }
+    public void allocateTable(){}
+    public void chooseItem(){}
+    public void closeOrder(Order order){}
+    
 }

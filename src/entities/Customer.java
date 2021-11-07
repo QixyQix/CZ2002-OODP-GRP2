@@ -3,7 +3,7 @@ package entities;
 public class Customer {
     private Membership membership;
     private String name;
-    private String id;
+    private String customerid;
 
     public Customer(Membership membership, String name, String customerid) {
         this.membership = membership;

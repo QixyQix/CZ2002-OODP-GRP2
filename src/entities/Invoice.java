@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
-import entities.*;
 
 
 public class Invoice {

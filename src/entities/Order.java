@@ -2,7 +2,7 @@ package entities;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-import entities.*;
+
 
 public class Order {
     private Staff servedBy;
@@ -90,12 +90,9 @@ public class Order {
         return this.date;
     }
 
-    public LocalDateTime setDate(){
+    public void setDate(){
         this.date = LocalDateTime.now();
     }
-
-
-    
 
     public String getid(){
         return this.orderid;

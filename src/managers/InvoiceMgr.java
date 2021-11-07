@@ -3,9 +3,9 @@ package managers;
 import java.util.HashMap;
 import entities.Invoice;
 import entities.PriceFilter;
-import entities.DiscountFilter;
 import entities.TaxFilter;
 import entities.Order;
+import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
@@ -34,7 +34,7 @@ class InvoiceMgr{
         return instance;
     }
 
-    private Invoice createInvoice(Order order){
+    public Invoice createInvoice(Order order){
         Invoice invoice = new Invoice(order, this.invoiceid);
         invoices.put(this.invoiceid, invoice);
         this.invoiceid +=1;
@@ -51,7 +51,7 @@ class InvoiceMgr{
         invoice.addPriceFilters(membershipDiscountFilter);
         
         PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
-        PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.SERVICE_CHARGE, 10));
+        PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.SERVICE_CHARGE, 10);
         invoice.addPriceFilters(gstFilter);
         invoice.addPriceFilters(serviceChargeFilter);
     }

@@ -2,15 +2,30 @@ package entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.TreeMap;
 public class Report{
 
     private ArrayList<Invoice> invoiceList;
     private double totalRevenue;
     private LocalDate date;
+    private TreeMap<MenuItem, Double> menuItemRevenue;
+
 
     public Report(LocalDate date){
         this.date = date;
+        this.menuItemRevenue = new TreeMap<MenuItem, Double> ();
+        this.invoiceList = new ArrayList<Invoice> ();
+    }
+
+    private void addtomenuItemRevenue(TreeMap<MenuItem,Integer> orderedItems){
+        for(MenuItem item : orderedItems.keySet() ){
+            double val = 0;
+            if( this.menuItemRevenue.containsKey(item)) val = menuItemRevenue.get(item);
+            val += orderedItems.get(item) * item.getPrice();
+            
+            // not sure will overwrite or not
+            this.menuItemRevenue.put(item,val);
+        }
     }
 
     private void calculateTotalRevenue(){
@@ -21,6 +36,7 @@ public class Report{
         this.totalRevenue =0;
         for (int i =0; i< this.invoiceList.size();i++){
             this.totalRevenue += this.invoiceList.get(i).getFinalPrice();
+            addtomenuItemRevenue(this.invoiceList.get(i).getOrder().getOrderedItems());
         }
     }
 
@@ -50,6 +66,13 @@ public class Report{
     public LocalDate getDate(){
         return this.date;
     }
+
+    public TreeMap<MenuItem, Double> getMenuItemRevenue() {
+        return menuItemRevenue;
+    }
+
+    
+
 }
 
     

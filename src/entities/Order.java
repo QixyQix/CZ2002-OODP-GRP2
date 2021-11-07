@@ -13,7 +13,15 @@ public class Order {
     private Customer customer;
     private Table table;
     private LocalDateTime date;     
-    private String orderid;
+    private int orderid;
+
+    public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int orderid){
+        this.servedBy = staff;
+        this.customer = customer;
+        this.table = table;
+        this.date = date;
+        this.orderid = orderid;
+    }
 
     public Staff getServeby(){
         return this.servedBy;
@@ -94,11 +102,11 @@ public class Order {
         this.date = LocalDateTime.now();
     }
 
-    public String getid(){
+    public int getid(){
         return this.orderid;
     }
 
-    public void setid(String id){
+    public void setid(int id){
         this.orderid = id;
     }
 

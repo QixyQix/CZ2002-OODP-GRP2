@@ -1,13 +1,12 @@
 package entities;
 
-public class Customer {
+public class Customer extends Person {
     private Membership membership;
-    private String name;
     private String customerid;
 
-    public Customer(Membership membership, String name, String customerid) {
+    public Customer(Membership membership, String customerid, String name, String gender, int contact) {
+        super(name, gender, contact);
         this.membership = membership;
-        this.name = name;
         this.customerid = customerid;
     }
 
@@ -18,15 +17,7 @@ public class Customer {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    
     public String getCustomerid() {
         return this.customerid;
     }

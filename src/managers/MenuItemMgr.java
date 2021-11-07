@@ -109,6 +109,7 @@ public final class MenuItemMgr {
             throw new IDNotFoundException();
         }
         this.items.remove(id);
+        //TODO Remove alacarte items from packages
     }
 
     /***

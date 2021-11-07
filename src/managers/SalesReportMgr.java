@@ -7,7 +7,7 @@ import entities.Report;
 public class SalesReportMgr {
     private static SalesReportMgr instance;
     private HashMap<Integer,Report> reports;
-    private int invoiceid;
+    private int reportid;
 
     private SalesReportMgr(){
         importing();
@@ -25,7 +25,6 @@ public class SalesReportMgr {
 
     public static SalesReportMgr getInstance(){
         if(instance == null){
-            importing();
             instance = new SalesReportMgr();
         }
         return instance;
@@ -36,10 +35,10 @@ public class SalesReportMgr {
     }
 
     public void getReport(LocalDate startDate, LocalDate endDate) {
-
+        findReportByDay(startDate);
     }
 
     private Report findReportByDay(LocalDate targetDay) {
-        
+        return null;
     }
 }

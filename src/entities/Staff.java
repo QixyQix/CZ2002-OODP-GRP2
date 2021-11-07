@@ -5,7 +5,7 @@ public class Staff extends Person {
     private String id;
     private String jobTitle;
     
-    public Staff(String id, String jobTitle, String name, String gender, int contact) {
+    public Staff(String id, String jobTitle, String name, String gender, String contact) {
         super(name, gender, contact);
         this.id = id;
         this.jobTitle = jobTitle;

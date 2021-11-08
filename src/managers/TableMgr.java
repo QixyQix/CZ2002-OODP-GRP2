@@ -51,8 +51,10 @@ public class TableMgr {
      */
     public Table findAvailTable(LocalDateTime checkInTime, int noOfPax) {
         for (Table table : tables.values()) {
-            if (table.getTableState(checkInTime) == TableState.AVAILABLE) {
-                table.setBooking(checkInTime, TableState.RESERVED);
+            if ((table.getTableState(checkInTime) == TableState.AVAILABLE) && (table.getSeatingCapacity() >= noOfPax)) {
+                table.setState(checkInTime, TableState.RESERVED);
+                table.setState(checkInTime.plusHours(1), TableState.RESERVED);
+                table.setState(checkInTime.minusHours(1), TableState.RESERVED);
                 return table;
             }
         }
@@ -89,13 +91,12 @@ public class TableMgr {
      * 
      * @return true or false
      */
-    public boolean checkTableAvailability(int noOfPax, LocalDateTime date) {
+    public void checkTableAvailability(int noOfPax, LocalDateTime date) {
         for (Table table : tables.values()) {
             if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) == TableState.AVAILABLE)) {
-                return true;
+                System.out.println(table.toString());
             }
         }
-        return false;
     }
 
     /***

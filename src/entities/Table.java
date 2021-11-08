@@ -4,45 +4,48 @@ import java.sql.Date;
 import java.util.List;
 import enums.TableState;
 
-
-
 public class Table {
-    Reservation res;
     private int seatingCapacity;
-    private List<res.date> booking;
+    private List<Date> booking;
     private TableState state;
-    private String id;
-    
-    public int getSeatingCapacity(){
+    private int id;
+
+    public int getSeatingCapacity() {
         return this.seatingCapacity;
     }
-    public void setSeatingCapacity(int seatingCapacity){
-        this.seatingCapacity=seatingCapacity;
+
+    public void setSeatingCapacity(int seatingCapacity) {
+        this.seatingCapacity = seatingCapacity;
     }
     // public ReservationMgr[] getDate(){
-        
+
     // }
     // public void setDate(ReservationMgr){
-        
+
     // }
-    public List getBooking(){
-        
+    public List<Date> getBooking() {
+        return this.booking;
     }
-    public void setBooking(List booking){
-        
+
+    public void setBooking(List<Date> booking) {
+        this.booking = booking;
     }
-    public TableState getState(){
+
+    public TableState getState() {
         return this.state;
     }
-    public void setState(TableState state){
-        this.state=state;
+
+    public void setState(TableState state) {
+        this.state = state;
     }
-    public String getId(){
+
+    public int getId() {
         return this.id;
     }
-    public void setId(String id){
+
+    public void setId(int id){
         this.id=id;
     }
-    // public void getAttribute(){
-        
-    // }
+// public void getAttribute(){
+
+// }

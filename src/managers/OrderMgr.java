@@ -60,6 +60,15 @@ public final class OrderMgr {
         // deallocateTable()
         invoiceMgr.createInvoice(order);
     }
+
+    public boolean checkAvailableOrder(int orderid) {
+        return !this.orders.containsKey(orderid);
+    }
+
+    public Order getOrder(int orderid) {
+        return this.orders.get(orderid);
+    }
+
     /*
     public HashMap<Integer, Order> getorders(){
         return orders;

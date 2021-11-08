@@ -53,10 +53,9 @@ public final class ReservationMgr{
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true){
                 removeReservation(reservation);
-                
             }
             //depends on CustomerMgr
-            if (reservation.getCustomer().getContact() == contact)
+            else if (reservation.getCustomer().getContact() == contact)
                 result = reservation;
         }
         return result;
@@ -64,12 +63,11 @@ public final class ReservationMgr{
 
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());
-        TableMgr tableMgr = TableMgr.getInstance();
-        tableMgr.deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
+        TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
     }
 
 
-    
+
     public HashMap<Integer, Reservation> getAllReservations() {
         //check if expired 
         LocalDateTime current = LocalDateTime.now();
@@ -127,8 +125,7 @@ public final class ReservationMgr{
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Reservation reservation = ReservationMgr.getInstance()
-                    .createReservationFromSerializedData(objectInputStream.readObject());
+            Reservation reservation = ReservationMgr.getInstance().createReservationFromSerializedData(objectInputStream.readObject());
             this.reservations.put(reservation.getreservationID(), reservation);
             objectInputStream.close();
         }

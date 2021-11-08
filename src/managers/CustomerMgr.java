@@ -35,12 +35,13 @@ public final class CustomerMgr{
     }
 
 
-    public Customer createCustomer(Membership membership, int customerid, String name, String gender, String contact){
+    public Customer createCustomer(Membership membership, String name, String gender, String contact){
         if (getExistingCustomer(contact) != null) {
             System.out.println("Customer Contains already");
+            return null;
         }
 
-        Customer customer = new Customer( membership,  customerid,  name,  gender,  contact);
+        Customer customer = new Customer(membership,  customerId,  name,  gender,  contact);
         
         this.phonetoid.put(contact,customerId);
         this.customers.put(customerId,customer);
@@ -51,7 +52,7 @@ public final class CustomerMgr{
 
     }
 
-    public Customer getExistingCustomer(  String phoneNumber){
+    public Customer getExistingCustomer(String phoneNumber){
         if(! this.phonetoid.containsKey(phoneNumber)) return null;
 
         int cusid = this.phonetoid.get(phoneNumber);

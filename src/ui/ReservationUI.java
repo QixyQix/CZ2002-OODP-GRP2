@@ -6,9 +6,7 @@ import managers.CustomerMgr;
 import entities.Reservation;
 import entities.Customer;
 import entities.Table;
-import enums.TableState;
 
-import java.io.*;
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,9 +14,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ReservationUI {
     private static ReservationUI singleInstance = null;
-    private ReservationMgr reservationMgr = ReservationMgr.getInstance();
-    private TableMgr tableMgr = TableMgr.getInstance();
-    private CustomerMgr customerMgr = CustomerMgr.getInstance();
     private static Scanner sc = new Scanner(System.in);
     private ReservationUI() {}
 
@@ -74,35 +69,38 @@ public class ReservationUI {
 	    int noOfPax = sc.nextInt();
         sc.nextLine();
 
-        //depends on ben to create TableMgr + findAvailableTable Method
-        Table table = tableMgr.findAvailTable(checkInTime, noOfPax);
+        Table table = TableMgr.getInstance().findAvailTable(checkInTime, noOfPax);
         if (table==null){ System.out.println("There is no available table with the specified requirements.");}
         else {
             System.out.println("We have an available table. But first we need your particulars.");
             // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
+<<<<<<< HEAD
             Customer customer = customerMgr.getExistingCustomer(customerContact);
             Reservation res = reservationMgr.createReservation(customer, checkInTime, noOfPax, table);
+=======
+            Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerContact);
+            Reservation res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
+>>>>>>> 0d4f20827ba0ad0e2582a7ab1e17f41ca044b46a
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
         }
     }
 
     private void checkRemoveReservationUI(String customerContact){
-        Reservation res = reservationMgr.checkReservation(customerContact);			        
+        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);			        
 		System.out.println("Reservation made: ");
 		System.out.println(res.toString());
         sc.nextLine();
         System.out.print("Would you like to remove this reservation? [yes/no]");
 	    String remove = sc.nextLine();
         if (remove == "yes" || remove =="Yes"){
-            reservationMgr.removeReservation(res);
+            ReservationMgr.getInstance().removeReservation(res);
             System.out.println("Reservation successfully removed from the system: ");
-
         }
 		return;	
     }
     private void printReservationUI(){
-        HashMap<Integer, Reservation> reservations = reservationMgr.getAllReservations();
+        HashMap<Integer, Reservation> reservations = ReservationMgr.getInstance().getAllReservations();
 		if (reservations.isEmpty()) {
         	System.out.println("No records found!");
         }

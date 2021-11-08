@@ -71,14 +71,9 @@ public class TableUI {
                         continue;
                     }
                 }
-                checkTableAvailability(noOfPax, date);
+                TableMgr.getInstance().checkTableAvailability(noOfPax, date);
                 break;
             }
         } while (option != -1);
-    }
-
-    public boolean checkTableAvailability(int noOfPax, LocalDateTime date) {
-        TableMgr tablemgr = TableMgr.getInstance();
-        return tablemgr.checkTableAvailability(noOfPax, date);
     }
 }

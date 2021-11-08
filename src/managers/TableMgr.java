@@ -7,7 +7,7 @@ import enums.TableState;
 import java.time.LocalDateTime;
 
 public class TableMgr {
-    private static TableMgr instance = null;
+    private static TableMgr instance;
     private HashMap<Integer, Table> tables;
 
     private TableMgr() {
@@ -26,15 +26,8 @@ public class TableMgr {
     }
 
     public void createTable(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
-        try {
-            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, id,
-                    packageItems);
-
-            this.items.put(newItem.getId(), newItem);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-
+        Table table = new Table(seatingCapacity, bookings, tableId);
+        this.tables.put(table.getId(), table);
     }
 
     /**
@@ -47,6 +40,7 @@ public class TableMgr {
     public Table findAvailTable(LocalDateTime checkInTime, int noOfPax) {
         for (Table table : tables.values()) {
             if (table.getTableState(checkInTime) == TableState.AVAILABLE) {
+                table.setBooking(checkInTime, TableState.RESERVED);
                 return table;
             }
         }

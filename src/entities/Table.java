@@ -8,6 +8,12 @@ public class Table {
     private int seatingCapacity;
     private HashMap<LocalDateTime, TableState> bookings;
     private int tableId;
+    
+    public Table(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId){
+        this.seatingCapacity = seatingCapacity;
+        this.bookings = bookings;
+        this.tableId = tableId;
+    }
 
     public int getSeatingCapacity() {
         return this.seatingCapacity;

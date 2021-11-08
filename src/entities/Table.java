@@ -1,14 +1,14 @@
 package entities;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import enums.TableState;
 
 public class Table {
     private int seatingCapacity;
-    private List<Date> booking;
+    private List<LocalDateTime> booking;
     private TableState state;
-    private int id;
+    private int tableId;
 
     public int getSeatingCapacity() {
         return this.seatingCapacity;
@@ -18,11 +18,11 @@ public class Table {
         this.seatingCapacity = seatingCapacity;
     }
 
-    public List<Date> getBooking() {
+    public List<LocalDateTime> getBooking() {
         return this.booking;
     }
 
-    public void setBooking(List<Date> booking) {
+    public void setBooking(List<LocalDateTime> booking) {
         this.booking = booking;
     }
 
@@ -35,9 +35,9 @@ public class Table {
     }
 
     public int getId() {
-        return this.id;
+        return this.tableid;
     }
 
-    public void setId(int id){
-        this.id=id;
+    public void setId(int tableId){
+        this.tableId=tableId;
     }

@@ -79,11 +79,9 @@ public class ReservationUI {
         if (table==null){ System.out.println("There is no available table with the specified requirements.");}
         else {
             System.out.println("We have an available table. But first we need your particulars.");
-
             // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
             Customer customer = customerMgr.findExistingCustomer(customerContact);
             Reservation res = reservationMgr.createReservation(customer, checkInTime, noOfPax, table);
-            table.setTableState(checkInTime, TableState.RESERVED);
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
         }
@@ -98,8 +96,6 @@ public class ReservationUI {
 	    String remove = sc.nextLine();
         if (remove == "yes" || remove =="Yes"){
             reservationMgr.removeReservation(res);
-            Table table = res.getTable();
-            tableMgr.deallocateTable(table,);
             System.out.println("Reservation successfully removed from the system: ");
 
         }

@@ -31,6 +31,12 @@ public class TableMgr {
         return instance;
     }
 
+    /**
+     * Creates table object
+     * 
+     * @param seatingCapacity, bookings, tableId
+     * @return
+     */
     public void createTable(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
         Table table = new Table(seatingCapacity, bookings, tableId);
         this.tables.put(table.getId(), table);
@@ -63,6 +69,12 @@ public class TableMgr {
         table.setTableToAvailable(date);
     }
 
+    /**
+     * Creates table object from serialized data and returns a table
+     * 
+     * @param o
+     * @return Table
+     */
     public Table createTableFromSerializedData(Object o) throws ClassNotFoundException {
         if (o instanceof Table) {
             return (Table) o;
@@ -116,8 +128,8 @@ public class TableMgr {
     }
 
     /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
+     * Reads Serialized Table data in the data/table folder and stores it into the
+     * tables HashMap
      * 
      * @throws IOException
      * @throws ClassNotFoundException

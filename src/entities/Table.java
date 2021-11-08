@@ -35,10 +35,6 @@ public class Table {
         this.bookings.put(date, TableState.AVAILABLE);
     }
 
-    public void setTableState(LocalDateTime date, TableState state) {
-        this.bookings.put(date, state);
-    }
-
     public void setBooking(LocalDateTime date, TableState state) {
         this.bookings.put(date, state);
     }

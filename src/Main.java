@@ -1,32 +1,6 @@
+import ui.MainUI;
 
-import ui.*;
-import managers.*;
-import entities.Staff;
-
-class Main{ 
-
-    private static void entersystem(Staff staff){
-        System.out.println(" Hello Mr/Ms " + staff.getName() ); // TODO Mr/Ms based on the gender
-        System.out.println(" Welcome to the Restaurant Reservation and Point of Sale System");
-
-        
-    }
-
-    private static void endsystem(){
-        // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
-        
-        CustomerMgr.getInstance().saveData();
-        InvoiceMgr.getInstance().saveData();
-        //MenuItemMgr.getInstance().saveData();
-        OrderMgr.getInstance().saveData();
-        SalesReportMgr.getInstance().saveData();
-        StaffMgr.getInstance().saveData();
-        
-        // TableMgr
-        // ReservationMgr
-
-     
-    }
+class Main{
     public static void main(String arg[]){
         // two way 
         // Actually we maybe do not need to getInstance first cuz in future when we use the mgr it will also be using getInstance..
@@ -49,10 +23,7 @@ class Main{
         */
 
         // is it better if we use getInstance? or use above code..
-        Staff staff = StaffUI.getInstance().staffSelectionscreen();
-        if(staff == null) endsystem();
-        else entersystem(staff);
         
-        System.out.println("GoodBye and Thank you for using our system !!");
+        MainUI.getInstance().systemBoot();  
     }  
 }

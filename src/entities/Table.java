@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import enums.TableState;
 
+
 public class Table {
+    /*
+    Reservation res;
     private int seatingCapacity;
     private HashMap<LocalDateTime, TableState> bookings;
     private int tableId;
@@ -45,4 +48,8 @@ public class Table {
     public void setId(int tableId) {
         this.tableId = tableId;
     }
+    // public void getAttribute(){
+        
+    // }
+    */
 }

@@ -6,9 +6,7 @@ import managers.CustomerMgr;
 import entities.Reservation;
 import entities.Customer;
 import entities.Table;
-import enums.TableState;
 
-import java.io.*;
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

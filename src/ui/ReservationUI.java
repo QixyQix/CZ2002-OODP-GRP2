@@ -74,13 +74,8 @@ public class ReservationUI {
         else {
             System.out.println("We have an available table. But first we need your particulars.");
             // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
-<<<<<<< HEAD
-            Customer customer = customerMgr.getExistingCustomer(customerContact);
-            Reservation res = reservationMgr.createReservation(customer, checkInTime, noOfPax, table);
-=======
             Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerContact);
             Reservation res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
->>>>>>> 0d4f20827ba0ad0e2582a7ab1e17f41ca044b46a
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
         }

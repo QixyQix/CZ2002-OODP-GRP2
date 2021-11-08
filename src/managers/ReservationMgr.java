@@ -9,7 +9,7 @@ import entities.Reservation;
 import entities.Customer;
 import entities.Table;
 
-public class ReservationMgr{
+public final class ReservationMgr{
     private static ReservationMgr instance;
     private HashMap<Integer, Reservation> reservations;
     private int reservationID;
@@ -40,7 +40,7 @@ public class ReservationMgr{
     }
 
     public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table){
-        Reservation reservation = new Reservation(customer,checkInDateTime,noOfPax,table,false, this.reservationID);
+        Reservation reservation = new Reservation(customer,checkInDateTime,noOfPax,table, this.reservationID);
         reservations.put(this.reservationID, reservation);
         this.reservationID +=1;
         return reservation;
@@ -68,6 +68,8 @@ public class ReservationMgr{
         tableMgr.deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
     }
 
+
+    
     public HashMap<Integer, Reservation> getAllReservations() {
         //check if expired 
         LocalDateTime current = LocalDateTime.now();
@@ -108,4 +110,36 @@ public class ReservationMgr{
             objectOutputStream.close();
         }
     }
+        /***
+     * Reads Serialized Reservation data in the data/reservation folder and stores it
+     * into the reservations HashMap
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void loadSavedData() throws IOException, ClassNotFoundException {
+        File dataDirectory = new File("./data/menuItems");
+        File fileList[] = dataDirectory.listFiles();
+
+        if (fileList == null)
+            return;
+
+        for (File file : fileList) {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Reservation reservation = ReservationMgr.getInstance()
+                    .createReservationFromSerializedData(objectInputStream.readObject());
+            this.reservations.put(reservation.getreservationID(), reservation);
+            objectInputStream.close();
+        }
+    }
+
+    public Reservation createReservationFromSerializedData(Object o) throws ClassNotFoundException{
+        if(o instanceof Reservation){
+            return (Reservation) o;
+        }else{
+            throw new ClassNotFoundException();
+        }
+    }
+
 }

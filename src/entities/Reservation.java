@@ -1,22 +1,23 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class Reservation {
+
+public class Reservation implements Serializable {
     private Customer customer;
     private LocalDateTime checkInTime;
     private int noOfPax;
     private Table table;
-    private boolean expired;
     private int reservationID;
 
     public Reservation(){}
-    public Reservation(Customer customer, LocalDateTime checkInTime, Integer noOfPax,Table table, boolean status, int id) {
+
+    public Reservation(Customer customer, LocalDateTime checkInTime, Integer noOfPax,Table table, int id) {
 		this.customer = customer;
 		this.checkInTime = checkInTime;		
 		this.noOfPax = noOfPax;
 		this.table = table;
-		this.expired = status;	
         this.reservationID = id;
 	}
 
@@ -51,13 +52,6 @@ public class Reservation {
 		this.table = table;
 	}
 
-    public boolean getExpired() {
-		return expired;
-	}
-
-	public void setExpired(Boolean status) {
-		this.expired = status;
-	}
 
     public int getreservationID() {
 		return reservationID;

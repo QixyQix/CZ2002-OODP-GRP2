@@ -77,7 +77,7 @@ public class TableUI {
         } while (option != -1);
     }
 
-    public boolean checkTableAvailability(int noOfPax, LocalDateTime date) {
+    private boolean checkTableAvailability(int noOfPax, LocalDateTime date) {
         TableMgr tablemgr = TableMgr.getInstance();
         return tablemgr.checkTableAvailability(noOfPax, date);
     }

@@ -1,8 +1,6 @@
 package ui;
 
 import java.util.Scanner;
-
-import entities.Invoice;
 import entities.Order;
 import managers.InvoiceMgr;
 import managers.OrderMgr;
@@ -52,6 +50,7 @@ public class InvoiceUI extends UserInterface{
         System.out.println("====Payment Manager====");
         System.out.println("(1) Close order and create invoice");
         System.out.println("(2) Print order invoice");
+        System.out.println("(-1) Exit");
     }
 
 

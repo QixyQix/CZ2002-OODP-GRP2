@@ -7,7 +7,7 @@ import entities.Invoice;
 import entities.Report;
 import entities.MenuItem;
 
-public class SalesReportMgr {
+public final class SalesReportMgr {
     private static SalesReportMgr instance;
     private HashMap<Integer,Report> reports;
     private HashMap<LocalDate,Integer> reports_day;

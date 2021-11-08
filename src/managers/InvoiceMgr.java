@@ -9,7 +9,7 @@ import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
-class InvoiceMgr{
+public final class InvoiceMgr{
 
     private static InvoiceMgr instance;
     private HashMap<Integer,Invoice> invoices;

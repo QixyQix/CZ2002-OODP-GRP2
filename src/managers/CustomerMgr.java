@@ -4,7 +4,7 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
 
-class CustomerMgr{
+public final class CustomerMgr{
 
     private static CustomerMgr instance;
     private HashMap<Integer,Customer> customers;

@@ -32,14 +32,14 @@ public final class OrderMgr {
 
         return INSTANCE;
     }
-    public Table allocateTable(){
+    public Table allocateTable(LocalDateTime date, int noofpax){
         // TO BE DONE
-        Table table = new Table();
+        Table table = TableMgr.getInstance().findAvailTable(date,noofpax);
         return table;
     }
 
     public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noofpax){
-        Table table = this.allocateTable();
+        Table table = this.allocateTable(date,noofpax);
 
         Order order = new Order(staff,  customer, table, date, orderid);
         orders.put(orderid,order);

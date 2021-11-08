@@ -1,7 +1,11 @@
 import ui.MainUI;
 
+import java.io.IOException;
+import global.CurrentTime;
+
 class Main{
-    public static void main(String arg[]){
+
+    public static void main(String arg[]) throws ClassNotFoundException, IOException{
         // two way 
         // Actually we maybe do not need to getInstance first cuz in future when we use the mgr it will also be using getInstance..
         /*
@@ -23,6 +27,8 @@ class Main{
         */
 
         // is it better if we use getInstance? or use above code..
+        
+        CurrentTime.loadSavedData();
         
         MainUI.getInstance().systemBoot();  
     }  

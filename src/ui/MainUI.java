@@ -1,7 +1,9 @@
 package ui;
-import entities.Staff;
-import managers.*;
+import java.io.IOException;
 
+import entities.Staff;
+import global.CurrentTime;
+import managers.*;
 public class MainUI extends UserInterface{
     private static MainUI INSTANCE;
 
@@ -12,8 +14,8 @@ public class MainUI extends UserInterface{
 
         return INSTANCE;
     }
-
-    private void endsystem(){
+    
+    private void endsystem() throws IOException{
         // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
         
         CustomerMgr.getInstance().saveData();
@@ -22,11 +24,9 @@ public class MainUI extends UserInterface{
         OrderMgr.getInstance().saveData();
         SalesReportMgr.getInstance().saveData();
         StaffMgr.getInstance().saveData();
-        
+        CurrentTime.saveData();
         // TableMgr
-        // ReservationMgr
-
-     
+        // ReservationMgr 
     }
 
 
@@ -40,6 +40,7 @@ public class MainUI extends UserInterface{
         System.out.println("(6) Print Sale Revenue Report");
         System.out.println("(7) End of the day (report)");
         System.out.println("(8) Log Out");
+        System.out.println("(9) ChangeCurrentTime");
         System.out.println("===========================================================================");
         System.out.println(" ");
     }
@@ -50,12 +51,13 @@ public class MainUI extends UserInterface{
         
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", 1, 8);
+            option = super.getInputInt("Enter your selection: ", 1, 9);
             switch(option){
                 case 1:
                     MenuItemUI.getInstance().showMenu();
                     break;
                 case 2:
+                    
                     //OrderUI.getInstance().
                     break;
                 case 3: 
@@ -73,14 +75,17 @@ public class MainUI extends UserInterface{
                 case 7:
                     // SaleReportUI.getInstance();
                     break;
+                case 9:
+                    CurrentTime.setCurrentTime();
+                    break;
             }
             
 
         }while(option != 8);
 
     }
-    
-    public void systemBoot(){
+
+    public void systemBoot() throws IOException{
         do{
             Staff staff = StaffUI.getInstance().staffSelectionscreen();
             if(staff == null) {

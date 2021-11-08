@@ -1,5 +1,7 @@
 package ui;
 
+import managers.TableMgr;
+
 public class TableUI {
     private static TableUI instance;
 
@@ -23,7 +25,8 @@ public class TableUI {
         System.out.println("(1) Check table availability");
     }
 
-    public void viewTableAvailability() {
-
+    public boolean checkTableAvailability() {
+        TableMgr tablemgr = TableMgr.getInstance();
+        return tablemgr.checkTableAvailability;
     }
 }

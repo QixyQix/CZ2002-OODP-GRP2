@@ -56,4 +56,19 @@ public class TableMgr {
     public void deallocateTable(Table table, LocalDateTime date) {
         table.setTableToAvailable(date);
     }
+
+    /**
+     * Returns the true if there is an available table for the number of pax at that
+     * time Otherwise returns false
+     * 
+     * @return true or false
+     */
+    public boolean checkTableAvailability(int noOfPax, LocalDateTime date) {
+        for (Table table : tables.values()) {
+            if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) == TableState.AVAILABLE)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

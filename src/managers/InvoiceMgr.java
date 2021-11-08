@@ -56,6 +56,14 @@ public final class InvoiceMgr{
         invoice.addPriceFilters(serviceChargeFilter);
     }
     
+    public boolean checkInvoice(int invoiceid) {
+        return !this.invoices.containsKey(invoiceid);
+    }
+
+    public Invoice getOrder(int invoiceid) {
+        return this.invoices.get(invoiceid);
+    }
+
     public HashMap<Integer,Invoice> getInvoicesMap() {
         return this.invoices;
     }

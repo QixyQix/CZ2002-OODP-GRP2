@@ -1,7 +1,5 @@
 package ui;
 
-package ui;
-
 public class TableUI {
     private static TableUI instance;
 

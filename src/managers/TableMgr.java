@@ -1,6 +1,12 @@
 package managers;
 
 import java.util.HashMap;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import entities.Table;
 import enums.TableState;
@@ -57,6 +63,14 @@ public class TableMgr {
         table.setTableToAvailable(date);
     }
 
+    public Table createTableFromSerializedData(Object o) throws ClassNotFoundException {
+        if (o instanceof Table) {
+            return (Table) o;
+        } else {
+            throw new ClassNotFoundException();
+        }
+    }
+
     /**
      * Returns the true if there is an available table for the number of pax at that
      * time Otherwise returns false
@@ -70,5 +84,57 @@ public class TableMgr {
             }
         }
         return false;
+    }
+
+    /***
+     * Serializes and saves the Table objects into the data/table folder Creates the
+     * data/table folder if it does not exist
+     * 
+     * @throws IOException
+     */
+    public void saveData() throws IOException {
+        // Create directory & clear exisring data if needed
+        File dataDirectory = new File("./data/table");
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        } else {
+            for (File existingData : dataDirectory.listFiles()) {
+                existingData.delete();
+            }
+        }
+
+        for (int tableId : tables.keySet()) {
+            Table table = tables.get(tableId);
+
+            FileOutputStream fileOutputStream = new FileOutputStream("./data/table/" + tableId);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(table);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+    }
+
+    /***
+     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
+     * into the items HashMap
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void loadSavedData() throws IOException, ClassNotFoundException {
+        File dataDirectory = new File("./data/table");
+        File fileList[] = dataDirectory.listFiles();
+
+        if (fileList == null)
+            return;
+
+        for (File file : fileList) {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Table table = this.createTableFromSerializedData(objectInputStream.readObject());
+            this.tables.put(table.getId(), table);
+            objectInputStream.close();
+        }
     }
 }

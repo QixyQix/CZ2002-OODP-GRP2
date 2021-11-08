@@ -1,6 +1,6 @@
 package ui;
 
-import entities.Table;
+package ui;
 
 public class TableUI {
     private static TableUI instance;

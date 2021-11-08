@@ -24,8 +24,8 @@ public class Table {
             return TableState.AVAILABLE;
     }
 
-    public void setTableState(LocalDateTime date) {
-        this.bookings.put(date, TableState.AVAILABLE);
+    public void setTableState(LocalDateTime date, TableState state) {
+        this.bookings.put(date, state);
     }
 
     public void setBooking(LocalDateTime date, TableState state) {
@@ -39,3 +39,4 @@ public class Table {
     public void setId(int tableId){
         this.tableId=tableId;
     }
+}

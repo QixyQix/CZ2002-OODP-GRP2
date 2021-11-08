@@ -1,14 +1,19 @@
 package entities;
 
 import enums.PriceFilterTypeEnum;
+
+import java.io.Serializable;
+
 import enums.DiscountFilterNameEnum;
 
 
-public class DiscountFilter implements PriceFilter{
+public class DiscountFilter implements PriceFilter, Serializable{
     private double amount;
     private PriceFilterTypeEnum type;
     private DiscountFilterNameEnum name;
 
+    public DiscountFilter(){}
+    
     public DiscountFilter(PriceFilterTypeEnum type, DiscountFilterNameEnum name, double amount){
         this.amount = amount;
         this.type = type;

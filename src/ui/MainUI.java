@@ -17,23 +17,26 @@ public class MainUI extends UserInterface{
         return INSTANCE;
     }
     
-    private void endsystem() {
+    private boolean endsystem() {
         // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
         try{
-            //CustomerMgr.getInstance().saveData();
-            //InvoiceMgr.getInstance().saveData();
-            //MenuItemMgr.getInstance().saveData();
-            //OrderMgr.getInstance().saveData();
-            //SalesReportMgr.getInstance().saveData();
+            CustomerMgr.getInstance().saveData();
+            InvoiceMgr.getInstance().saveData();
+            MenuItemMgr.getInstance().saveData();
+            OrderMgr.getInstance().saveData();
+            ReservationMgr.getInstance().saveData();
+            SalesReportMgr.getInstance().saveData();
             StaffMgr.getInstance().saveData();
-            //CurrentTime.saveData();
-            // TableMgr
-            // ReservationMgr 
+            TableMgr.getInstance().saveData();
+            CurrentTime.saveData();
+            return true;
+             
         }catch(IOException e){
             // CHECK WITH QI XIANG WHETHER THIS CORRECT
             //System.out.println(e.getMessage());
             //System.out.println((e.getCause()));
-            System.out.println("Data are not save properly"); 
+            System.out.println("Data are not save properly !"); 
+            return false;
         }
     }
 
@@ -77,10 +80,10 @@ public class MainUI extends UserInterface{
                     // InvoiceUI.getInstance();
                     break;
                 case 6:
-                    // SaleReportUI.getInstance();
+                    SalesReportUI.getInstance().printrevenue();
                     break;
                 case 7:
-                    // SaleReportUI.getInstance();
+                    SalesReportUI.getInstance().createreport();
                     break;
                 case 9:
                     CurrentTime.setCurrentTime();
@@ -96,7 +99,7 @@ public class MainUI extends UserInterface{
         do{
             Staff staff = StaffUI.getInstance().staffSelectionscreen();
             if(staff == null) {
-                endsystem();
+                if(!endsystem()) continue;
                 break;
             }
             else {

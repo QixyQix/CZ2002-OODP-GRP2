@@ -1,15 +1,17 @@
 package entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.TreeMap;
-public class Report{
+public class Report implements Serializable{
 
     private ArrayList<Invoice> invoiceList;
     private double totalRevenue;
     private LocalDate date;
     private TreeMap<MenuItem, Double> menuItemRevenue;
-
+    private int id;
+    public Report(){}
 
     public Report(LocalDate date){
         this.date = date;
@@ -69,6 +71,10 @@ public class Report{
 
     public TreeMap<MenuItem, Double> getMenuItemRevenue() {
         return menuItemRevenue;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
     

@@ -1,10 +1,11 @@
 package entities;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class Order {
+public class Order implements Serializable{
     private Staff servedBy;
     private double totalPrice;
     private TreeMap<MenuItem, Integer> orderedItems;
@@ -14,6 +15,8 @@ public class Order {
     private Table table;
     private LocalDateTime date;     
     private int orderid;
+    
+    public Order(){}
 
     public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int orderid){
         this.servedBy = staff;
@@ -102,13 +105,11 @@ public class Order {
         this.date = LocalDateTime.now();
     }
 
-    public int getid(){
+    public int getId(){
         return this.orderid;
     }
 
-    public void setid(int id){
-        this.orderid = id;
-    }
+  
 
 
     

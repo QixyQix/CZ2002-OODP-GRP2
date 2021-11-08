@@ -59,7 +59,7 @@ public final class CustomerMgr{
         FileOutputStream fileOutputStream = new FileOutputStream("./data/customerId");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        objectOutputStream.writeObject(customerId);
+        objectOutputStream.writeInt(customerId);
         objectOutputStream.flush();
         objectOutputStream.close();
 

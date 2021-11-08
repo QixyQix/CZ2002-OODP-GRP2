@@ -2,6 +2,12 @@ package managers;
 
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import entities.Invoice;
 import entities.Report;
@@ -11,20 +17,89 @@ public final class SalesReportMgr {
     private static SalesReportMgr instance;
     private HashMap<Integer,Report> reports;
     private HashMap<LocalDate,Integer> reports_day;
-    private int reportid;
+    private int reportId;
 
     private SalesReportMgr(){
-        loadSavedData();
-        // this.invoiceid = this.invoices.size() +1;
+        try {
+            this.reports = new HashMap<Integer, Report>();
+            this.reports_day = new HashMap<LocalDate,Integer>();
+
+            loadSavedData();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Failed to load reports data");
+        }
     };
 
-    private void loadSavedData(){
-        // this.invoices = ... //import from serialization;
-        // this.invoiceid import from serialization
-    }
+    /***
+     * Serializes and saves the Customers objects into the data/customers folder
+     * Creates the data/customers folder if it does not exist
+     * 
+     * @throws IOException
+     */
+    public void saveData() throws IOException {
+        // Create directory & clear exisring data if needed
+        File dataDirectory = new File("./data/reports");
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        } else {
+            for (File existingData : dataDirectory.listFiles()) {
+                existingData.delete();
+            }
+        }
 
-    public  void saveData(){
-        // export to serialization;
+        for (int reportID : this.reports.keySet()) {
+            Report report = this.reports.get(reportID);
+
+            FileOutputStream fileOutputStream = new FileOutputStream("./data/reports/" + reportID);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(report);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+
+        FileOutputStream fileOutputStream = new FileOutputStream("./data/reportId");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+        objectOutputStream.writeInt(reportId);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+
+    }
+    
+    /***
+     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
+     * into the items HashMap
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void loadSavedData() throws IOException, ClassNotFoundException {
+        File dataDirectory = new File("./data/reports");
+        File fileList[] = dataDirectory.listFiles();
+
+        if (fileList == null)
+            return;
+
+        for (File file : fileList) {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+           
+            Report report = (Report) objectInputStream.readObject();
+            this.reports.put(report.getId(), report);
+            this.reports_day.put(report.getDate(),report.getId());
+            objectInputStream.close();
+        }
+        try{
+            FileInputStream fileInputStream = new FileInputStream("reportId");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            this.reportId = (int) objectInputStream.readObject();
+            objectInputStream.close();
+        }catch(Exception e){
+            this.reportId = 1;
+        }
     }
 
     public static SalesReportMgr getInstance(){
@@ -43,16 +118,18 @@ public final class SalesReportMgr {
         }
     }
 
-    public void createReport(LocalDate targetDay, InvoiceMgr invoiceMgr) {
+    public void createReport(LocalDate targetDay) {
         // end of the day
-        HashMap<Integer,Invoice> invoices = invoiceMgr.getInvoicesMap();
+        //error handling;
+        if(reports_day.containsKey(targetDay)) return;
+        HashMap<Integer,Invoice> invoices = InvoiceMgr.getInstance().getInvoicesMap();
         Report report = new Report(targetDay);
-        this.reports.put(reportid,report);
-        this.reports_day.put(targetDay,reportid);
+        this.reports.put(reportId,report);
+        this.reports_day.put(targetDay,reportId);
         
        
         this.addInvoiceToReport( report, invoices, targetDay);
-        reportid++;
+        reportId++;
     }
 
     private Report findReportByDay(LocalDate targetDay) {

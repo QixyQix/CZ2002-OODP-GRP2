@@ -1,8 +1,12 @@
 package entities;
 
-public class Membership {
+import java.io.Serializable;
+
+public class Membership implements Serializable{
     private DiscountFilter discount;
 
+    public Membership(){}
+    
     public Membership(DiscountFilter discount) {
         this.discount = discount;
     }

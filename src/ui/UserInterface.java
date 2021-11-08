@@ -1,5 +1,9 @@
 package ui;
 
+import java.lang.invoke.TypeDescriptor;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -66,4 +70,61 @@ public class UserInterface {
             }
         }
     }
+
+    public LocalDateTime getInputDateTime(String prompt){
+        while(true){
+            try{
+                System.out.println(prompt);
+                String input = sc.nextLine().trim().replace(" ", "T");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
+                LocalDateTime input_date = LocalDateTime.parse(input, formatter);
+                sc.nextLine();
+                return input_date;
+            } catch(Exception ex){
+                System.out.println("Please enter a valid Date");
+                sc.nextLine();
+            }
+        }
+        
+    }
+
+    public LocalDate getInputDate(String prompt){
+        while(true){
+            try{
+                System.out.println(prompt);
+                String input = sc.nextLine().trim().replace(" ", "T");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//input format:yyyy-mm-ddThh:mm	
+                LocalDate input_date = LocalDate.parse(input, formatter);
+                sc.nextLine();
+                return input_date;
+            } catch(Exception ex){
+                System.out.println("Please enter a valid Date");
+                sc.nextLine();
+            }
+        }
+        
+    }
+
+    public boolean getYNOption(String prompt){
+        while(true){
+            try{
+                System.out.println(prompt);
+                char choice = sc.next().charAt(0);
+                sc.nextLine();
+                if(choice =='Y'||choice == 'y') return true;
+                else if (choice =='N' || choice == 'n') return false;
+                else {
+                    System.out.println("Please enter valid option, Y or N");
+                }
+            }catch(Exception ex){
+                System.out.println("Please enter valid option, Y or N");
+                
+
+            }
+        }
+
+    }
+
+    // TODO ask for contact?
+
 }

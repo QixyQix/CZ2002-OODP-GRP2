@@ -1,14 +1,18 @@
 package entities;
 
 import enums.TaxFilterNameEnum;
+
+import java.io.Serializable;
+
 import enums.PriceFilterTypeEnum;
 
-public class TaxFilter implements PriceFilter{
+public class TaxFilter implements PriceFilter, Serializable{
     private double amount;
     private PriceFilterTypeEnum type;
     private TaxFilterNameEnum name;
     
-
+    public TaxFilter(){}
+    
     public TaxFilter(PriceFilterTypeEnum type, TaxFilterNameEnum name, double amount){
         this.amount = amount;
         this.type = type;

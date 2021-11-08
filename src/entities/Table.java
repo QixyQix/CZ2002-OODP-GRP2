@@ -1,14 +1,17 @@
 package entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import enums.TableState;
 
-public class Table {
+public class Table implements Serializable {
     private int seatingCapacity;
     private HashMap<LocalDateTime, TableState> bookings;
     private int tableId;
 
+    public Table(){}
+    
     public Table(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
         this.seatingCapacity = seatingCapacity;
         this.bookings = bookings;

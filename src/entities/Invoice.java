@@ -1,10 +1,11 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 
-public class Invoice {
+public class Invoice implements Serializable {
     private int invoiceId;
     private Order order;
     private ArrayList<PriceFilter> priceFilters;
@@ -22,6 +23,7 @@ public class Invoice {
             finalPrice += addPrice;
         }
     }
+    public Invoice(){}
 
     public Invoice(Order order, int invoiceId) {
         this.order = order;
@@ -33,7 +35,7 @@ public class Invoice {
     public void setOrder(Order order){
 
     }*/
-    public int getInvoiceid(){
+    public int getId(){
         return this.invoiceId;
     }
 

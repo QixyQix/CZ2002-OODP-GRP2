@@ -9,13 +9,29 @@ import entities.Reservation;
 import entities.Customer;
 import entities.Table;
 
-public class ReservationMgr implements Serializable{
-    private static ReservationMgr instance = null;
-    private  HashMap<Integer, Reservation> reservations;
+public class ReservationMgr{
+    private static ReservationMgr instance;
+    private HashMap<Integer, Reservation> reservations;
     private int reservationID;
 
-    private ReservationMgr(){};
+    /**
+     * Constructor
+     */
+    private ReservationMgr(){
+        this.reservations = new HashMap<Integer, Reservation>();
+        try {
+            loadSavedData();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Failed to load reservation data");
+        }
+    };
 
+    /**
+     * Returns the ReservationMgr instance and creates an instance if it does not exist
+     * 
+     * @return
+     */
     public static ReservationMgr getInstance(){
         if(instance == null){
             instance = new ReservationMgr();
@@ -23,7 +39,7 @@ public class ReservationMgr implements Serializable{
         return instance;
     }
 
-    public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table ) {
+    public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table){
         Reservation reservation = new Reservation(customer,checkInDateTime,noOfPax,table,false, this.reservationID);
         reservations.put(this.reservationID, reservation);
         this.reservationID +=1;
@@ -37,6 +53,7 @@ public class ReservationMgr implements Serializable{
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true){
                 removeReservation(reservation);
+                
             }
             //depends on CustomerMgr
             if (reservation.getCustomer().getContact() == contact)
@@ -47,6 +64,8 @@ public class ReservationMgr implements Serializable{
 
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());
+        TableMgr tableMgr = TableMgr.getInstance();
+        tableMgr.deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
     }
 
     public HashMap<Integer, Reservation> getAllReservations() {
@@ -60,5 +79,33 @@ public class ReservationMgr implements Serializable{
         }
         return reservations;
     }
-    
+
+        /***
+     * Serializes and saves the reservation objects into the data/reservation folder
+     * Creates the data/reservation folder if it does not exist
+     * 
+     * @throws IOException
+     */
+    public void saveData() throws IOException {
+        // Create directory & clear exisring data if needed
+        File dataDirectory = new File("./data/reservations");
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        } else {
+            for (File existingData : dataDirectory.listFiles()) {
+                existingData.delete();
+            }
+        }
+
+        for (int reservationID : reservations.keySet()) {
+            Reservation reservation = reservations.get(reservationID);
+
+            FileOutputStream fileOutputStream = new FileOutputStream("./data/reservations/" + reservationID);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(reservation);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+    }
 }

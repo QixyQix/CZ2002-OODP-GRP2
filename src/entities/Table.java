@@ -17,12 +17,7 @@ public class Table {
     public void setSeatingCapacity(int seatingCapacity) {
         this.seatingCapacity = seatingCapacity;
     }
-    // public ReservationMgr[] getDate(){
 
-    // }
-    // public void setDate(ReservationMgr){
-
-    // }
     public List<Date> getBooking() {
         return this.booking;
     }
@@ -46,6 +41,3 @@ public class Table {
     public void setId(int id){
         this.id=id;
     }
-// public void getAttribute(){
-
-// }

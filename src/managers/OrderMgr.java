@@ -13,15 +13,15 @@ public final class OrderMgr {
     private HashMap<Integer, Order> orders;
     private int orderid;
     
-    private void importing(){
+    private void loadSavedData(){
 
     }
 
-    public void exporting(){
+    public void saveData(){
 
     }
     private OrderMgr(){
-        importing();
+        loadSavedData();
     }
 
 

@@ -12,15 +12,15 @@ public final class CustomerMgr{
     private int customerId;
 
     private CustomerMgr(){
-        importing();
+        loadSavedData();
         // this.invoiceid = this.invoices.size() +1;
     };
 
-    private void importing(){
+    private void loadSavedData(){
         // this.invoices = ... //import from Serialization;
         // this.invoiceid import from Serialization 
     }
-    public void exporting(){
+    public void saveData(){
         // export to Json;
     }
     public static CustomerMgr getInstance(){

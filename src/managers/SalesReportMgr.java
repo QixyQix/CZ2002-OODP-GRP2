@@ -14,16 +14,16 @@ public final class SalesReportMgr {
     private int reportid;
 
     private SalesReportMgr(){
-        importing();
+        loadSavedData();
         // this.invoiceid = this.invoices.size() +1;
     };
 
-    private void importing(){
+    private void loadSavedData(){
         // this.invoices = ... //import from serialization;
         // this.invoiceid import from serialization
     }
 
-    public  void exporting(){
+    public  void saveData(){
         // export to serialization;
     }
 

@@ -1,10 +1,12 @@
 package ui;
 
 import java.util.Scanner;
+
+import entities.Invoice;
 import managers.InvoiceMgr;
 
 
-public final class InvoiceUI extends UserInterface {
+public class InvoiceUI extends UserInterface{
     private static InvoiceUI INSTANCE;
     private Scanner sc;
 

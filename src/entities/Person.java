@@ -3,9 +3,9 @@ package entities;
 public class Person {
     private String name;
     private String gender;
-    private int contact;
+    private String contact;
 
-    public Person(String name, String gender, int contact) {
+    public Person(String name, String gender, String contact) {
         this.name = name;
         this.gender = gender;
         this.contact = contact;
@@ -27,11 +27,11 @@ public class Person {
         this.gender = gender;
     }
 
-    public int getContact() {
+    public String getContact() {
         return this.contact;
     }
 
-    public void setContact(int contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 

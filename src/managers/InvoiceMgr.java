@@ -9,22 +9,22 @@ import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
-public class InvoiceMgr{
+public final class InvoiceMgr{
 
     private static InvoiceMgr instance;
     private HashMap<Integer,Invoice> invoices;
     private int invoiceid;
 
     private InvoiceMgr(){
-        importing();
+        loadSavedData();
         // this.invoiceid = this.invoices.size() +1;
     };
 
-    private void importing(){
+    private void loadSavedData(){
         // this.invoices = ... //import from Serialization;
         // this.invoiceid import from Serialization 
     }
-    public void exporting(){
+    public void saveData(){
         // export to Json;
     }
     public static InvoiceMgr getInstance(){

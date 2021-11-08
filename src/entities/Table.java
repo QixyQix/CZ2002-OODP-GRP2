@@ -6,6 +6,7 @@ import enums.TableState;
 
 
 public class Table {
+    /*
     Reservation res;
     private int seatingCapacity;
     private List<res.date> booking;
@@ -45,4 +46,5 @@ public class Table {
     // public void getAttribute(){
         
     // }
+    */
 }

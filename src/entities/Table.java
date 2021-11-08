@@ -7,7 +7,6 @@ import enums.TableState;
 public class Table {
     private int seatingCapacity;
     private HashMap<LocalDateTime, TableState> bookings;
-    private LocalDateTime date;
     private int tableId;
 
     public int getSeatingCapacity() {

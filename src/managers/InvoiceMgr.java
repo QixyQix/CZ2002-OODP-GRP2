@@ -16,8 +16,12 @@ public final class InvoiceMgr{
     private int invoiceid;
 
     private InvoiceMgr(){
-        loadSavedData();
-        // this.invoiceid = this.invoices.size() +1;
+        try {
+            loadSavedData();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Failed to load invoices data");
+        }
     };
 
     private void loadSavedData(){

@@ -1,25 +1,12 @@
 package ui;
 import managers.StaffMgr;
 import entities.Staff;
-import java.util.Scanner;
-
-import javax.print.DocPrintJob;
 
 public class StaffUI extends UserInterface {
     private static StaffUI INSTANCE;
-    private Scanner sc;
-
-    private void importing(){
-
-    }
-
-    public void exporting(){
-
-    }
 
     private StaffUI(){
-        importing();
-        this.sc = new Scanner(System.in);
+        
     }
 
     public static StaffUI getInstance(){
@@ -68,9 +55,10 @@ public class StaffUI extends UserInterface {
             gender = super.getInputString("Please enter your gender: "); // A bit not makes sense
             contact = super.getInputString("Please enter your contact number: ");
             
-            option = super.getInputInt("Are you happy with the selection. (1) YES (2) NO : " , 1, 2);
-        }while(option ==2 );
+            option = super.getInputInt("Are you happy with the selection. (1) YES (2) NO (-1) To Exit: " , -1, 2);
+        }while(option ==2) ;
 
+        if(option<=0) return;
 
         Staff staff = StaffMgr.getInstance().createStaff(jobTitle, name, gender, contact);
         
@@ -99,8 +87,7 @@ public class StaffUI extends UserInterface {
             }
             
 
-        }while(staff == null);
-
+        }while(staff == null); 
         return staff;
     }
 

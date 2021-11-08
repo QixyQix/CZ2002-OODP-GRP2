@@ -2,13 +2,14 @@ import ui.MainUI;
 
 import java.io.IOException;
 import global.CurrentTime;
-
+import managers.*;
+import ui.*;
 class Main{
 
     public static void main(String arg[]) throws ClassNotFoundException, IOException{
         // two way 
         // Actually we maybe do not need to getInstance first cuz in future when we use the mgr it will also be using getInstance..
-        /*
+        
         CustomerMgr customerMgr = CustomerMgr.getInstance();
         InvoiceMgr invoiceMgr = InvoiceMgr.getInstance();
         MenuItemMgr menuItemMgr = MenuItemMgr.getInstance();
@@ -24,7 +25,7 @@ class Main{
         SalesReportUI salesReportUI = SalesReportUI.getInstance();
         StaffUI staffUI = StaffUI.getInstance();
         // Reservation UI
-        */
+        
 
         // is it better if we use getInstance? or use above code..
         

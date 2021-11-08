@@ -4,6 +4,10 @@ public class Customer extends Person {
     private Membership membership;
     private int customerid;
 
+    public Customer(){
+        super();
+    }
+
     public Customer(Membership membership, int customerid, String name, String gender, String contact) {
         super(name, gender, contact);
         this.membership = membership;

@@ -1,5 +1,12 @@
 package managers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
@@ -11,18 +18,90 @@ public final class CustomerMgr{
     private HashMap<String, Integer> phonetoid;
     private int customerId;
 
-    private CustomerMgr(){
-        loadSavedData();
-        // this.invoiceid = this.invoices.size() +1;
+    private CustomerMgr() {
+        try {
+            this.customers = new HashMap<Integer, Customer>();
+            loadSavedData();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Failed to load customers data");
+        }
     };
 
-    private void loadSavedData(){
-        // this.invoices = ... //import from Serialization;
-        // this.invoiceid import from Serialization 
+     /***
+     * Serializes and saves the Customers objects into the data/customers folder
+     * Creates the data/customers folder if it does not exist
+     * 
+     * @throws IOException
+     */
+    public void saveData() throws IOException {
+        // Create directory & clear exisring data if needed
+        File dataDirectory = new File("./data/customers");
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        } else {
+            for (File existingData : dataDirectory.listFiles()) {
+                existingData.delete();
+            }
+        }
+
+        for (int customerID : this.customers.keySet()) {
+            Customer customer = this.customers.get(customerID);
+
+            FileOutputStream fileOutputStream = new FileOutputStream("./data/customers/" + customerID);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(customer);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+
+        FileOutputStream fileOutputStream = new FileOutputStream("./data/customerId");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+        objectOutputStream.writeObject(customerId);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+
     }
-    public void saveData(){
-        // export to Json;
+    
+    /***
+     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
+     * into the items HashMap
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void loadSavedData() throws IOException, ClassNotFoundException {
+        File dataDirectory = new File("./data/customers");
+        File fileList[] = dataDirectory.listFiles();
+
+        if (fileList == null)
+            return;
+
+        for (File file : fileList) {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+           
+            Customer customer = (Customer) objectInputStream.readObject();
+            this.customers.put(customer.getCustomerid(), customer);
+            objectInputStream.close();
+        }
+        try{
+            FileInputStream fileInputStream = new FileInputStream("customerId");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            this.customerId = (int) objectInputStream.readObject();
+            objectInputStream.close();
+        }catch(Exception e){
+            this.customerId = 1;
+        }
     }
+    /**
+     * Returns the MenuItemMgr instance and creates an instance if it does not exist
+     * 
+     * @return
+     */
     public static CustomerMgr getInstance(){
         if(instance == null){
             instance = new CustomerMgr();

@@ -8,6 +8,7 @@ import entities.Customer;
 import entities.Table;
 
 import java.util.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -58,7 +59,7 @@ public class ReservationUI {
         } while (choice > 0);
     }
 
-    private void createReservationUI(String customerContact){
+    private void createReservationUI(String customerContact) {
         System.out.println("Please fill in your requirements: ");
         System.out.print("Check In time (yyyy-MM-dd HH:mm): ");
 	    String checkIn = sc.nextLine().trim().replace(" ", "T");

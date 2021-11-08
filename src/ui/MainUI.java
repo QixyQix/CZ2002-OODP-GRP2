@@ -7,6 +7,8 @@ import managers.*;
 public class MainUI extends UserInterface{
     private static MainUI INSTANCE;
 
+    private MainUI(){}
+
     public static MainUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new MainUI();
@@ -15,18 +17,24 @@ public class MainUI extends UserInterface{
         return INSTANCE;
     }
     
-    private void endsystem() throws IOException{
+    private void endsystem() {
         // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
-        
-        CustomerMgr.getInstance().saveData();
-        InvoiceMgr.getInstance().saveData();
-        //MenuItemMgr.getInstance().saveData();
-        OrderMgr.getInstance().saveData();
-        SalesReportMgr.getInstance().saveData();
-        StaffMgr.getInstance().saveData();
-        CurrentTime.saveData();
-        // TableMgr
-        // ReservationMgr 
+        try{
+            //CustomerMgr.getInstance().saveData();
+            //InvoiceMgr.getInstance().saveData();
+            //MenuItemMgr.getInstance().saveData();
+            //OrderMgr.getInstance().saveData();
+            //SalesReportMgr.getInstance().saveData();
+            StaffMgr.getInstance().saveData();
+            //CurrentTime.saveData();
+            // TableMgr
+            // ReservationMgr 
+        }catch(IOException e){
+            // CHECK WITH QI XIANG WHETHER THIS CORRECT
+            //System.out.println(e.getMessage());
+            //System.out.println((e.getCause()));
+            System.out.println("Data are not save properly"); 
+        }
     }
 
 
@@ -57,7 +65,6 @@ public class MainUI extends UserInterface{
                     MenuItemUI.getInstance().showMenu();
                     break;
                 case 2:
-                    
                     //OrderUI.getInstance().
                     break;
                 case 3: 
@@ -85,7 +92,7 @@ public class MainUI extends UserInterface{
 
     }
 
-    public void systemBoot() throws IOException{
+    public void systemBoot(){
         do{
             Staff staff = StaffUI.getInstance().staffSelectionscreen();
             if(staff == null) {

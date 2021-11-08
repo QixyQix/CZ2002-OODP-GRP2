@@ -1,10 +1,13 @@
 package entities;
 
-
-public class Staff extends Person {
+public class Staff extends Person{
     private int id;
     private String jobTitle;
     
+    public Staff(){
+        super();
+    }
+
     public Staff(int id, String jobTitle, String name, String gender, String contact) {
         super(name, gender, contact);
         this.id = id;

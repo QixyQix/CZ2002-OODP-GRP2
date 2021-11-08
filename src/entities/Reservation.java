@@ -66,15 +66,15 @@ public class Reservation {
 	public void setreservationID(int id) {
 		this.reservationID = id;
 	}
-    // // depends on CustomerMgr and TableMgr
-    // @Override 
-    // public String toString() {
-    //     return "Reservation{" + '\n' + 
-    //             "Customer= " + customer.getName() + '\n' +
-    //             "customerContact= " + customer.getContact() + '\n' +
-    //             "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
-    //             "noOfPax= " + noOfPax + '\n' +
-    //             "tableID= " + table.getTableID() + '\n' +
-    //             '}';
-    // }
+    // depends on CustomerMgr and TableMgr
+    @Override 
+    public String toString() {
+        return "Reservation{" + '\n' + 
+                "Customer= " + customer.getName() + '\n' +
+                "customerContact= " + customer.getContact() + '\n' +
+                "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
+                "noOfPax= " + noOfPax + '\n' +
+                "tableID= " + table.getId() + '\n' +
+                '}';
+    }
 }

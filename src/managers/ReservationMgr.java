@@ -38,18 +38,15 @@ public class ReservationMgr implements Serializable{
             if (current.isAfter(expiredTime) == true){
                 removeReservation(reservation);
             }
-            // //depends on CustomerMgr
-            // if (reservation.getCustomer().getContact() == contact)
-            //     result = reservation;
+            //depends on CustomerMgr
+            if (reservation.getCustomer().getContact() == contact)
+                result = reservation;
         }
         return result;
     }
 
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());
-        Table table = reservationMade.getTable();
-        // //depends on TableMgr
-        // table.setState("Avaliable");
     }
 
     public HashMap<Integer, Reservation> getAllReservations() {

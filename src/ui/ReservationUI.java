@@ -2,9 +2,11 @@ package ui;
 
 import managers.TableMgr;
 import managers.ReservationMgr;
+import managers.CustomerMgr;
 import entities.Reservation;
 import entities.Customer;
 import entities.Table;
+import enums.TableState;
 
 import java.io.*;
 import java.util.*;
@@ -12,11 +14,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-import javax.swing.plaf.TableUI;
-
 public class ReservationUI {
     private static ReservationUI singleInstance = null;
     private ReservationMgr reservationMgr = ReservationMgr.getInstance();
+    private TableMgr tableMgr = TableMgr.getInstance();
+    private CustomerMgr customerMgr = CustomerMgr.getInstance();
     private static Scanner sc = new Scanner(System.in);
     private ReservationUI() {}
 
@@ -72,21 +74,18 @@ public class ReservationUI {
 	    int noOfPax = sc.nextInt();
         sc.nextLine();
 
-        // //depends on ben to create TableMgr + findAvailableTable Method
-        // TableMgr tableMgr = TableMgr.getInstance();
-        // Table table = tableMgr.findAvailableTable(checkIn, noOfPax);
-        //if (table==null){ System.out.println("There is no available table with the specified requirements.");}
-        //else {
+        //depends on ben to create TableMgr + findAvailableTable Method
+        Table table = tableMgr.findAvailableTable(checkInTime, noOfPax);
+        if (table==null){ System.out.println("There is no available table with the specified requirements.");}
+        else {
             System.out.println("We have an available table. But first we need your particulars.");
 
-            // // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
-            // CustomerMgr customerMgr = CustomerMgr.getInstance();
-            // Customer customer = customerMgr.findExistingCustomer(customerContact);
-
-            //Reservation res = reservationMgr.createReservation(customer, checkInTime, noOfPax, table);
+            // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
+            Customer customer = customerMgr.findExistingCustomer(customerContact);
+            Reservation res = reservationMgr.createReservation(customer, checkInTime, noOfPax, table);
             System.out.println("New reservation added to the system: ");
-	        //System.out.println(res.toString());
-        //}
+	        System.out.println(res.toString());
+        }
     }
 
     private void checkRemoveReservationUI(String customerContact){
@@ -98,6 +97,8 @@ public class ReservationUI {
 	    String remove = sc.nextLine();
         if (remove == "yes" || remove =="Yes"){
             reservationMgr.removeReservation(res);
+            Table table = res.getTable();
+            tableMgr.deallocateTable(table, TableState.AVAILABLE);
             System.out.println("Reservation successfully removed from the system: ");
 
         }

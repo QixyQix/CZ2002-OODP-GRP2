@@ -37,7 +37,6 @@ public class Table {
         return this.tableId;
     }
 
-    public void setId(int tableId) {
-        this.tableId = tableId;
+    public void setId(int tableId){
+        this.tableId=tableId;
     }
-}

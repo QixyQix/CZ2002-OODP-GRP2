@@ -64,12 +64,11 @@ public final class ReservationMgr{
 
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());
-        TableMgr tableMgr = TableMgr.getInstance();
-        tableMgr.deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
+        TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
     }
 
 
-    
+
     public HashMap<Integer, Reservation> getAllReservations() {
         //check if expired 
         LocalDateTime current = LocalDateTime.now();

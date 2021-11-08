@@ -1,13 +1,13 @@
 package entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashMap;
 import enums.TableState;
 
 public class Table {
     private int seatingCapacity;
-    private List<LocalDateTime> booking;
-    private TableState state;
+    private HashMap<LocalDateTime, TableState> bookings;
+    private LocalDateTime date;
     private int tableId;
 
     public int getSeatingCapacity() {
@@ -18,24 +18,23 @@ public class Table {
         this.seatingCapacity = seatingCapacity;
     }
 
-    public List<LocalDateTime> getBooking() {
-        return this.booking;
+    public TableState getTableState(LocalDateTime date) {
+        if (this.bookings.containsKey(date) == true)
+            return this.bookings.get(date);
+        else
+            return TableState.AVAILABLE;
     }
 
-    public void setBooking(List<LocalDateTime> booking) {
-        this.booking = booking;
+    public void setTableState(LocalDateTime date) {
+        this.bookings.put(date, TableState.AVAILABLE);
     }
 
-    public TableState getState() {
-        return this.state;
-    }
-
-    public void setState(TableState state) {
-        this.state = state;
+    public void setBooking(LocalDateTime date, TableState state) {
+        this.bookings.put(date, state);
     }
 
     public int getId() {
-        return this.tableid;
+        return this.tableId;
     }
 
     public void setId(int tableId){

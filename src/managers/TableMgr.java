@@ -69,6 +69,8 @@ public class TableMgr {
      */
     public void deallocateTable(Table table, LocalDateTime date) {
         table.setTableToAvailable(date);
+        table.setTableToAvailable(date.plusHours(1));
+        table.setTableToAvailable(date.minusHours(1));
     }
 
     /**

@@ -69,7 +69,6 @@ public class ReservationUI {
 	    int noOfPax = sc.nextInt();
         sc.nextLine();
 
-        //depends on ben to create TableMgr + findAvailableTable Method
         Table table = TableMgr.getInstance().findAvailTable(checkInTime, noOfPax);
         if (table==null){ System.out.println("There is no available table with the specified requirements.");}
         else {
@@ -92,7 +91,6 @@ public class ReservationUI {
         if (remove == "yes" || remove =="Yes"){
             ReservationMgr.getInstance().removeReservation(res);
             System.out.println("Reservation successfully removed from the system: ");
-
         }
 		return;	
     }

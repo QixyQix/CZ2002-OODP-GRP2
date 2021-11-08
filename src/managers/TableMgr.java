@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class TableMgr {
     private static TableMgr instance = null;
     private HashMap<Integer, Table> tables;
-    private int tableID;
 
     private TableMgr() {
     };
@@ -24,6 +23,18 @@ public class TableMgr {
             instance = new TableMgr();
         }
         return instance;
+    }
+
+    public void createTable(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
+        try {
+            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, id,
+                    packageItems);
+
+            this.items.put(newItem.getId(), newItem);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     /**
@@ -49,6 +60,6 @@ public class TableMgr {
      * @return
      */
     public void deallocateTable(Table table, LocalDateTime date) {
-        table.setTableState(date);
+        table.setTableToAvailable(date);
     }
 }

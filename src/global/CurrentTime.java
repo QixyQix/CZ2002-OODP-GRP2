@@ -42,7 +42,7 @@ public class CurrentTime {
 
             
         }while(option != 3);
-        
+        sc.close();
     }
 
 

@@ -26,6 +26,6 @@ public final class CustomerUI extends UserInterface {
     }
 
     private void createCustomer() {
-        CustomerMgr.getInstance().createCustomer(membership, name, gender, contact)
+        //CustomerMgr.getInstance().createCustomer(membership, name, gender, contact)
     }
 }

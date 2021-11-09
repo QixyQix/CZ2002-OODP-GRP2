@@ -105,7 +105,7 @@ public class MainUI extends UserInterface{
             else {
                 entersystem(staff);
                 System.out.println("Succesfully Log Out");
-                super.getInputString("Enter to continue ... ");
+                super.waitEnter();
             }
         
         }while(true);

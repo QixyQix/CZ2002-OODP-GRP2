@@ -1,6 +1,8 @@
 package ui;
 
 import java.util.Scanner;
+
+import entities.Invoice;
 import entities.Order;
 import managers.InvoiceMgr;
 import managers.OrderMgr;
@@ -58,7 +60,7 @@ public class InvoiceUI extends UserInterface{
         
         int orderid;
         Order order;
-
+        Invoice invoice;
         while(true) {
             orderid = super.getInputInt("Enter your order id");
             if (!OrderMgr.getInstance().checkAvailableOrder(orderid)) {
@@ -66,12 +68,13 @@ public class InvoiceUI extends UserInterface{
                 continue;
             } else {
                 order = OrderMgr.getInstance().getOrder(orderid);
-                InvoiceMgr.getInstance().createInvoice(order);
+                invoice = InvoiceMgr.getInstance().createInvoice(order);
                 break;
             }
         }
 
-        System.out.print("Invoice has been created");
+        System.out.print("Invoice has been created with Invoice id = " + invoice.getId());
+        super.waitEnter();
     }
 
     private void printOrderInvoice() {

@@ -154,7 +154,7 @@ public final class OrderMgr {
     }
 
     public void deleteOrderItem(MenuItem MenuItem, int qty, Order order) {
-        Order order = this.getOrder(orderid);
+        //Order order = this.getOrder(orderId);
         order.deleteOrderItem(MenuItem, qty);
     }
 

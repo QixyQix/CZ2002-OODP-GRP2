@@ -5,9 +5,7 @@ import entities.Staff;
 public class StaffUI extends UserInterface {
     private static StaffUI INSTANCE;
 
-    private StaffUI(){
-        
-    }
+    private StaffUI(){}
 
     public static StaffUI getInstance(){
         if (INSTANCE == null) {
@@ -52,8 +50,8 @@ public class StaffUI extends UserInterface {
         do{
             jobTitle = super.getInputString("Please enter your jobTitle : ");
             name = super.getInputString("Please enter your name :");
-            gender = super.getInputString("Please enter your gender: "); // A bit not makes sense
-            contact = super.getInputString("Please enter your contact number: ");
+            gender = super.getGender("Please enter your gender: "); 
+            contact = super.getContact("Please enter your contact number: ");
             
             option = super.getInputInt("Are you happy with the selection. (1) YES (2) NO (-1) To Exit: " , -1, 2);
         }while(option ==2) ;
@@ -66,7 +64,7 @@ public class StaffUI extends UserInterface {
         System.out.println("StaffId = " + staff.getId() );
         System.out.println("Please Remember your StaffId");
 
-        super.getInputString("Please Enter to continue ... ");
+        super.waitEnter();
     }
 
     public Staff staffSelectionscreen(){

@@ -1,5 +1,7 @@
 package enums;
 
-public class MenuItemTypeEnum {
+public enum MenuItemTypeEnum {
+    RICE,
+    NOODLE,
     
 }

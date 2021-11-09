@@ -70,7 +70,7 @@ public class TableUI {
                 while (true) {
                     try {
                         int idCounter = 0;
-                        for (int j = 0; j < 11; j = j + 2) {
+                        for (int j = 2; j <= 10; j = j + 2) {
                             System.out.println("How many tables of " + j + " pax: ");
                             int noOfTablePax = sc.nextInt();
                             for (int i = 0; i < noOfTablePax; i++) {

@@ -37,8 +37,8 @@ public class TableMgr {
      * @param seatingCapacity, bookings, tableId
      * @return
      */
-    public void createTable(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
-        Table table = new Table(seatingCapacity, bookings, tableId);
+    public void createTable(int seatingCapacity, int tableId) {
+        Table table = new Table(seatingCapacity, tableId);
         this.tables.put(table.getId(), table);
     }
 

@@ -10,11 +10,12 @@ public class Table implements Serializable {
     private HashMap<LocalDateTime, TableState> bookings;
     private int tableId;
 
-    public Table(){}
-    
-    public Table(int seatingCapacity, HashMap<LocalDateTime, TableState> bookings, int tableId) {
+    public Table() {
+    }
+
+    public Table(int seatingCapacity, int tableId) {
         this.seatingCapacity = seatingCapacity;
-        this.bookings = bookings;
+        this.bookings = new HashMap<LocalDateTime, TableState>();
         this.tableId = tableId;
     }
 

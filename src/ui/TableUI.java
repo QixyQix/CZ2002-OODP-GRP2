@@ -4,7 +4,10 @@ import managers.TableMgr;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
+
+import enums.TableState;
 
 public class TableUI {
     private static TableUI instance;
@@ -28,6 +31,7 @@ public class TableUI {
     public void displayOptions() {
         System.out.println("====Table Manager====");
         System.out.println("(1) Check table availability");
+        System.out.println("(2) Create tables");
         System.out.println("(-1) Exit");
     }
 
@@ -71,7 +75,25 @@ public class TableUI {
                         continue;
                     }
                 }
-                TableMgr.getInstance().checkTableAvailability(noOfPax, date);
+                break;
+            case 2:
+                while (true) {
+                    try {
+                        int idCounter = 0;
+                        HashMap<LocalDateTime, TableState> tempHash = new HashMap<LocalDateTime, TableState>();
+                        for (int j = 0; j < 11; j = j + 2) {
+                            System.out.println("How many tables of " + j + " pax: ");
+                            int noOfTablePax = sc.nextInt();
+                            for (int i = 0; i < noOfTablePax; i++) {
+                                TableMgr.getInstance().createTable(noOfTablePax, tempHash, idCounter++);
+                            }
+                        }
+                        break;
+                    } catch (Exception ex) {
+                        System.out.println("Invalid input");
+                        continue;
+                    }
+                }
                 break;
             }
         } while (option != -1);

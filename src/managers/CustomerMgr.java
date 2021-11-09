@@ -132,11 +132,13 @@ public final class CustomerMgr{
     }
 
     public Customer getExistingCustomer(String phoneNumber){
-        if(! this.phonetoid.containsKey(phoneNumber)) return null;
-
         int cusid = this.phonetoid.get(phoneNumber);
         return this.customers.get(cusid);
+    }
 
+
+    public boolean checkExististingCustomer(String phoneNumber) {
+        return this.phonetoid.containsKey(phoneNumber);
     }
 
     public void updateMembership(String phoneNumber, Membership membership){

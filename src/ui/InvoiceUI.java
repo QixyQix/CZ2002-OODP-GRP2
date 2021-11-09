@@ -36,12 +36,12 @@ public class InvoiceUI extends UserInterface{
             }
 
             switch (option) {
-            case 1:
-                printOrderInvoice();
-                break;
-            case 2:
-                createInvoice();
-                break;
+                case 1:
+                    printOrderInvoice();
+                    break;
+                case 2:
+                    createInvoice();
+                    break;
             }
         } while (option != -1);
     }
@@ -83,6 +83,7 @@ public class InvoiceUI extends UserInterface{
                 InvoiceMgr.getInstance().getOrder(invoiceid).printInvoice();
                 break;
             }
+
             System.out.println("Please enter a valid invoice id, invoice id: " + invoiceid + " is not valid");
         }
     }

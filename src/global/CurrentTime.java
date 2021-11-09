@@ -43,8 +43,6 @@ public class CurrentTime {
             
         }while(option != 3);
         
-        
-        
     }
 
 
@@ -95,9 +93,4 @@ public class CurrentTime {
         objectInputStream.close();
         
     }
-
-
-
-
-    
 }

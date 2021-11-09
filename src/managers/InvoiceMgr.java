@@ -140,7 +140,7 @@ public final class InvoiceMgr{
     }
     
     public boolean checkInvoice(int invoiceid) {
-        return !this.invoices.containsKey(invoiceid);
+        return this.invoices.containsKey(invoiceid);
     }
 
     public Invoice getOrder(int invoiceid) {

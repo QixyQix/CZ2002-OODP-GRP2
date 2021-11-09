@@ -67,7 +67,6 @@ public final class ReservationMgr{
     }
 
 
-
     public HashMap<Integer, Reservation> getAllReservations() {
         //check if expired 
         LocalDateTime current = LocalDateTime.now();

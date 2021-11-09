@@ -77,7 +77,7 @@ public class MainUI extends UserInterface{
                     // TableUI.getInstance().
                     break;
                 case 5:
-                    // InvoiceUI.getInstance();
+                    InvoiceUI.getInstance();
                     break;
                 case 6:
                     SalesReportUI.getInstance().printrevenue();

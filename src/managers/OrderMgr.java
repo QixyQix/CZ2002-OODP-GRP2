@@ -13,7 +13,8 @@ import entities.MenuItem;
 import entities.Customer;
 import entities.Table;
 import entities.Staff;
-import managers.InvoiceMgr;
+
+
 public final class OrderMgr {
     private static OrderMgr INSTANCE;
     private HashMap<Integer, Order> orders;
@@ -145,11 +146,16 @@ public final class OrderMgr {
     }
 
     public boolean checkAvailableOrder(int orderid) {
-        return !this.orders.containsKey(orderid);
+        return this.orders.containsKey(orderid);
     }
 
     public Order getOrder(int orderid) {
         return this.orders.get(orderid);
+    }
+
+    public void deleteOrderItem(MenuItem MenuItem, int qty, Order order) {
+        Order order = this.getOrder(orderid);
+        order.deleteOrderItem(MenuItem, qty);
     }
 
     /*

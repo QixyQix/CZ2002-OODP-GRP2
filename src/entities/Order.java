@@ -1,5 +1,8 @@
 package entities;
 import java.util.TreeMap;
+
+import managers.MenuItemMgr;
+
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -38,6 +41,7 @@ public class Order implements Serializable{
         calculateTotalPrice();
         return this.totalPrice;
     }
+    
 
     private void calculateTotalPrice(){
         this.totalPrice = 0;
@@ -58,6 +62,21 @@ public class Order implements Serializable{
             this.orderedItems.put(item,val);
         }
         this.pendingItems.clear();
+    }
+
+    public void printOrder() {
+        System.out.println("Your current order contains:");
+        System.out.println("................................");
+        System.out.println();
+
+        TreeMap<MenuItem, Integer> items = this.getOrderedItems();
+        for (MenuItem item : items.keySet()) {
+            int quantity = items.get(item);
+            System.out.println(quantity + " " + item.getName() + " " + item.getPrice()*quantity);
+        }
+
+        System.out.println("................................");
+
     }
 
     public TreeMap<MenuItem, Integer> getOrderedItems(){
@@ -109,8 +128,13 @@ public class Order implements Serializable{
         return this.orderid;
     }
 
-  
-
+    public void deleteOrderItem(MenuItem orderItem, int qty) {
+        if (this.orderedItems.get(orderItem) <= qty) {
+            this.orderedItems.remove(orderItem);
+        } else {
+            this.orderedItems.put(orderItem, this.orderedItems.get(orderItem)-qty);
+        }
+    }
 
     
 }

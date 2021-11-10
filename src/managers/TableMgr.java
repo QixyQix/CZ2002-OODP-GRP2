@@ -17,6 +17,14 @@ public class TableMgr {
     private HashMap<Integer, Table> tables;
 
     private TableMgr() {
+        try{
+            tables = new HashMap<Integer, Table>();
+            loadSavedData();
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            System.out.println("Failed to load Tables data");
+        }
+        
     };
 
     /**

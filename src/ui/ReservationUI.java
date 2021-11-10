@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class ReservationUI {
+public class ReservationUI extends UserInterface {
     private static ReservationUI singleInstance = null;
     private static Scanner sc = new Scanner(System.in);
     private ReservationUI() {}
@@ -28,72 +28,89 @@ public class ReservationUI {
 
     public void selectOption() {
         String customerContact;
-        System.out.println("0. Go back to Main Page");
-        System.out.println("1. Create a new reservation ");
-        System.out.println("2. Check/remove reservation booking");
-        System.out.println("3. Print Reservation");
-        System.out.println("Please enter your choice: ");
-        int choice = sc.nextInt();
-        
-        switch (choice) {
-            case 0: break;
-            case 1:
-                    {
-                        System.out.print("Please enter customer contact: ");
-                        customerContact = sc.nextLine().trim().replace(" ", "");
-                        createReservationUI(customerContact);
-                        break;
-                    } 
-            case 2: 
-                    {
-                        System.out.print("Please enter customer contact: ");
-                        customerContact = sc.nextLine().trim().replace(" ", "");
-                        checkRemoveReservationUI(customerContact);
-                        break;
-                    }
-            case 3: printReservationUI();
+        while(true){
+            System.out.println("0. Go back to Main Page");
+            System.out.println("1. Create a new reservation ");
+            System.out.println("2. Check/remove reservation booking");
+            System.out.println("3. Print Reservation");
+          
+            int choice = super.getInputInt("Please enter your choice: ", 0,3);
+            
+            switch (choice) {
+                case 0: 
+                    super.waitEnter();
+                    return;
+                case 1:
+                    customerContact = getContact("Please enter customer contact: ");
+                    this.createReservationUI(customerContact);
+                    break; 
+                case 2:   
+                    customerContact = getContact("Please enter customer contact: ");
+                    this.checkRemoveReservationUI(customerContact);
                     break;
-            default: System.out.println("Invalid Choice");
-                     break;
+                        
+                case 3: printReservationUI();
+                    break;
+                default: System.out.println("Invalid Choice");
+                    break;
 
-        } while (choice > 0);
+            } 
+        }
+        
     }
-
+    private void printReservation(Reservation res){
+        System.out.println("There is a reservation made by the customer");
+        System.out.println(res.toString());
+        System.out.println();
+    }
     private void createReservationUI(String customerContact) {
+        //should we check whether this customer have reservation or not?? Since we allow one custoemr to have one reservation..
+        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
+        if(res != null) {
+            printReservation(res);
+            super.waitEnter();
+            return;
+        }
+
+        // Up to here is edited by ZY, not sure yet, need confirmation..
+
         System.out.println("Please fill in your requirements: ");
-        System.out.print("Check In time (yyyy-MM-dd HH:mm): ");
-	    String checkIn = sc.nextLine().trim().replace(" ", "T");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
-    	LocalDateTime checkInTime = LocalDateTime.parse(checkIn, formatter);
-        sc.nextLine();
-        System.out.print("Number Of people: ");
-	    int noOfPax = sc.nextInt();
-        sc.nextLine();
+        
+	    LocalDateTime checkInTime = super.getInputDateTime("Check In time (yyyy-MM-dd HH:mm): ");
+	    int noOfPax = super.getInputInt("Number Of people: ");
 
         Table table = TableMgr.getInstance().findAvailTable(checkInTime, noOfPax);
-        if (table==null){ System.out.println("There is no available table with the specified requirements.");}
+        if (table==null){ 
+            System.out.println("There is no available table with the specified requirements.");
+        }
         else {
             System.out.println("We have an available table. But first we need your particulars.");
             // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
             Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerContact);
-            Reservation res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
+            res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
         }
+        super.waitEnter();
     }
 
     private void checkRemoveReservationUI(String customerContact){
-        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);			        
-		System.out.println("Reservation made: ");
-		System.out.println(res.toString());
-        sc.nextLine();
-        System.out.print("Would you like to remove this reservation? [yes/no]");
-	    String remove = sc.nextLine();
-        if (remove == "yes" || remove =="Yes"){
+        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
+        
+        //May change if YanKai want it to be check first then only take O(2N) tho;
+        if(res == null){
+            System.out.println("There is no reservation made by the customer");
+            super.waitEnter();
+            return;
+        }
+
+		this.printReservation(res);
+        
+        if (super.getYNOption("Would you like to remove this reservation? [yes/no]") ){
             ReservationMgr.getInstance().removeReservation(res);
             System.out.println("Reservation successfully removed from the system: ");
         }
-		return;	
+        super.waitEnter();
     }
     private void printReservationUI(){
         HashMap<Integer, Reservation> reservations = ReservationMgr.getInstance().getAllReservations();
@@ -107,6 +124,6 @@ public class ReservationUI {
 				System.out.print('\n');
 			}
 		}
-
+        super.waitEnter();
     }   
 }

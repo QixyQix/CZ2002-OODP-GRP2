@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import enums.GenderEnum;
+
 public class UserInterface {
     private Scanner sc;
 
@@ -98,11 +98,11 @@ public class UserInterface {
                 String input = this.getInputString().trim().replace(" ", "T");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
                 LocalDateTime input_date = LocalDateTime.parse(input, formatter);
-                sc.nextLine();
+                
                 return input_date;
             } catch(Exception ex){
                 System.out.println("Please enter a valid Date");
-                sc.nextLine();
+                
             }
         }
         
@@ -115,11 +115,11 @@ public class UserInterface {
                 String input = this.getInputString().replace(" ", "T");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//input format:yyyy-mm-ddThh:mm	
                 LocalDate input_date = LocalDate.parse(input, formatter);
-                sc.nextLine();
+                
                 return input_date;
             } catch(Exception ex){
                 System.out.println("Please enter a valid Date");
-                sc.nextLine();
+                
             }
         }
         

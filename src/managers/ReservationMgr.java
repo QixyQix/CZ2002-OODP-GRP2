@@ -47,7 +47,7 @@ public final class ReservationMgr{
 
     }
     public Reservation checkReservation(String contact) {
-        Reservation result = new Reservation();
+        Reservation result = null;
         LocalDateTime current = LocalDateTime.now();
         for (Reservation reservation: reservations.values()){
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
@@ -115,7 +115,7 @@ public final class ReservationMgr{
      * @throws ClassNotFoundException
      */
     public void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/menuItems");
+        File dataDirectory = new File("./data/reservations");
         File fileList[] = dataDirectory.listFiles();
 
         if (fileList == null)

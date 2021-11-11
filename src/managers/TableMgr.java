@@ -115,7 +115,7 @@ public class TableMgr {
             }
         }
         if (flag == false) {
-            System.out.println("No available tables found");
+            System.out.println("There are no available tables with the specified requirements");
         }
     }
 

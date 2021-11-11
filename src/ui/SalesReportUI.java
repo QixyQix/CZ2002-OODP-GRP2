@@ -26,11 +26,12 @@ public final class SalesReportUI extends UserInterface{
     }
 
     private void displayOptions(){
-        System.out.println("====SalesReport Manager====");
+        System.out.println("=========SalesReport Manager==========");
+        System.out.println("(0) Go Back to Main Page");
         System.out.println("(1) Total Revenue only");
         System.out.println("(2) Revenue For each MenuItem only");
         System.out.println("(3) Both");
-        System.out.println("(-1) Exit");
+        System.out.println("======================================");
     }
 
     
@@ -41,7 +42,7 @@ public final class SalesReportUI extends UserInterface{
         LocalDate endDate;
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", -1, 3);
+            option = super.getInputInt("Please enter your choice: ");
             startDate = super.getInputDate("Enter start date (YYYY:MM:DD)");
             endDate = super.getInputDate("Enter end date (YYYY:MM:DD)");
             switch(option){
@@ -57,7 +58,7 @@ public final class SalesReportUI extends UserInterface{
             }
             
 
-        }while(option!=-1); 
+        }while(option!=0); 
         
     }
     

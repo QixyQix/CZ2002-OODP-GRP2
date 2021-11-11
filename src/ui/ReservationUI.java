@@ -29,12 +29,15 @@ public class ReservationUI extends UserInterface {
     public void selectOption() {
         String customerContact;
         while(true){
-            System.out.println("0. Go back to Main Page");
-            System.out.println("1. Create a new reservation ");
-            System.out.println("2. Check/remove reservation booking");
-            System.out.println("3. Print Reservation");
+            System.out.println("==========Reservation Manager==========");
+            System.out.println("(0) Go back to Main Page");
+            System.out.println("(1) Create a new reservation ");
+            System.out.println("(2) Check/remove reservation booking");
+            System.out.println("(3) Print Reservation");
+            System.out.println("=======================================");
+
           
-            int choice = super.getInputInt("Please enter your choice: ", 0,3);
+            int choice = super.getInputInt("Please enter your choice: ");
             
             switch (choice) {
                 case 0: 

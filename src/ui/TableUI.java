@@ -23,11 +23,12 @@ public class TableUI extends UserInterface {
     }
 
     public void displayOptions() {
-        System.out.println("====Table Manager====");
-        System.out.println("(1) View table availability");
+        System.out.println("==========Table Manager==========");
+        System.out.println("(0) Go Back to Main Page Exit");
+        System.out.println("(1) Check table availability");
         System.out.println("(2) Create tables");
         System.out.println("(3) View all tables");
-        System.out.println("(-1) Exit");
+        System.out.println("=================================");
     }
 
     public void selectOption() {
@@ -58,6 +59,6 @@ public class TableUI extends UserInterface {
                 TableMgr.getInstance().printAllTables();
             break;
             }
-        } while (option != -1);
+        } while (option != 0);
     }
 }

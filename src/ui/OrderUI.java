@@ -31,6 +31,7 @@ public final class OrderUI extends UserInterface {
         int option = 0;
         do {
             displayOptions();
+            option = super.getInputInt("Please enter your choice: ");
             try {
                 option = sc.nextInt();
                 sc.nextLine();
@@ -53,18 +54,18 @@ public final class OrderUI extends UserInterface {
                     deleteOrderItem();
                     break;
             }
-        } while (option != -1);
+        } while (option != 0);
 
     }
 
     public void displayOptions(){
-        System.out.println("====Order Manager====");
+        System.out.println("===========Order Manager============");
+        System.out.println("(0) Go Back to Main Page");
         System.out.println("(1) Show current order");
         System.out.println("(2) Create a order");
         System.out.println("(3) Add order items");
         System.out.println("(4) Delete order items from order");
-        System.out.println("(-1) Exit");
-        System.out.println("Enter your selection: ");
+        System.out.println("====================================");
     }
 
     private void printOrder() {

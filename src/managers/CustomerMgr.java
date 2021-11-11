@@ -171,7 +171,7 @@ public final class CustomerMgr {
      * @param phoneNumber customer contact number
      * @return true if Customer object exists, false if customer does not exist
      */
-    public boolean checkExististingCustomer(String phoneNumber) {
+    public boolean checkExistingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
 

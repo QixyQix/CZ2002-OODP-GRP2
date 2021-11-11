@@ -8,7 +8,6 @@ import managers.OrderMgr;
 import managers.MenuItemMgr;
 
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public final class OrderUI extends UserInterface {
     private static OrderUI INSTANCE;
@@ -33,7 +32,7 @@ public final class OrderUI extends UserInterface {
 
             switch (option) {
                 case 1:
-                    createOrder();
+                    createOrder(staff);
                     break;
                 case 2:
                     modifyOrderMenu();
@@ -42,24 +41,25 @@ public final class OrderUI extends UserInterface {
         } while (option != 0);
 
     }
-    private Order askId(){
+
+    private Order getOrder(){
         Order order;
         int orderid;
-        while(true) {
-            orderid = super.getInputInt("Enter your order id");
-            if (!OrderMgr.getInstance().checkAvailableOrder(orderid)) {
-                System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid");
-                continue;
-            } else {
-                order = OrderMgr.getInstance().getOrder(orderid);
-                break;
-            }
+        orderid = super.getInputInt("Enter your order id");
+        try {
+            order = OrderMgr.getInstance().getOrder(orderid);
+            return order;
+        } catch(Exception ex) {
+            System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid. Enter -1 to return");
+            return null;
         }
-        return order;
     }
-    private void showOrder(){
+
+    private void modifyOrderMenu(){
         int option;
-        Order order = askId();
+        Order order = getOrder();
+        if (order == null)
+            return;
         do {
             displayOrderOptions(order.getId());
             option = super.getInputInt("Please enter your choice: ");
@@ -86,8 +86,8 @@ public final class OrderUI extends UserInterface {
     private void displayOptions(){
         System.out.println("===========Order Manager============");
         System.out.println("(0) Go Back to Main Page");
-        System.out.println("(1) Enter Order Selection Page");
-        System.out.println("(2) Create a order");
+        System.out.println("(1) Create Order");
+        System.out.println("(2) Modify Order");
         System.out.println("====================================");
     }
 
@@ -120,33 +120,27 @@ public final class OrderUI extends UserInterface {
     private void addOrderItem(Order order) {
         int menuItemid;
         MenuItem menuItem;
-      
-        while(true) {
-            try {
-                menuItemid = super.getInputInt("Please enter the Menu item id");
-                menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
-                OrderMgr.getInstance().addItem(menuItem, order);
-                break;
-            } catch (Exception ex) {
-                System.out.println("Invalid menu item id");
-            }   
-        }
+        try {
+            menuItemid = super.getInputInt("Please enter the Menu item id");
+            menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
+            OrderMgr.getInstance().addItem(menuItem, order);
+            System.out.println("Order item added");
+        } catch (Exception ex) {
+            System.out.println("Invalid menu item id. ");
+        }   
     }
 
     private void deleteOrderItem(Order order) {
         int menuItemid;
         int qty;
         MenuItem menuItem;
-        while(true) {
-            try {
-                menuItemid = super.getInputInt("Menu item id");
-                menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
-                qty = super.getInputInt("Quantity to be deleted");
-                OrderMgr.getInstance().deleteOrderItem(menuItem, qty, order);
-                break;
-            } catch (Exception ex) {
-                System.out.println("Invalid menu item id");
-            }
+        try {
+            menuItemid = super.getInputInt("Menu item id");
+            menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
+            qty = super.getInputInt("Quantity to be deleted");
+            OrderMgr.getInstance().deleteOrderItem(menuItem, qty, order);
+        } catch (Exception ex) {
+            System.out.println("Invalid menu item id");
         }
        
     }

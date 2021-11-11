@@ -69,10 +69,15 @@ public class Order implements Serializable{
         System.out.println("................................");
         System.out.println();
 
-        TreeMap<MenuItem, Integer> items = this.getOrderedItems();
-        for (MenuItem item : items.keySet()) {
-            int quantity = items.get(item);
-            System.out.println(quantity + " " + item.getName() + " " + item.getPrice()*quantity);
+        TreeMap<MenuItem, Integer> confirmedItems = this.getOrderedItems();
+        ArrayList<MenuItem> pendingItems = this.getPendingItems();
+        for (MenuItem item : confirmedItems.keySet()) {
+            int quantity = confirmedItems.get(item);
+            System.out.println(quantity + " " + item.getName() + " Price: " + item.getPrice()*quantity + " Status: Confirmed");
+        }
+
+        for (int i = 0; i<pendingItems.size(); i++) {
+            System.out.println( pendingItems.get(i).getName() + " Price: " + pendingItems.get(i).getPrice() + " Status: Pending");
         }
 
         System.out.println("................................");

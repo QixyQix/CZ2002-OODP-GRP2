@@ -107,7 +107,6 @@ public final class MenuItemMgr {
     public ArrayList<MenuItem> getAllMenuItems() throws IDNotFoundException {
         ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 
-        int i = 0;
         for (int id : this.items.keySet()) {
             items.add(getMenuItemByID(id));
         }

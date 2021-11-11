@@ -27,6 +27,7 @@ public final class ReservationMgr {
      * Returns the ReservationMgr instance and creates an instance if it does not
      * exist
      * 
+     * @author Eang Sokunthea
      * @return instance
      */
     public static ReservationMgr getInstance() {
@@ -39,6 +40,7 @@ public final class ReservationMgr {
     /**
      * Creates and returns Reservation object
      * 
+     * @author Eang Sokunthea
      * @param customer Customer object
      * @param date     date and time
      * @param noOfPax  number of pax at the table
@@ -56,6 +58,7 @@ public final class ReservationMgr {
     /**
      * Returns Reservation object or null
      * 
+     * @author Eang Sokunthea
      * @param contact customer contact number
      * @return Reservation object if Reservation object corresponding to customer
      *         contact number exists, null if it does not exist
@@ -77,6 +80,7 @@ public final class ReservationMgr {
     /**
      * Removes a reservation
      * 
+     * @author Eang Sokunthea
      * @param reservationMade
      */
     public void removeReservation(Reservation reservationMade) {
@@ -87,6 +91,7 @@ public final class ReservationMgr {
     /**
      * Returns hashmap of reservation id and Reservation object
      * 
+     * @author Eang Sokunthea
      * @return HashMaps of all reservation id and Reservation object
      */
     public HashMap<Integer, Reservation> getAllReservations() {
@@ -105,6 +110,7 @@ public final class ReservationMgr {
      * Serializes and saves the reservation objects into the data/reservation folder
      * Creates the data/reservation folder if it does not exist
      * 
+     * @author Eang Sokunthea
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -140,6 +146,7 @@ public final class ReservationMgr {
      * Reads Serialized Reservation data in the data/reservation folder and stores
      * it into the reservations HashMap
      * 
+     * @author Eang Sokunthea
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer

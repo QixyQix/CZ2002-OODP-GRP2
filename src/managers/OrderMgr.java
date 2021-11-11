@@ -33,6 +33,7 @@ public final class OrderMgr {
      * Serializes and saves the Staffs objects into the data/staffs folder Creates
      * the data/staffs folder if it does not exist
      * 
+     * @author Eang Sokunthea
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -70,6 +71,7 @@ public final class OrderMgr {
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
+     * @author Eang Sokunthea
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
@@ -108,6 +110,7 @@ public final class OrderMgr {
     /**
      * Returns the OrderMgr instance and creates an instance if it does not exist
      * 
+     * @author Eang Sokunthea
      * @return instance
      */
     public static OrderMgr getInstance() {
@@ -121,6 +124,7 @@ public final class OrderMgr {
     /**
      * Returns a Table object that is available
      * 
+     * @author Eang Sokunthea
      * @param date    date and time
      * @param noOfPax number of pax at the table
      * @return Table object if available, null if no available tables
@@ -133,6 +137,7 @@ public final class OrderMgr {
     /**
      * Creates and returns Order object
      * 
+     * @author Eang Sokunthea
      * @param staff    staff object
      * @param customer customer object
      * @param date     date and time
@@ -152,6 +157,7 @@ public final class OrderMgr {
     /**
      * Add MenuItem object to the order
      * 
+     * @author Eang Sokunthea
      * @param menuItem MenuItem object
      * @param order    Order object
      * 
@@ -163,6 +169,7 @@ public final class OrderMgr {
     /**
      * Create Order object
      * 
+     * @author Eang Sokunthea
      * @param order Order object
      * 
      */
@@ -173,6 +180,7 @@ public final class OrderMgr {
     /**
      * Close order and create invoice by calling invoiceMgr
      * 
+     * @author Eang Sokunthea
      * @param order      Order object
      * @param invoiceMgr InvoiceMgr obejct
      * 
@@ -186,6 +194,7 @@ public final class OrderMgr {
      * Returns true or false depending on whether the order corresponding to the
      * order id exists
      * 
+     * @author Eang Sokunthea
      * @param orderId id of order
      * @return true if order exists, false if order does not exist
      */
@@ -196,6 +205,7 @@ public final class OrderMgr {
     /**
      * Returns Order object corresponding to order id
      * 
+     * @author Eang Sokunthea
      * @param orderId id of order
      * @return Order object
      */
@@ -206,6 +216,7 @@ public final class OrderMgr {
     /**
      * Delete menuItem item from a speciifc order
      * 
+     * @author Eang Sokunthea
      * @param menuItem MenuItem object
      * @param qty      quantity of MenuItem
      * @param order    Order object

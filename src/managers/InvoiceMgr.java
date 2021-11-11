@@ -35,6 +35,7 @@ public final class InvoiceMgr {
      * Serializes and saves the invoice objects into the data/invoice folder Creates
      * the data/invoice folder if it does not exist
      * 
+     * @author Zong Yu Lee
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -72,6 +73,7 @@ public final class InvoiceMgr {
      * Reads Serialized invoice data in the data/invoice folder and stores it into
      * the invoices HashMap
      * 
+     * @author Zong Yu Lee
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
@@ -110,6 +112,7 @@ public final class InvoiceMgr {
     /**
      * Returns the InvoiceMgr instance and creates an instance if it does not exist
      * 
+     * @author Zong Yu Lee
      * @return instance
      */
     public static InvoiceMgr getInstance() {
@@ -136,6 +139,7 @@ public final class InvoiceMgr {
     /**
      * Add price filter to the invoice
      * 
+     * @author Zong Yu Lee
      * @param invoiceid id of invoice
      * 
      */
@@ -158,6 +162,7 @@ public final class InvoiceMgr {
      * Returns true or false depending on whether the invoice corresponding to the
      * invoice id exists
      * 
+     * @author Zong Yu Lee
      * @param invoiceid id of invoice
      * @return true if invoice exists, false if invoice does not exist
      */
@@ -168,6 +173,7 @@ public final class InvoiceMgr {
     /**
      * Returns Invoice object corresponding to the invoice id
      * 
+     * @author Zong Yu Lee
      * @param invoiceid id of invoice
      * @return Invoice object
      */
@@ -178,6 +184,7 @@ public final class InvoiceMgr {
     /**
      * Returns Invoices hashmap
      * 
+     * @author Zong Yu Lee
      * @return invoices hashmap
      */
     public HashMap<Integer, Invoice> getInvoicesMap() {

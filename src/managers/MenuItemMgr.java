@@ -32,6 +32,7 @@ public final class MenuItemMgr {
     /**
      * Returns the MenuItemMgr instance and creates an instance if it does not exist
      * 
+     * @author Cho Qi Xiang
      * @return instance
      */
     public static MenuItemMgr getInstance() {
@@ -45,6 +46,7 @@ public final class MenuItemMgr {
     /**
      * Create a menu item
      * 
+     * @author Cho Qi Xiang
      * @param type         menu item type
      * @param name         menu item name
      * @param description  menu item description
@@ -74,6 +76,7 @@ public final class MenuItemMgr {
     /**
      * Returns true or false depending on whether id is in use
      * 
+     * @author Cho Qi Xiang
      * @param id menu item id
      * @return true if id can be assigned to new object, false if id already in use
      */
@@ -84,6 +87,7 @@ public final class MenuItemMgr {
     /**
      * Returns a MenuItem object corresponding to the menu item id
      * 
+     * @author Cho Qi Xiang
      * @param id menu item id
      * @return MenuItem object that matches the menu item id
      * @throws IDNotFoundException if no such menu item corresponding to the id
@@ -100,6 +104,7 @@ public final class MenuItemMgr {
     /***
      * Returns an ArrayList of MenuItem objects that are stored in the MenuItemMgr
      * 
+     * @author Cho Qi Xiang
      * @return ArrayList of MenuItem objects
      * @throws IDNotFoundException if no such menu item corresponding to the id
      *                             exists
@@ -140,6 +145,7 @@ public final class MenuItemMgr {
      * Serializes and saves the MenuItem objects into the data/menuItems folder
      * Creates the data/menuItems folder if it does not exist
      * 
+     * @author Cho Qi Xiang
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -169,6 +175,7 @@ public final class MenuItemMgr {
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
+     * @author Cho Qi Xiang
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer

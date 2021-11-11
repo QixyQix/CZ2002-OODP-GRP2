@@ -51,7 +51,6 @@ public class Table implements Serializable {
     }
 
     public String toString() {
-        return "Table{" + '\n' + "Seating Capacity= " + getSeatingCapacity() + '\n' + "Table ID= " + getId() + '\n'
-                + '}';
+        return "\n" + "Table ID = " + getId() + '\n' + "Seating Capacity = " + getSeatingCapacity() + '\n';
     }
 }

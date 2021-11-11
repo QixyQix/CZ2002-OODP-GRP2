@@ -123,7 +123,7 @@ public class TableMgr {
      * Prints all available tables
      * 
      */
-    public void printAllAvailableTables() {
+    public void printAllTables() {
         for (Table table : tables.values()) {
             System.out.println(table.toString());
         }

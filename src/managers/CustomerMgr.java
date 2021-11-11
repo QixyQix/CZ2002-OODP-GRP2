@@ -10,6 +10,12 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
 
+/***
+ * Represents a customer manager
+ * 
+ * @author Zong Yu Lee
+ * @author Lim Yan Kai
+ */
 public final class CustomerMgr {
 
     private static CustomerMgr instance;
@@ -31,8 +37,6 @@ public final class CustomerMgr {
      * Serializes and saves the Customers objects into the data/customers folder
      * Creates the data/customers folder if it does not exist
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -70,8 +74,6 @@ public final class CustomerMgr {
      * Reads Serialized Customer data in the data/customers folder and stores it
      * into the customers HashMap
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
@@ -106,8 +108,6 @@ public final class CustomerMgr {
     /**
      * Returns the CustomerMgr instance and creates an instance if it does not exist
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @return instance
      */
     public static CustomerMgr getInstance() {
@@ -117,6 +117,11 @@ public final class CustomerMgr {
         return instance;
     }
 
+    /**
+     * Returns hashmap of invoice id and Customer object
+     * 
+     * @return hashmap of invoice id and Customer object
+     */
     public HashMap<Integer, Customer> getInvoicesMap() {
         return this.customers;
     }
@@ -124,8 +129,6 @@ public final class CustomerMgr {
     /**
      * Creates Customer object
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @param membership customer membership
      * @param name       customer name
      * @param gender     customer gender
@@ -153,8 +156,6 @@ public final class CustomerMgr {
     /**
      * Returns Customer object corresponding to the contact number
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @param phoneNumber customer contact number
      * @return Customer object corresponding to the phone number
      */
@@ -166,8 +167,6 @@ public final class CustomerMgr {
     /**
      * Check if customer exists by contact number
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @param phoneNumber customer contact number
      * @return true if Customer object exists, false if customer does not exist
      */
@@ -178,8 +177,6 @@ public final class CustomerMgr {
     /**
      * Update customer membership
      * 
-     * @author Zong Yu Lee
-     * @author Lim Yan Kai
      * @param phoneNumber customer contact number
      * @param membership  customer membership
      * 

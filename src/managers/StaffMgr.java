@@ -9,6 +9,11 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import entities.Staff;
 
+/***
+ * Represents a staff manager
+ * 
+ * @author Zong Yu Lee
+ */
 public final class StaffMgr {
     private static StaffMgr instance;
     private HashMap<Integer, Staff> staffs;
@@ -28,7 +33,6 @@ public final class StaffMgr {
      * Serializes and saves the Staffs objects into the data/staffs folder Creates
      * the data/staffs folder if it does not exist
      * 
-     * @author Zong Yu Lee
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -66,7 +70,6 @@ public final class StaffMgr {
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
-     * @author Zong Yu Lee
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
@@ -105,7 +108,6 @@ public final class StaffMgr {
     /**
      * Returns the StaffMgr instance and creates an instance if it does not exist
      * 
-     * @author Zong Yu Lee
      * @return instance
      */
     public static StaffMgr getInstance() {
@@ -119,7 +121,6 @@ public final class StaffMgr {
     /**
      * Returns Staff object or null
      * 
-     * @author Zong Yu Lee
      * @param staffId id of staff
      * @return Staff object if staff exists, null if staff does not exist
      */
@@ -136,7 +137,6 @@ public final class StaffMgr {
      * Returns true or false depending if staff corresponding to the contact number
      * exists
      * 
-     * @author Zong Yu Lee
      * @param phoneNumber contact number
      * @return true if staff exists, false if staff does not exist
      */
@@ -148,7 +148,6 @@ public final class StaffMgr {
     /**
      * Creates and returns Staff object
      * 
-     * @author Zong Yu Lee
      * @param jobTitle staff job title
      * @param name     staff name
      * @param gender   staff gender

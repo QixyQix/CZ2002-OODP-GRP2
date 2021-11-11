@@ -13,6 +13,11 @@ import entities.Invoice;
 import entities.Report;
 import entities.MenuItem;
 
+/***
+ * Represents a sales report manager
+ * 
+ * @author Zong Yu Lee
+ */
 public final class SalesReportMgr {
     private static SalesReportMgr instance;
     private HashMap<Integer, Report> reports;
@@ -35,7 +40,6 @@ public final class SalesReportMgr {
      * Serializes and saves the Customers objects into the data/customers folder
      * Creates the data/customers folder if it does not exist
      * 
-     * @author Zong Yu Lee
      * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
@@ -73,7 +77,6 @@ public final class SalesReportMgr {
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
-     * @author Zong Yu Lee
      * @throws IOException            if stream to file cannot be written to or
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
@@ -110,7 +113,6 @@ public final class SalesReportMgr {
      * Returns the SalesReportMgr instance and creates an instance if it does not
      * exist
      * 
-     * @author Zong Yu Lee
      * @return instance
      */
     public static SalesReportMgr getInstance() {
@@ -123,7 +125,6 @@ public final class SalesReportMgr {
     /**
      * Add Invoice object to report
      * 
-     * @author Zong Yu Lee
      * @param report   Report object to add Invoice object to
      * @param invoices hashmap of invoiceId and Invoice object
      * @param date     date
@@ -141,7 +142,6 @@ public final class SalesReportMgr {
     /**
      * Create a new Report object
      * 
-     * @author Zong Yu Lee
      * @param targetDay date
      * 
      */
@@ -162,7 +162,6 @@ public final class SalesReportMgr {
     /**
      * Returns a report corresponding to the date
      * 
-     * @author Zong Yu Lee
      * @param date date
      * @return Report object
      */
@@ -187,7 +186,6 @@ public final class SalesReportMgr {
     /**
      * Print total revenue made
      * 
-     * @author Zong Yu Lee
      * @param totalRevenue total revenue made
      *
      */
@@ -199,7 +197,6 @@ public final class SalesReportMgr {
     /**
      * Print total revenue by MenuItem
      * 
-     * @author Zong Yu Lee
      * @param menuItemTotalRevenue total revenue of menu item
      * 
      */
@@ -215,7 +212,6 @@ public final class SalesReportMgr {
      * Print report by start and end date and update total revenue and total revenue
      * of that specific menu item
      * 
-     * @author Zong Yu Lee
      * @param startDate start date
      * @param endDate   end date
      * @param total     total revenue

@@ -1,6 +1,9 @@
 package managers;
 
 import java.util.HashMap;
+
+import javax.sound.sampled.BooleanControl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,14 +20,14 @@ public class TableMgr {
     private HashMap<Integer, Table> tables;
 
     private TableMgr() {
-        try{
+        try {
             tables = new HashMap<Integer, Table>();
             loadSavedData();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load Tables data");
         }
-        
+
     };
 
     /**
@@ -102,10 +105,15 @@ public class TableMgr {
      * @return true or false
      */
     public void checkTableAvailability(int noOfPax, LocalDateTime date) {
+        boolean flag = false;
         for (Table table : tables.values()) {
             if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) == TableState.AVAILABLE)) {
                 System.out.println(table.toString());
+                flag = true;
             }
+        }
+        if (flag == false) {
+            System.out.println("No available tables found");
         }
     }
 

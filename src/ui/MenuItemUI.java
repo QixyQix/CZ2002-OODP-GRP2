@@ -1,7 +1,6 @@
 package ui;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import entities.MenuItem;
 import entities.MenuPackage;
@@ -9,11 +8,10 @@ import managers.MenuItemMgr;
 
 public final class MenuItemUI extends UserInterface {
     private static MenuItemUI INSTANCE;
-    private Scanner sc;
+    
 
     private MenuItemUI() {
         super();
-        this.sc = new Scanner(System.in);
     }
 
     /**
@@ -34,14 +32,7 @@ public final class MenuItemUI extends UserInterface {
         do {
             displayOptions();
             option = super.getInputInt("Please enter your choice: ");
-            try {
-                option = sc.nextInt();
-                sc.nextLine();
-            } catch (Exception ex) {
-                System.out.println("Invalid input");
-                continue;
-            }
-
+           
             switch (option) {
             case 1:
                 showCurrentMenuItems();

@@ -154,6 +154,7 @@ public final class OrderUI extends UserInterface {
                 System.out.println("Invalid menu item id");
             }
         }
+       
     }
 
     private void confirmOrder(Order order){

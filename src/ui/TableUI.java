@@ -40,7 +40,7 @@ public class TableUI extends UserInterface{
                 noOfPax = super.getInputInt("How many pax?: ");
                 date = super.getInputDateTime("Which date and time? (yyyy-MM-dd HH:mm): ");
              
-                TableMgr.getInstance().checkTableAvailability(noOfPax, date);
+                TableMgr.getInstance().printTableAvailability(noOfPax, date);
                 break;
             case 2:
                 int idCounter = 0;

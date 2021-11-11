@@ -16,12 +16,9 @@ import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
 
 public final class MenuItemMgr {
-    private static MenuItemMgr INSTANCE;
+    private static MenuItemMgr instance;
     private HashMap<Integer, MenuItem> items;
 
-    /**
-     * Constructor
-     */
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
@@ -35,18 +32,18 @@ public final class MenuItemMgr {
     /**
      * Returns the MenuItemMgr instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return instance
      */
     public static MenuItemMgr getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MenuItemMgr();
+        if (instance == null) {
+            instance = new MenuItemMgr();
         }
 
-        return INSTANCE;
+        return instance;
     }
 
     /**
-     * create a new menu item
+     * Create a menu item
      * 
      * @param type, name, description, price, id, package items
      * @throws DuplicateIDException
@@ -112,7 +109,6 @@ public final class MenuItemMgr {
         return items;
     }
 
-    
     public void deleteMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();
@@ -126,7 +122,7 @@ public final class MenuItemMgr {
                 for (int i = 0; i < packageItems.size(); i++) {
                     if (packageItems.get(i).getId() == id) {
                         packageItems.remove(i);
-                        System.out.println("Removed from package "+menuPackage.getName()+" items");
+                        System.out.println("Removed from package " + menuPackage.getName() + " items");
                         i--;
                     }
                 }

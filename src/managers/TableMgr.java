@@ -106,7 +106,7 @@ public class TableMgr {
      * @param noOfPax number of pax at the table
      * @param date    date and time of the table to check
      */
-    public void checkTableAvailability(int noOfPax, LocalDateTime date) {
+    public void printTableAvailability(int noOfPax, LocalDateTime date) {
         boolean flag = false;
         for (Table table : tables.values()) {
             if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) == TableState.AVAILABLE)) {
@@ -116,6 +116,16 @@ public class TableMgr {
         }
         if (flag == false) {
             System.out.println("There are no available tables with the specified requirements");
+        }
+    }
+
+    /**
+     * Prints all available tables
+     * 
+     */
+    public void printAllAvailableTables() {
+        for (Table table : tables.values()) {
+            System.out.println(table.toString());
         }
     }
 

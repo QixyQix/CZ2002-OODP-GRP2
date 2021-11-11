@@ -1,7 +1,6 @@
 package ui;
 
-import java.util.Scanner;
-
+import entities.Customer;
 import entities.DiscountFilter;
 import entities.Membership;
 import enums.DiscountFilterNameEnum;
@@ -11,11 +10,9 @@ import managers.MembershipMgr;
 
 public final class CustomerUI extends UserInterface {
     private static CustomerUI INSTANCE;
-    private Scanner sc;
 
     private CustomerUI() {
         super();
-        this.sc = new Scanner(System.in);
     }
 
     public static CustomerUI getInstance() {
@@ -24,32 +21,6 @@ public final class CustomerUI extends UserInterface {
         }
 
         return INSTANCE;
-    }
-
-    public void showMenu() {
-        int option = 0;
-        do {
-            displayOptions();
-            try {
-                option = sc.nextInt();
-                sc.nextLine();
-            } catch (Exception ex) {
-                System.out.println("Invalid input");
-                continue;
-            }
-
-            switch (option) {
-                case 1:
-                    this.createCustomer();
-                    break;
-            }
-        } while (option != -1);
-    }
-
-    private void displayOptions() {
-        System.out.println("====Customer Manager====");
-        System.out.println("(1) Create customer");
-        System.out.println("(-1) Exit");
     }
 
     private Membership getMembershipInput() {
@@ -90,13 +61,20 @@ public final class CustomerUI extends UserInterface {
         return membership;
     }
 
-    private void createCustomer() {
-        String name = super.getInputString("Customer name: ");
+    public Customer getCustomer() {
         String contact = super.getContact("Customer contact: ");
+        try {
+            return CustomerMgr.getInstance().getExistingCustomer(contact);
+        } catch(Exception ex) {
+            return createCustomer(contact);
+        }
+    }
+
+    private Customer createCustomer(String contact) {
+        String name = super.getInputString("Customer name: ");
         String gender = super.getGender("Customer gender: ");
         Membership membership = this.getMembershipInput();
 
-        CustomerMgr.getInstance().createCustomer(membership, name, gender, contact);
-        System.out.println("Customer have been created");
+        return CustomerMgr.getInstance().createCustomer(membership, name, gender, contact);
     }
 }

@@ -138,7 +138,6 @@ public final class CustomerMgr {
      *         customer data exists
      */
     public Customer createCustomer(Membership membership, String name, String gender, String contact) {
-      
 
         Customer customer = new Customer(membership, customerId, name, gender, contact);
 

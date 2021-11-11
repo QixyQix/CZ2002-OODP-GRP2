@@ -1,13 +1,9 @@
 package ui;
 
-import entities.Invoice;
-import entities.Report;
 import global.CurrentTime;
-import managers.InvoiceMgr;
 import managers.SalesReportMgr;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public final class SalesReportUI extends UserInterface{
     private static SalesReportUI INSTANCE;

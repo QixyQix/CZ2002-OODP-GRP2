@@ -65,7 +65,7 @@ public final class ReservationMgr {
      * @return Reservation object if Reservation object corresponding to customer
      *         contact number exists, null if it does not exist
      */
-    public Reservation checkReservation(String contact) {
+    public Reservation checkReservation(Customer customer) {
         Reservation result = null;
         LocalDateTime current = LocalDateTime.now();
         for (Reservation reservation : reservations.values()) {
@@ -73,7 +73,7 @@ public final class ReservationMgr {
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true) {
                 removeReservation(reservation);
-            } else if (reservation.getCustomer().getContact() == contact)
+            } else if (reservation.getCustomer().getContact() == customer.getContact())
                 result = reservation;
         }
         return result;

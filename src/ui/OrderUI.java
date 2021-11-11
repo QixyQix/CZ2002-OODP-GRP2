@@ -5,7 +5,6 @@ import entities.Staff;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
-import managers.CustomerMgr;
 import managers.MenuItemMgr;
 
 import java.time.LocalDateTime;
@@ -34,10 +33,10 @@ public final class OrderUI extends UserInterface {
 
             switch (option) {
                 case 1:
-                    showOrder();
+                    createOrder();
                     break;
                 case 2:
-                    createOrder(staff);
+                    modifyOrderMenu();
                     break;
             }
         } while (option != 0);
@@ -108,18 +107,13 @@ public final class OrderUI extends UserInterface {
         super.waitEnter();
     }
 
-    private void createOrder(Staff staff) {
+    public void createOrder(Staff staff) {
         LocalDateTime date = LocalDateTime.now();
 
         Integer noofpax = super.getInputInt("No of pax");
-        String customerPhoneNumber = super.getInputString("Customer phone number");
-        if (!CustomerMgr.getInstance().checkExistingCustomer(customerPhoneNumber)) {
-            CustomerUI.getInstance().showMenu();
-        } else {
-            Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerPhoneNumber);
-            Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
-            System.out.println("Order has been created. Your order id is: " + order.getId());
-        }
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
+        System.out.println("Order has been created. Your order id is: " + order.getId());
         super.waitEnter();
     }
 

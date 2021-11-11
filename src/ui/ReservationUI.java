@@ -2,20 +2,16 @@ package ui;
 
 import managers.TableMgr;
 import managers.ReservationMgr;
-import managers.CustomerMgr;
 import entities.Reservation;
 import entities.Customer;
 import entities.Table;
 
 import java.util.*;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 public class ReservationUI extends UserInterface {
     private static ReservationUI singleInstance = null;
-    private static Scanner sc = new Scanner(System.in);
     private ReservationUI() {}
 
     public static ReservationUI getInstance()
@@ -27,7 +23,6 @@ public class ReservationUI extends UserInterface {
 
 
     public void selectOption() {
-        String customerContact;
         while(true){
             System.out.println("==========Reservation Manager==========");
             System.out.println("(0) Go back to Main Page");
@@ -44,12 +39,10 @@ public class ReservationUI extends UserInterface {
                     super.waitEnter();
                     return;
                 case 1:
-                    customerContact = getContact("Please enter customer contact: ");
-                    this.createReservationUI(customerContact);
+                    this.createReservationUI();
                     break; 
-                case 2:   
-                    customerContact = getContact("Please enter customer contact: ");
-                    this.checkRemoveReservationUI(customerContact);
+                case 2:
+                    this.checkRemoveReservationUI();
                     break;
                         
                 case 3: printReservationUI();
@@ -67,15 +60,17 @@ public class ReservationUI extends UserInterface {
         System.out.println();
     }
     
-    private void createReservationUI(String customerContact) {
+    private void createReservationUI() {
+        Customer customer = CustomerUI.getInstance().getCustomer();
         //should we check whether this customer have reservation or not?? Since we allow one custoemr to have one reservation..
-        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         if(res != null) {
             printReservation(res);
             super.waitEnter();
             return;
         }
         // Up to here is edited by ZY, not sure yet, need confirmation..
+        
 
         System.out.println("Please fill in your requirements: ");
         
@@ -87,9 +82,10 @@ public class ReservationUI extends UserInterface {
             System.out.println("There is no available table with the specified requirements.");
         }
         else {
-            System.out.println("We have an available table. But first we need your particulars.");
-            // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
-            Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerContact);
+            System.out.println("We have an available table. We can reserve a table for you");
+            if (!super.getYNOption("Do you confirm the reservation")) {
+                return;
+            }
             res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
@@ -97,8 +93,9 @@ public class ReservationUI extends UserInterface {
         super.waitEnter();
     }
 
-    private void checkRemoveReservationUI(String customerContact){
-        Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
+    private void checkRemoveReservationUI(){
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         
         //May change if YanKai want it to be check first then only take O(2N) tho;
         if(res == null){
@@ -109,12 +106,13 @@ public class ReservationUI extends UserInterface {
 
 		this.printReservation(res);
         
-        if (super.getYNOption("Would you like to remove this reservation? [yes/no]") ){
+        if (super.getYNOption("Would you like to remove this reservation?") ){
             ReservationMgr.getInstance().removeReservation(res);
             System.out.println("Reservation successfully removed from the system: ");
         }
         super.waitEnter();
     }
+
     private void printReservationUI(){
         HashMap<Integer, Reservation> reservations = ReservationMgr.getInstance().getAllReservations();
 		if (reservations.isEmpty()) {

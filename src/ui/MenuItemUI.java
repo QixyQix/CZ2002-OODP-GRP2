@@ -32,7 +32,6 @@ public final class MenuItemUI extends UserInterface {
         do {
             displayOptions();
             option = super.getInputInt("Please enter your choice: ");
-           
             switch (option) {
             case 1:
                 showCurrentMenuItems();

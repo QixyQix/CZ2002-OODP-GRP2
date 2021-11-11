@@ -56,13 +56,14 @@ public class ReservationUI extends UserInterface {
 
             } 
         }
-        
     }
+
     private void printReservation(Reservation res){
         System.out.println("There is a reservation made by the customer");
         System.out.println(res.toString());
         System.out.println();
     }
+    
     private void createReservationUI(String customerContact) {
         //should we check whether this customer have reservation or not?? Since we allow one custoemr to have one reservation..
         Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
@@ -71,7 +72,6 @@ public class ReservationUI extends UserInterface {
             super.waitEnter();
             return;
         }
-
         // Up to here is edited by ZY, not sure yet, need confirmation..
 
         System.out.println("Please fill in your requirements: ");

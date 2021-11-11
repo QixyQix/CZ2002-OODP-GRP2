@@ -68,7 +68,7 @@ public class Reservation implements Serializable {
                 "customerContact= " + customer.getContact() + '\n' +
                 "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
                 "noOfPax= " + noOfPax + '\n' +
-                // "tableID= " + table.getId() + '\n' +
+                "tableID= " + table.getId() + '\n' +
                 '}';
     }
 }

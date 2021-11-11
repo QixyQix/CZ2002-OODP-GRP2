@@ -45,6 +45,13 @@ public final class MenuItemMgr {
         return INSTANCE;
     }
 
+    /**
+     * create a new menu item
+     * 
+     * @param type, name, description, price, id, package items
+     * @throws DuplicateIDException
+     * 
+     */
     public void createMenuItem(String type, String name, String description, double price, int id,
             ArrayList<MenuItem> packageItems) throws DuplicateIDException {
         if (this.items.containsKey(id)) {
@@ -105,6 +112,7 @@ public final class MenuItemMgr {
         return items;
     }
 
+    
     public void deleteMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();

@@ -108,7 +108,11 @@ public final class OrderMgr {
         
     }
 
-
+    /**
+     * Returns the OrderMgr instance and creates an instance if it does not exist
+     * 
+     * @return
+     */
     public static OrderMgr getInstance(){
         if(INSTANCE == null){
             INSTANCE = new OrderMgr();
@@ -116,12 +120,25 @@ public final class OrderMgr {
 
         return INSTANCE;
     }
+
+    /**
+     * Allocate a table if available 
+     * 
+     * @param date, no of pax
+     * @return table if available else table return is null
+     */
     public Table allocateTable(LocalDateTime date, int noofpax){
         // TO BE DONE
         Table table = TableMgr.getInstance().findAvailTable(date,noofpax);
         return table;
     }
 
+    /**
+     * Create order 
+     * 
+     * @param staff, customer, date, noOfPax
+     * @return Order
+     */
     public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noofpax){
         Table table = this.allocateTable(date,noofpax);
 
@@ -132,27 +149,63 @@ public final class OrderMgr {
         return order;
     }
 
+    /**
+     * Add menu item to the order 
+     * 
+     * @param menu item, order
+     * 
+     */
     public void addItem(MenuItem item, Order order){
         order.addPendingItems(item);
     }
 
+    /**
+     * Make order
+     * 
+     * @param order
+     * 
+     */
     public void makeOrder(Order order){
         order.addToOrderedItems();
     }
 
+    /**
+     * Close order and create invoice by calling invoiceMgr
+     * 
+     * @param order, invoiceMgr
+     * 
+     */
     public void closeOrder(Order order, InvoiceMgr invoiceMgr){
         // deallocateTable()
         invoiceMgr.createInvoice(order);
     }
 
+    /**
+     * Check if the order exists by order id
+     * 
+     * @param order id
+     * @return true if order exists else false
+     */
     public boolean checkAvailableOrder(int orderid) {
         return this.orders.containsKey(orderid);
     }
 
+    /**
+     * Get order by order id
+     * 
+     * @param order id
+     * @return Order
+     */
     public Order getOrder(int orderid) {
         return this.orders.get(orderid);
     }
 
+    /**
+     * Delete order item from a speciifc order
+     * 
+     * @param order, menu item, qty
+     * 
+     */
     public void deleteOrderItem(MenuItem MenuItem, int qty, Order order) {
         //Order order = this.getOrder(orderId);
         order.deleteOrderItem(MenuItem, qty);

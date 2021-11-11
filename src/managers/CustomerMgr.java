@@ -113,7 +113,12 @@ public final class CustomerMgr{
         return this.customers;
     }
 
-
+    /**
+     * Creates customer object 
+     * 
+     * @param memebership, name, gender, contact
+     * @return Customer
+     */
     public Customer createCustomer(Membership membership, String name, String gender, String contact){
         if (getExistingCustomer(contact) != null) {
             System.out.println("Customer Contains already");
@@ -131,16 +136,33 @@ public final class CustomerMgr{
 
     }
 
+    /**
+     * Get existing customer by phone number
+     * 
+     * @param phone number
+     * @return Customer
+     */
     public Customer getExistingCustomer(String phoneNumber){
         int cusid = this.phonetoid.get(phoneNumber);
         return this.customers.get(cusid);
     }
 
-
+    /**
+     * Check if customer exists by phone number
+     * 
+     * @param phone number
+     * @return true if exists else false
+     */
     public boolean checkExististingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
 
+    /**
+     * Update customer membership
+     * 
+     * @param phone number, membership
+     * 
+     */
     public void updateMembership(String phoneNumber, Membership membership){
         Customer customer = getExistingCustomer(phoneNumber);
         

@@ -39,6 +39,12 @@ public final class ReservationMgr{
         return instance;
     }
 
+    /**
+	 * Create new reservation
+	 * 
+	 * @param customer, date, noOfPax, table
+     * @return reservation object created
+	 */
     public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table){
         Reservation reservation = new Reservation(customer,checkInDateTime,noOfPax,table, this.reservationID);
         reservations.put(this.reservationID, reservation);
@@ -46,31 +52,48 @@ public final class ReservationMgr{
         return reservation;
 
     }
+
+    /**
+	 * Retrieval of Reservation's details by customer's contact.
+	 * 
+     * @param customer's contact
+	 * @return Reservation 
+	 */
     public Reservation checkReservation(String contact) {
         Reservation result = null;
         LocalDateTime current = LocalDateTime.now();
         for (Reservation reservation: reservations.values()){
+            //remove expired reservations 
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true){
                 removeReservation(reservation);
             }
-            //depends on CustomerMgr
             else if (reservation.getCustomer().getContact() == contact)
                 result = reservation;
         }
         return result;
     }
 
+    /**
+	 * Remove of reservation from reservation HashMap.
+	 * 
+     * @param reservation
+	 */
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());
         TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
     }
 
 
+    /**
+	 * Retrieval of all reservations.
+	 * 
+	 * @return HashMaps of all reservation.
+	 */
     public HashMap<Integer, Reservation> getAllReservations() {
-        //check if expired 
         LocalDateTime current = LocalDateTime.now();
         for (Reservation reservation: reservations.values()){
+            //remove expired reservations 
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true){
                 removeReservation(reservation);
@@ -79,7 +102,7 @@ public final class ReservationMgr{
         return reservations;
     }
 
-        /***
+    /***
      * Serializes and saves the reservation objects into the data/reservation folder
      * Creates the data/reservation folder if it does not exist
      * 
@@ -106,6 +129,12 @@ public final class ReservationMgr{
             objectOutputStream.flush();
             objectOutputStream.close();
         }
+        FileOutputStream fileOutputStream = new FileOutputStream("./data/reservationID");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+        objectOutputStream.writeInt(reservationID);
+        objectOutputStream.flush();
+        objectOutputStream.close();
     }
         /***
      * Reads Serialized Reservation data in the data/reservation folder and stores it
@@ -124,17 +153,19 @@ public final class ReservationMgr{
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Reservation reservation = ReservationMgr.getInstance().createReservationFromSerializedData(objectInputStream.readObject());
+
+            Reservation reservation = (Reservation) objectInputStream.readObject();
             this.reservations.put(reservation.getreservationID(), reservation);
             objectInputStream.close();
         }
-    }
+        try{
+            FileInputStream fileInputStream = new FileInputStream("reservationID");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-    public Reservation createReservationFromSerializedData(Object o) throws ClassNotFoundException{
-        if(o instanceof Reservation){
-            return (Reservation) o;
-        }else{
-            throw new ClassNotFoundException();
+            this.reservationID = (int) objectInputStream.readObject();
+            objectInputStream.close();
+        }catch(Exception e){
+            this.reservationID = 1;
         }
     }
 

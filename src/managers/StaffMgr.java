@@ -114,6 +114,12 @@ public final class StaffMgr {
         return INSTANCE;
     }
 
+    /**
+     * Find an existing staff by id
+     * 
+     * @param staffid
+     * @return staff
+     */
     public Staff checkexisitingStaff(int id){
         Staff staff = null;
 
@@ -123,11 +129,23 @@ public final class StaffMgr {
         return staff;
     }
 
+    /**
+     * Check if staff exists by their phone number
+     * 
+     * @param phone number
+     * @return true if staff exists else return false
+     */
     public boolean checkexisitingStaff(String phoneNumber){
         
         return true;
     }
 
+    /**
+     * Create new stadd
+     * 
+     * @param job title, name gender, contact
+     * @return staff
+     */
     public Staff createStaff(String jobTitle, String name, String gender, String contact ){
         Staff staff = new Staff(staffId, jobTitle, name, gender, contact);
         this.staffs.put(staffId,staff);

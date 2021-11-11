@@ -110,6 +110,11 @@ public final class InvoiceMgr{
         
     }
 
+    /**
+     * Returns the InvoiceMgr instance and creates an instance if it does not exist
+     * 
+     * @return
+     */
     public static InvoiceMgr getInstance(){
         if(instance == null){
             instance = new InvoiceMgr();
@@ -117,6 +122,12 @@ public final class InvoiceMgr{
         return instance;
     }
 
+    /**
+     * Creates invoice object from order made
+     * 
+     * @param order
+     * @return Invoice
+     */
     public Invoice createInvoice(Order order){
         Invoice invoice = new Invoice(order, this.invoiceId);
         invoices.put(this.invoiceId, invoice);
@@ -125,6 +136,12 @@ public final class InvoiceMgr{
         return invoice;
     }
 
+    /**
+     * add price filter to the invoice
+     * 
+     * @param invoice id
+     * 
+     */
     private void choosePriceFilter(int invoiceid){
         Invoice invoice = this.invoices.get(invoiceid);
         // Need depends on KT & Ben
@@ -139,14 +156,31 @@ public final class InvoiceMgr{
         invoice.addPriceFilters(serviceChargeFilter);
     }
     
+    /**
+     * Check if invoice exists by invoice id
+     * 
+     * @param invoice id
+     * @return true if invoice exists else false
+     */
     public boolean checkInvoice(int invoiceid) {
         return this.invoices.containsKey(invoiceid);
     }
 
+    /**
+     * Get invoice by invoice id
+     * 
+     * @param invoice id
+     * @return Invoice
+     */
     public Invoice getOrder(int invoiceid) {
         return this.invoices.get(invoiceid);
     }
 
+    /**
+     * Get all invoices
+     * 
+     * @return invoices
+     */
     public HashMap<Integer,Invoice> getInvoicesMap() {
         return this.invoices;
     }

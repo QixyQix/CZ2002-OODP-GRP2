@@ -41,10 +41,10 @@ public final class ReservationMgr {
      * Creates and returns Reservation object
      * 
      * @author Eang Sokunthea
-     * @param customer Customer object
-     * @param date     date and time
-     * @param noOfPax  number of pax at the table
-     * @param table    Table object
+     * @param customer        Customer object
+     * @param checkInDateTime date and time
+     * @param noOfPax         number of pax at the table
+     * @param table           Table object
      * @return Reservation object
      */
     public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table) {
@@ -81,7 +81,7 @@ public final class ReservationMgr {
      * Removes a reservation
      * 
      * @author Eang Sokunthea
-     * @param reservationMade
+     * @param reservationMade Reservation object
      */
     public void removeReservation(Reservation reservationMade) {
         this.reservations.remove(reservationMade.getreservationID());

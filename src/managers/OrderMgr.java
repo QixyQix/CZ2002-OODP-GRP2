@@ -144,8 +144,8 @@ public final class OrderMgr {
      * @param noOfPax  number of pax at the table
      * @return Order object
      */
-    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noofpax) {
-        Table table = this.allocateTable(date, noofpax);
+    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noOfPax) {
+        Table table = this.allocateTable(date, noOfPax);
 
         Order order = new Order(staff, customer, table, date, orderId);
         orders.put(orderId, order);

@@ -126,10 +126,10 @@ public final class CustomerMgr {
      * 
      * @author Zong Yu Lee
      * @author Lim Yan Kai
-     * @param memebership customer membership
-     * @param name        customer name
-     * @param gender      customer gender
-     * @param contact     customer contact number
+     * @param membership customer membership
+     * @param name       customer name
+     * @param gender     customer gender
+     * @param contact    customer contact number
      * @return Customer object if customer has not been created before, null if
      *         customer data exists
      */

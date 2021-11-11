@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"managers","l":"CustomerMgr"},{"p":"managers","l":"InvoiceMgr"},{"p":"managers","l":"MenuItemMgr"},{"p":"managers","l":"OrderMgr"},{"p":"managers","l":"ReservationMgr"},{"p":"managers","l":"SalesReportMgr"},{"p":"managers","l":"StaffMgr"},{"p":"managers","l":"TableMgr"}];updateSearchResults();

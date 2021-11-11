@@ -142,7 +142,7 @@ public final class SalesReportMgr {
      * Create a new Report object
      * 
      * @author Zong Yu Lee
-     * @param date date
+     * @param targetDay date
      * 
      */
     public void createReport(LocalDate targetDay) {

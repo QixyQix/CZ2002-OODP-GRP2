@@ -4,9 +4,11 @@ import managers.TableMgr;
 
 import java.time.LocalDateTime;
 
-public class TableUI extends UserInterface{
+public class TableUI extends UserInterface {
     private static TableUI instance;
-    private TableUI() {};
+
+    private TableUI() {
+    };
 
     /**
      * Returns the TableMgr instance and creates an instance if it does not exist
@@ -22,8 +24,9 @@ public class TableUI extends UserInterface{
 
     public void displayOptions() {
         System.out.println("====Table Manager====");
-        System.out.println("(1) Check table availability");
+        System.out.println("(1) View table availability");
         System.out.println("(2) Create tables");
+        System.out.println("(3) View all tables");
         System.out.println("(-1) Exit");
     }
 
@@ -39,19 +42,21 @@ public class TableUI extends UserInterface{
             case 1:
                 noOfPax = super.getInputInt("How many pax?: ");
                 date = super.getInputDateTime("Which date and time? (yyyy-MM-dd HH:mm): ");
-             
-                TableMgr.getInstance().checkTableAvailability(noOfPax, date);
+
+                TableMgr.getInstance().printTableAvailability(noOfPax, date);
                 break;
             case 2:
                 int idCounter = 0;
                 for (int j = 2; j <= 10; j = j + 2) {
-                    int noOfTablePax = getInputInt("How many tables of " + j + " pax: ");
-                    for (int i = 0; i < noOfTablePax; i++) {
-                        TableMgr.getInstance().createTable(noOfTablePax, ++idCounter);
+                    int noOfTableOfJPax = getInputInt("How many tables of " + j + " pax: ");
+                    for (int i = 0; i < noOfTableOfJPax; i++) {
+                        TableMgr.getInstance().createTable(j, ++idCounter);
                     }
                 }
                 break;
-              
+            case 3:
+                TableMgr.getInstance().printAllTables();
+            break;
             }
         } while (option != -1);
     }

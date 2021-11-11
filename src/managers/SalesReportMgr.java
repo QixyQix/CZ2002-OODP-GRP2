@@ -102,6 +102,11 @@ public final class SalesReportMgr {
         }
     }
 
+    /**
+     * Returns the SalesReportMgr instance and creates an instance if it does not exist
+     * 
+     * @return
+     */
     public static SalesReportMgr getInstance(){
         if(instance == null){
             instance = new SalesReportMgr();
@@ -109,6 +114,12 @@ public final class SalesReportMgr {
         return instance;
     }
 
+    /**
+     * Add invoice to report
+     * 
+     * @param report, invoices, date
+     * 
+     */
     private void addInvoiceToReport(Report report, HashMap<Integer,Invoice> invoices, LocalDate targetDay){
         for(HashMap.Entry<Integer,Invoice> entry : invoices.entrySet()){
             Invoice invoice = entry.getValue();
@@ -118,6 +129,12 @@ public final class SalesReportMgr {
         }
     }
 
+    /**
+     * Create a new report
+     * 
+     * @param date
+     * 
+     */
     public void createReport(LocalDate targetDay) {
         // end of the day
         //error handling;
@@ -132,6 +149,12 @@ public final class SalesReportMgr {
         reportId++;
     }
 
+    /**
+     * Finds a report by date
+     * 
+     * @param date
+     * @return report
+     */
     private Report findReportByDay(LocalDate targetDay) {
         return this.reports.get(this.reports_day.get(targetDay));
     }
@@ -148,11 +171,23 @@ public final class SalesReportMgr {
         return menuItemTotalRevenue;
     }
 
+    /**
+     * Print total revenue made
+     * 
+     * @param total revenue
+     * 
+     */
     private void printTotalRevenue(double totalrevenue){
         System.out.println("Total Revenue : " + totalrevenue + "Sgd ");
         System.out.println("including discounts and taxes");
     }
 
+    /**
+     * Print total revenue by Menu item
+     * 
+     * @param menu item total revenue
+     * 
+     */
     private void printMenuItemTotalRevenue(TreeMap<MenuItem,Double> menuItemTotalRevenue){
         System.out.println("Details Revenue Report for each MenuItem");
         for( MenuItem item : menuItemTotalRevenue.keySet()){
@@ -161,6 +196,12 @@ public final class SalesReportMgr {
         }
     }
 
+    /**
+     * Print report by start and end date and update total revenue and total revenue of that specific menu item
+     * 
+     * @param start date, end date, total, items
+     * 
+     */
     public void getReport(LocalDate startDate, LocalDate endDate, boolean total, boolean items) {
         // TODO for UI, tranlate month to startdate to enddate)
         if(!total & !items) return;

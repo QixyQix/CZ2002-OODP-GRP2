@@ -15,19 +15,15 @@ import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
-public final class InvoiceMgr{
+public final class InvoiceMgr {
 
     private static InvoiceMgr instance;
-    private HashMap<Integer,Invoice> invoices;
+    private HashMap<Integer, Invoice> invoices;
     private int invoiceId;
 
-    
-    /**
-     * Constructor
-     */
-    private InvoiceMgr(){
+    private InvoiceMgr() {
         try {
-            this.invoices = new HashMap<Integer,Invoice>();
+            this.invoices = new HashMap<Integer, Invoice>();
             loadSavedData();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -35,11 +31,11 @@ public final class InvoiceMgr{
         }
     }
 
-     /***
-     * Serializes and saves the Staffs objects into the data/staffs folder
-     * Creates the data/staffs folder if it does not exist
+    /***
+     * Serializes and saves the invoice objects into the data/invoice folder Creates
+     * the data/invoice folder if it does not exist
      * 
-     * @throws IOException
+     * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
         // Create directory & clear exisring data if needed
@@ -58,12 +54,11 @@ public final class InvoiceMgr{
             FileOutputStream fileOutputStream = new FileOutputStream("./data/invoices/" + invoiceID);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            
             objectOutputStream.writeObject(invoice);
             objectOutputStream.flush();
             objectOutputStream.close();
         }
-        
+
         FileOutputStream fileOutputStream = new FileOutputStream("./data/invoiceId");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
@@ -72,13 +67,15 @@ public final class InvoiceMgr{
         objectOutputStream.close();
 
     }
-    
+
     /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
+     * Reads Serialized invoice data in the data/invoice folder and stores it into
+     * the invoices HashMap
      * 
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException            if stream to file cannot be written to or
+     *                                closed
+     * @throws ClassNotFoundException if serialized data is not of the Customer
+     *                                class
      */
     private void loadSavedData() throws IOException, ClassNotFoundException {
         File dataDirectory = new File("./data/orders");
@@ -87,67 +84,103 @@ public final class InvoiceMgr{
         if (fileList == null)
             return;
 
-        try{
+        try {
             File file = new File("./data/orderId");
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             this.invoiceId = (int) objectInputStream.readInt();
             objectInputStream.close();
-        }catch(Exception e){
-            //System.out.println(e.getMessage());
+        } catch (Exception e) {
+            // System.out.println(e.getMessage());
             this.invoiceId = 1;
         }
 
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-           
+
             Invoice invoice = (Invoice) objectInputStream.readObject();
             this.invoices.put(invoice.getId(), invoice);
             objectInputStream.close();
         }
-        
+
     }
 
-    public static InvoiceMgr getInstance(){
-        if(instance == null){
+    /**
+     * Returns the InvoiceMgr instance and creates an instance if it does not exist
+     * 
+     * @return instance
+     */
+    public static InvoiceMgr getInstance() {
+        if (instance == null) {
             instance = new InvoiceMgr();
         }
         return instance;
     }
 
-    public Invoice createInvoice(Order order){
+    /**
+     * Returns invoice object from order made
+     * 
+     * @param order customer order
+     * @return created invoice
+     */
+    public Invoice createInvoice(Order order) {
         Invoice invoice = new Invoice(order, this.invoiceId);
         invoices.put(this.invoiceId, invoice);
-        this.invoiceId +=1;
+        this.invoiceId += 1;
         this.choosePriceFilter(this.invoiceId);
         return invoice;
     }
 
-    private void choosePriceFilter(int invoiceid){
+    /**
+     * Add price filter to the invoice
+     * 
+     * @param invoiceid id of invoice
+     * 
+     */
+    private void choosePriceFilter(int invoiceid) {
         Invoice invoice = this.invoices.get(invoiceid);
         // Need depends on KT & Ben
         Membership membership = invoice.getOrder().getCustomer().getMembership();
         PriceFilter membershipDiscountFilter = membership.getDiscount();
         // we noted this for membership class
         invoice.addPriceFilters(membershipDiscountFilter);
-        
+
         PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
-        PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.SERVICE_CHARGE, 10);
+        PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE,
+                TaxFilterNameEnum.SERVICE_CHARGE, 10);
         invoice.addPriceFilters(gstFilter);
         invoice.addPriceFilters(serviceChargeFilter);
     }
-    
+
+    /**
+     * Returns true or false depending on whether the invoice corresponding to the
+     * invoice id exists
+     * 
+     * @param invoiceid id of invoice
+     * @return true if invoice exists, false if invoice does not exist
+     */
     public boolean checkInvoice(int invoiceid) {
         return this.invoices.containsKey(invoiceid);
     }
 
+    /**
+     * Returns Invoice object corresponding to the invoice id
+     * 
+     * @param invoiceid id of invoice
+     * @return Invoice object
+     */
     public Invoice getOrder(int invoiceid) {
         return this.invoices.get(invoiceid);
     }
 
-    public HashMap<Integer,Invoice> getInvoicesMap() {
+    /**
+     * Returns Invoices hashmap
+     * 
+     * @return invoices hashmap
+     */
+    public HashMap<Integer, Invoice> getInvoicesMap() {
         return this.invoices;
     }
 }

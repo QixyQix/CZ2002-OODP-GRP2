@@ -11,8 +11,6 @@ public class DiscountFilter implements PriceFilter, Serializable{
     private double amount;
     private PriceFilterTypeEnum type;
     private DiscountFilterNameEnum name;
-
-    public DiscountFilter(){}
     
     public DiscountFilter(PriceFilterTypeEnum type, DiscountFilterNameEnum name, double amount){
         this.amount = amount;

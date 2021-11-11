@@ -1,26 +1,30 @@
 package ui;
 
 import entities.Order;
+import entities.Staff;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
 import managers.CustomerMgr;
 import managers.MenuItemMgr;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public final class OrderUI extends UserInterface {
     private static OrderUI INSTANCE;
     private Scanner sc;
+    private Staff staff;
 
-    private OrderUI() {
+    private OrderUI(Staff staff) {
         super();
+        this.staff = staff;
         this.sc = new Scanner(System.in);
     }
 
-    public static OrderUI getInstance() {
+    public static OrderUI getInstance(Staff staff) {
         if (INSTANCE == null) {
-            INSTANCE = new OrderUI();
+            INSTANCE = new OrderUI(staff);
         }
 
         return INSTANCE;
@@ -86,19 +90,16 @@ public final class OrderUI extends UserInterface {
     }
 
     private void createOrder() {
+        LocalDateTime date = LocalDateTime.now();
 
-        String customerPhoneNumber;
-        Customer customer;
-
-
-        while(true) {
-            customerPhoneNumber = super.getInputString("Customer phone number");
-            if (CustomerMgr.getInstance().checkExististingCustomer(customerPhoneNumber)) {
-                customer = CustomerMgr.getInstance().getExistingCustomer(customerPhoneNumber);
-            }
-            // } else {
-            //     super.getInputString("Please enter your phone number");        
-            // }
+        Integer noofpax = super.getInputInt("No of pax");
+        String customerPhoneNumber = super.getInputString("Customer phone number");
+        if (!CustomerMgr.getInstance().checkExistingCustomer(customerPhoneNumber)) {
+            CustomerUI.getInstance().showMenu();
+        } else {
+            Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerPhoneNumber);
+            Order order = OrderMgr.getInstance().createOrder(this.staff, customer, date, noofpax);
+            System.out.println("Order has been created. Your order id is: " + order.getId());
         }
     }
 

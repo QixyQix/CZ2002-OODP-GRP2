@@ -68,7 +68,7 @@ public class MainUI extends UserInterface{
                     MenuItemUI.getInstance().showMenu();
                     break;
                 case 2:
-                    OrderUI.getInstance().showMenu();
+                    OrderUI.getInstance(staff).showMenu();
                     break;
                 case 3: 
                     ReservationUI.getInstance().selectOption();

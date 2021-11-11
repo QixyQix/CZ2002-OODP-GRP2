@@ -1,8 +1,6 @@
 package entities;
 import java.util.TreeMap;
 
-import managers.MenuItemMgr;
-
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,6 +25,8 @@ public class Order implements Serializable{
         this.table = table;
         this.date = date;
         this.orderid = orderid;
+        this.orderedItems = new TreeMap<MenuItem, Integer>();
+        this.pendingItems = new ArrayList<MenuItem>();
     }
 
     public Staff getServeby(){

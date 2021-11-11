@@ -21,6 +21,7 @@ public final class CustomerMgr{
     private CustomerMgr() {
         try {
             this.customers = new HashMap<Integer, Customer>();
+            this.phonetoid = new HashMap<String, Integer>();
             loadSavedData();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -115,7 +116,7 @@ public final class CustomerMgr{
 
 
     public Customer createCustomer(Membership membership, String name, String gender, String contact){
-        if (getExistingCustomer(contact) != null) {
+        if (checkExistingCustomer(contact)) {
             System.out.println("Customer Contains already");
             return null;
         }
@@ -137,7 +138,7 @@ public final class CustomerMgr{
     }
 
 
-    public boolean checkExististingCustomer(String phoneNumber) {
+    public boolean checkExistingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
 
@@ -145,7 +146,7 @@ public final class CustomerMgr{
         Customer customer = getExistingCustomer(phoneNumber);
         
         if(customer == null) {
-            System.out.println("cusotmer not found");
+            System.out.println("customer not found");
             return;
         }
 

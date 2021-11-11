@@ -29,12 +29,15 @@ public class ReservationUI extends UserInterface {
     public void selectOption() {
         String customerContact;
         while(true){
-            System.out.println("0. Go back to Main Page");
-            System.out.println("1. Create a new reservation ");
-            System.out.println("2. Check/remove reservation booking");
-            System.out.println("3. Print Reservation");
+            System.out.println("==========Reservation Manager==========");
+            System.out.println("(0) Go back to Main Page");
+            System.out.println("(1) Create a new reservation ");
+            System.out.println("(2) Check/remove reservation booking");
+            System.out.println("(3) Print Reservation");
+            System.out.println("=======================================");
+
           
-            int choice = super.getInputInt("Please enter your choice: ", 0,3);
+            int choice = super.getInputInt("Please enter your choice: ");
             
             switch (choice) {
                 case 0: 
@@ -56,13 +59,14 @@ public class ReservationUI extends UserInterface {
 
             } 
         }
-        
     }
+
     private void printReservation(Reservation res){
         System.out.println("There is a reservation made by the customer");
         System.out.println(res.toString());
         System.out.println();
     }
+    
     private void createReservationUI(String customerContact) {
         //should we check whether this customer have reservation or not?? Since we allow one custoemr to have one reservation..
         Reservation res = ReservationMgr.getInstance().checkReservation(customerContact);	
@@ -71,7 +75,6 @@ public class ReservationUI extends UserInterface {
             super.waitEnter();
             return;
         }
-
         // Up to here is edited by ZY, not sure yet, need confirmation..
 
         System.out.println("Please fill in your requirements: ");

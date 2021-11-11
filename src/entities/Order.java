@@ -11,7 +11,7 @@ public class Order implements Serializable{
     private double totalPrice;
     private TreeMap<MenuItem, Integer> orderedItems;
     private ArrayList<MenuItem> pendingItems;
-    private Invoice invoice;
+    //private Invoice invoice;
     private Customer customer;
     private Table table;
     private LocalDateTime date;     
@@ -91,7 +91,7 @@ public class Order implements Serializable{
     }
 
     // Suggest no setter for ordereditems (not make sesnse)
-
+    /*
     public Invoice getInvoice(){
         return this.invoice;
     }
@@ -99,7 +99,7 @@ public class Order implements Serializable{
     public void setInvoice(Invoice invoice){
         this.invoice = invoice;
     }
-
+    */
     public Customer getCustomer(){
         return this.customer;
     }

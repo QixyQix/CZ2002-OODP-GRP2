@@ -19,6 +19,7 @@ public class MainUI extends UserInterface{
     
     private boolean endsystem() {
         // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
+        
         try{
             CustomerMgr.getInstance().saveData();
             InvoiceMgr.getInstance().saveData();
@@ -38,6 +39,7 @@ public class MainUI extends UserInterface{
             System.out.println("Data are not save properly !"); 
             return false;
         }
+        
     }
 
 
@@ -46,7 +48,7 @@ public class MainUI extends UserInterface{
         System.out.println("(1) Alter MenuItem/Promotion");
         System.out.println("(2) Open Order");
         System.out.println("(3) Open Reservation");
-        System.out.println("(4) Check Table Availability");
+        System.out.println("(4) Create/Check Table Availability");
         System.out.println("(5) Print Order invoice");
         System.out.println("(6) Print Sale Revenue Report");
         System.out.println("(7) End of the day (report)");

@@ -29,6 +29,7 @@ public class Invoice implements Serializable {
         this.order = order;
         this.finalPrice = order.getTotalPrice();
         this.invoiceId = invoiceId;
+        this.priceFilters = new ArrayList<PriceFilter>();
     }
     
 

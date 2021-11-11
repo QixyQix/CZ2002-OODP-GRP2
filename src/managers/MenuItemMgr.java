@@ -15,13 +15,16 @@ import exceptions.DuplicateIDException;
 import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
 
+/***
+ * Represents a menu item manager
+ * 
+ * @author Cho Qi Xiang
+ * 
+ */
 public final class MenuItemMgr {
-    private static MenuItemMgr INSTANCE;
+    private static MenuItemMgr instance;
     private HashMap<Integer, MenuItem> items;
 
-    /**
-     * Constructor
-     */
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
@@ -35,16 +38,28 @@ public final class MenuItemMgr {
     /**
      * Returns the MenuItemMgr instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return instance
      */
     public static MenuItemMgr getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MenuItemMgr();
+        if (instance == null) {
+            instance = new MenuItemMgr();
         }
 
-        return INSTANCE;
+        return instance;
     }
 
+    /**
+     * Create a menu item
+     * 
+     * @param type         menu item type
+     * @param name         menu item name
+     * @param description  menu item description
+     * @param price        menu item price
+     * @param id           menu item id
+     * @param packageItems menu items in a package
+     * @throws DuplicateIDException if menu item with the same id exists
+     * 
+     */
     public void createMenuItem(String type, String name, String description, double price, int id,
             ArrayList<MenuItem> packageItems) throws DuplicateIDException {
         if (this.items.containsKey(id)) {
@@ -63,22 +78,22 @@ public final class MenuItemMgr {
     }
 
     /**
-     * Checks if an ID is available to be used Returns true if ID can be assigned to
-     * a new object, false otherwise
+     * Returns true or false depending on whether id is in use
      * 
-     * @param id
-     * @return
+     * @param id menu item id
+     * @return true if id can be assigned to new object, false if id already in use
      */
     public boolean checkIDAvailable(int id) {
         return !this.items.containsKey(id);
     }
 
     /**
-     * Returns a MenuItem object that that matches the ID
+     * Returns a MenuItem object corresponding to the menu item id
      * 
-     * @param id
-     * @return
-     * @throws IDNotFoundException
+     * @param id menu item id
+     * @return MenuItem object that matches the menu item id
+     * @throws IDNotFoundException if no such menu item corresponding to the id
+     *                             exists
      */
     public MenuItem getMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
@@ -89,22 +104,27 @@ public final class MenuItemMgr {
     }
 
     /***
-     * Returns an array of MenuItem objects that are stored in the MenuItemMgr
+     * Returns an ArrayList of MenuItem objects that are stored in the MenuItemMgr
      * 
-     * @return
-     * @throws IDNotFoundException
+     * @return ArrayList of MenuItem objects
+     * @throws IDNotFoundException if no such menu item corresponding to the id
+     *                             exists
      */
     public ArrayList<MenuItem> getAllMenuItems() throws IDNotFoundException {
         ArrayList<MenuItem> items = new ArrayList<MenuItem>();
-
-        int i = 0;
         for (int id : this.items.keySet()) {
             items.add(getMenuItemByID(id));
         }
-
         return items;
     }
 
+    /***
+     * Deletes menu item corresponding to menu item id
+     * 
+     * @param id menu item id
+     * @throws IDNotFoundException if no such menu item corresponding to the id
+     *                             exists
+     */
     public void deleteMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();
@@ -118,7 +138,7 @@ public final class MenuItemMgr {
                 for (int i = 0; i < packageItems.size(); i++) {
                     if (packageItems.get(i).getId() == id) {
                         packageItems.remove(i);
-                        System.out.println("Removed from package "+menuPackage.getName()+" items");
+                        System.out.println("Removed from package " + menuPackage.getName() + " items");
                         i--;
                     }
                 }
@@ -131,7 +151,7 @@ public final class MenuItemMgr {
      * Serializes and saves the MenuItem objects into the data/menuItems folder
      * Creates the data/menuItems folder if it does not exist
      * 
-     * @throws IOException
+     * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
         // Create directory & clear exisring data if needed
@@ -160,8 +180,10 @@ public final class MenuItemMgr {
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException            if stream to file cannot be written to or
+     *                                closed
+     * @throws ClassNotFoundException if serialized data is not of the Customer
+     *                                class
      */
     public void loadSavedData() throws IOException, ClassNotFoundException {
         File dataDirectory = new File("./data/menuItems");

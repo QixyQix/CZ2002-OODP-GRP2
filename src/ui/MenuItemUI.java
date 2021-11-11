@@ -33,6 +33,7 @@ public final class MenuItemUI extends UserInterface {
         int option = 0;
         do {
             displayOptions();
+            option = super.getInputInt("Please enter your choice: ");
             try {
                 option = sc.nextInt();
                 sc.nextLine();
@@ -55,17 +56,17 @@ public final class MenuItemUI extends UserInterface {
                 deleteMenuItem();
                 break;
             }
-        } while (option != -1);
+        } while (option != 0);
     }
 
     private void displayOptions() {
-        System.out.println("====Menu Item Manager====");
+        System.out.println("======Menu Item Manager======");
+        System.out.println("(0) Go Back to Main Page");
         System.out.println("(1) Show current MenuItems");
         System.out.println("(2) Create a Menu Item");
         System.out.println("(3) Edit a Menu Item");
         System.out.println("(4) Delete a Menu Item");
-        System.out.println("(-1) Exit");
-        System.out.println("Enter your selection: ");
+        System.out.println("=============================");
     }
 
     private void showCurrentMenuItems() {

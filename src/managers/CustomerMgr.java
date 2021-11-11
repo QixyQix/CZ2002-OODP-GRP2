@@ -3,7 +3,6 @@ package managers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,10 +10,16 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
 
-public final class CustomerMgr{
+/***
+ * Represents a customer manager
+ * 
+ * @author Zong Yu Lee
+ * @author Lim Yan Kai
+ */
+public final class CustomerMgr {
 
     private static CustomerMgr instance;
-    private HashMap<Integer,Customer> customers;
+    private HashMap<Integer, Customer> customers;
     private HashMap<String, Integer> phonetoid;
     private int customerId;
 
@@ -29,11 +34,11 @@ public final class CustomerMgr{
         }
     };
 
-     /***
+    /***
      * Serializes and saves the Customers objects into the data/customers folder
      * Creates the data/customers folder if it does not exist
      * 
-     * @throws IOException
+     * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
         // Create directory & clear exisring data if needed
@@ -65,13 +70,15 @@ public final class CustomerMgr{
         objectOutputStream.close();
 
     }
-    
+
     /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
+     * Reads Serialized Customer data in the data/customers folder and stores it
+     * into the customers HashMap
      * 
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException            if stream to file cannot be written to or
+     *                                closed
+     * @throws ClassNotFoundException if serialized data is not of the Customer
+     *                                class
      */
     private void loadSavedData() throws IOException, ClassNotFoundException {
         File dataDirectory = new File("./data/customers");
@@ -83,70 +90,103 @@ public final class CustomerMgr{
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-           
+
             Customer customer = (Customer) objectInputStream.readObject();
             this.customers.put(customer.getCustomerid(), customer);
             objectInputStream.close();
         }
-        try{
+        try {
             FileInputStream fileInputStream = new FileInputStream("customerId");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             this.customerId = (int) objectInputStream.readObject();
             objectInputStream.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             this.customerId = 1;
         }
     }
+
     /**
-     * Returns the MenuItemMgr instance and creates an instance if it does not exist
+     * Returns the CustomerMgr instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return instance
      */
-    public static CustomerMgr getInstance(){
-        if(instance == null){
+    public static CustomerMgr getInstance() {
+        if (instance == null) {
             instance = new CustomerMgr();
         }
         return instance;
     }
 
-    public HashMap<Integer,Customer> getInvoicesMap() {
+    /**
+     * Returns hashmap of invoice id and Customer object
+     * 
+     * @return hashmap of invoice id and Customer object
+     */
+    public HashMap<Integer, Customer> getInvoicesMap() {
         return this.customers;
     }
 
-
-    public Customer createCustomer(Membership membership, String name, String gender, String contact){
-        if (checkExistingCustomer(contact)) {
+    /**
+     * Creates Customer object
+     * 
+     * @param membership customer membership
+     * @param name       customer name
+     * @param gender     customer gender
+     * @param contact    customer contact number
+     * @return Customer object if customer has not been created before, null if
+     *         customer data exists
+     */
+    public Customer createCustomer(Membership membership, String name, String gender, String contact) {
+        if (getExistingCustomer(contact) != null) {
             System.out.println("Customer Contains already");
             return null;
         }
 
-        Customer customer = new Customer(membership,  customerId,  name,  gender,  contact);
-        
-        this.phonetoid.put(contact,customerId);
-        this.customers.put(customerId,customer);
+        Customer customer = new Customer(membership, customerId, name, gender, contact);
+
+        this.phonetoid.put(contact, customerId);
+        this.customers.put(customerId, customer);
 
         customerId++;
-        
+
         return customer;
 
     }
 
-    public Customer getExistingCustomer(String phoneNumber){
+    /**
+     * Returns Customer object corresponding to the contact number
+     * 
+     * @param phoneNumber customer contact number
+     * @return Customer object corresponding to the phone number
+     */
+    public Customer getExistingCustomer(String phoneNumber) {
         int cusid = this.phonetoid.get(phoneNumber);
         return this.customers.get(cusid);
     }
 
-
-    public boolean checkExistingCustomer(String phoneNumber) {
+    /**
+     * Check if customer exists by contact number
+     * 
+     * @param phoneNumber customer contact number
+     * @return true if Customer object exists, false if customer does not exist
+     */
+    public boolean checkExististingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
 
-    public void updateMembership(String phoneNumber, Membership membership){
+    /**
+     * Update customer membership
+     * 
+     * @param phoneNumber customer contact number
+     * @param membership  customer membership
+     * 
+     */
+    public void updateMembership(String phoneNumber, Membership membership) {
         Customer customer = getExistingCustomer(phoneNumber);
-        
-        if(customer == null) {
-            System.out.println("customer not found");
+
+        if (customer == null) {
+            System.out.println("cusotmer not found");
             return;
         }
 

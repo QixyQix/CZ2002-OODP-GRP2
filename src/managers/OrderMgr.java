@@ -14,18 +14,14 @@ import entities.Customer;
 import entities.Table;
 import entities.Staff;
 
-
 public final class OrderMgr {
-    private static OrderMgr INSTANCE;
+    private static OrderMgr instance;
     private HashMap<Integer, Order> orders;
     private int orderId;
-    
-    /**
-     * Constructor
-     */
-    private OrderMgr(){
+
+    private OrderMgr() {
         try {
-            this.orders = new HashMap<Integer,Order>();
+            this.orders = new HashMap<Integer, Order>();
             loadSavedData();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -33,11 +29,11 @@ public final class OrderMgr {
         }
     }
 
-     /***
-     * Serializes and saves the Staffs objects into the data/staffs folder
-     * Creates the data/staffs folder if it does not exist
+    /***
+     * Serializes and saves the Staffs objects into the data/staffs folder Creates
+     * the data/staffs folder if it does not exist
      * 
-     * @throws IOException
+     * @throws IOException if stream to file cannot be written to or closed
      */
     public void saveData() throws IOException {
         // Create directory & clear exisring data if needed
@@ -56,12 +52,11 @@ public final class OrderMgr {
             FileOutputStream fileOutputStream = new FileOutputStream("./data/orders/" + orderID);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            
             objectOutputStream.writeObject(order);
             objectOutputStream.flush();
             objectOutputStream.close();
         }
-        
+
         FileOutputStream fileOutputStream = new FileOutputStream("./data/orderId");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
@@ -70,13 +65,15 @@ public final class OrderMgr {
         objectOutputStream.close();
 
     }
-    
+
     /***
      * Reads Serialized MenuItem data in the data/menuItems folder and stores it
      * into the items HashMap
      * 
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException            if stream to file cannot be written to or
+     *                                closed
+     * @throws ClassNotFoundException if serialized data is not of the Customer
+     *                                class
      */
     private void loadSavedData() throws IOException, ClassNotFoundException {
         File dataDirectory = new File("./data/orders");
@@ -85,135 +82,142 @@ public final class OrderMgr {
         if (fileList == null)
             return;
 
-        try{
+        try {
             File file = new File("./data/orderId");
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             this.orderId = (int) objectInputStream.readInt();
             objectInputStream.close();
-        }catch(Exception e){
-            //System.out.println(e.getMessage());
+        } catch (Exception e) {
+            // System.out.println(e.getMessage());
             this.orderId = 1;
         }
 
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-           
+
             Order order = (Order) objectInputStream.readObject();
             this.orders.put(order.getId(), order);
             objectInputStream.close();
         }
-        
+
     }
 
     /**
      * Returns the OrderMgr instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return instance
      */
-    public static OrderMgr getInstance(){
-        if(INSTANCE == null){
-            INSTANCE = new OrderMgr();
+    public static OrderMgr getInstance() {
+        if (instance == null) {
+            instance = new OrderMgr();
         }
 
-        return INSTANCE;
+        return instance;
     }
 
     /**
-     * Allocate a table if available 
+     * Returns a Table object that is available
      * 
-     * @param date, no of pax
-     * @return table if available else table return is null
+     * @param date    date and time
+     * @param noOfPax number of pax at the table
+     * @return Table object if available, null if no available tables
      */
-    public Table allocateTable(LocalDateTime date, int noofpax){
-        // TO BE DONE
-        Table table = TableMgr.getInstance().findAvailTable(date,noofpax);
+    public Table allocateTable(LocalDateTime date, int noOfPax) {
+        Table table = TableMgr.getInstance().findAvailTable(date, noOfPax);
         return table;
     }
 
     /**
-     * Create order 
+     * Creates and returns Order object
      * 
-     * @param staff, customer, date, noOfPax
-     * @return Order
+     * @param staff    staff object
+     * @param customer customer object
+     * @param date     date and time
+     * @param noOfPax  number of pax at the table
+     * @return Order object
      */
-    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noofpax){
-        Table table = this.allocateTable(date,noofpax);
+    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noofpax) {
+        Table table = this.allocateTable(date, noofpax);
 
-        Order order = new Order(staff,  customer, table, date, orderId);
-        orders.put(orderId,order);
+        Order order = new Order(staff, customer, table, date, orderId);
+        orders.put(orderId, order);
 
         orderId++;
         return order;
     }
 
     /**
-     * Add menu item to the order 
+     * Add MenuItem object to the order
      * 
-     * @param menu item, order
+     * @param menuItem MenuItem object
+     * @param order    Order object
      * 
      */
-    public void addItem(MenuItem item, Order order){
-        order.addPendingItems(item);
+    public void addItem(MenuItem menuItem, Order order) {
+        order.addPendingItems(menuItem);
     }
 
     /**
-     * Make order
+     * Create Order object
      * 
-     * @param order
+     * @param order Order object
      * 
      */
-    public void makeOrder(Order order){
+    public void makeOrder(Order order) {
         order.addToOrderedItems();
     }
 
     /**
      * Close order and create invoice by calling invoiceMgr
      * 
-     * @param order, invoiceMgr
+     * @param order      Order object
+     * @param invoiceMgr InvoiceMgr obejct
      * 
      */
-    public void closeOrder(Order order, InvoiceMgr invoiceMgr){
+    public void closeOrder(Order order, InvoiceMgr invoiceMgr) {
         // deallocateTable()
         invoiceMgr.createInvoice(order);
     }
 
     /**
-     * Check if the order exists by order id
+     * Returns true or false depending on whether the order corresponding to the
+     * order id exists
      * 
-     * @param order id
-     * @return true if order exists else false
+     * @param orderId id of order
+     * @return true if order exists, false if order does not exist
      */
-    public boolean checkAvailableOrder(int orderid) {
-        return this.orders.containsKey(orderid);
+    public boolean checkAvailableOrder(int orderId) {
+        return this.orders.containsKey(orderId);
     }
 
     /**
-     * Get order by order id
+     * Returns Order object corresponding to order id
      * 
-     * @param order id
-     * @return Order
+     * @param orderId id of order
+     * @return Order object
      */
-    public Order getOrder(int orderid) {
-        return this.orders.get(orderid);
+    public Order getOrder(int orderId) {
+        return this.orders.get(orderId);
     }
 
     /**
-     * Delete order item from a speciifc order
+     * Delete menuItem item from a speciifc order
      * 
-     * @param order, menu item, qty
+     * @param menuItem MenuItem object
+     * @param qty      quantity of MenuItem
+     * @param order    Order object
      * 
      */
-    public void deleteOrderItem(MenuItem MenuItem, int qty, Order order) {
-        //Order order = this.getOrder(orderId);
-        order.deleteOrderItem(MenuItem, qty);
+    public void deleteOrderItem(MenuItem menuItem, int qty, Order order) {
+        // Order order = this.getOrder(orderId);
+        order.deleteOrderItem(menuItem, qty);
     }
 
     /*
-    public HashMap<Integer, Order> getorders(){
-        return orders;
-    }
-    */
+     * public HashMap<Integer, Order> getorders(){ return orders; }
+     */
+
 }

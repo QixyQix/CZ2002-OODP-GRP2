@@ -124,9 +124,14 @@ public class TableMgr {
      * 
      */
     public void printAllTables() {
-        for (Table table : tables.values()) {
-            System.out.println(table.toString());
+        if (tables.isEmpty()) {
+            System.out.println("No tables have been created");
+        } else {
+            for (Table table : tables.values()) {
+                System.out.println(table.toString());
+            }
         }
+
     }
 
     /***

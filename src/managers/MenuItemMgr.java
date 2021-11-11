@@ -15,6 +15,12 @@ import exceptions.DuplicateIDException;
 import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
 
+/***
+ * Represents a menu item manager
+ * 
+ * @author Cho Qi Xiang
+ * 
+ */
 public final class MenuItemMgr {
     private static MenuItemMgr instance;
     private HashMap<Integer, MenuItem> items;
@@ -106,14 +112,19 @@ public final class MenuItemMgr {
      */
     public ArrayList<MenuItem> getAllMenuItems() throws IDNotFoundException {
         ArrayList<MenuItem> items = new ArrayList<MenuItem>();
-
         for (int id : this.items.keySet()) {
             items.add(getMenuItemByID(id));
         }
-
         return items;
     }
 
+    /***
+     * Deletes menu item corresponding to menu item id
+     * 
+     * @param id menu item id
+     * @throws IDNotFoundException if no such menu item corresponding to the id
+     *                             exists
+     */
     public void deleteMenuItemByID(int id) throws IDNotFoundException {
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();

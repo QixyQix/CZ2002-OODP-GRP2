@@ -15,6 +15,11 @@ import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
+/***
+ * Represents an invoice manager
+ * 
+ * @author Zong Yu Lee
+ */
 public final class InvoiceMgr {
 
     private static InvoiceMgr instance;

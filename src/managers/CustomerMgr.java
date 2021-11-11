@@ -10,6 +10,12 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
 
+/***
+ * Represents a customer manager
+ * 
+ * @author Zong Yu Lee
+ * @author Lim Yan Kai
+ */
 public final class CustomerMgr {
 
     private static CustomerMgr instance;
@@ -111,6 +117,11 @@ public final class CustomerMgr {
         return instance;
     }
 
+    /**
+     * Returns hashmap of invoice id and Customer object
+     * 
+     * @return hashmap of invoice id and Customer object
+     */
     public HashMap<Integer, Customer> getInvoicesMap() {
         return this.customers;
     }
@@ -118,10 +129,10 @@ public final class CustomerMgr {
     /**
      * Creates Customer object
      * 
-     * @param memebership customer membership
-     * @param name        customer name
-     * @param gender      customer gender
-     * @param contact     customer contact number
+     * @param membership customer membership
+     * @param name       customer name
+     * @param gender     customer gender
+     * @param contact    customer contact number
      * @return Customer object if customer has not been created before, null if
      *         customer data exists
      */

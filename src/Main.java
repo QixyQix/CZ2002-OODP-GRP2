@@ -24,7 +24,7 @@ class Main{
         ReservationMgr.getInstance();
         
     
-        
+        OrderUI.getInstance();
         SalesReportMgr.getInstance();
         //InvoiceMgr.getInstance();
         try{

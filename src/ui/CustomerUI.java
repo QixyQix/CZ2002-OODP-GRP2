@@ -24,7 +24,7 @@ public final class CustomerUI extends UserInterface {
     }
     
     public Customer getCustomer() {
-        String contact = super.getContact("Customer contact: ");
+        String contact = super.getContact("Please enter customer contact: ");
         try {
             return CustomerMgr.getInstance().getExistingCustomer(contact);
         } catch(Exception ex) {

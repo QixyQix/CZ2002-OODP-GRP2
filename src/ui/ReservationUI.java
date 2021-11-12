@@ -48,27 +48,22 @@ public class ReservationUI extends UserInterface {
                 case 3: 
                     this.printReservationUI();
                     break;     
-                
             } 
             super.waitEnter();
-        }while(choice !=0);
+        }while(choice != 0);
     }
 
     
     
     private void createReservationUI() {
         Customer customer = CustomerUI.getInstance().getCustomer();
-        //should we check whether this customer have reservation or not?? Since we allow one custoemr to have one reservation..
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         if(res != null) {
             printReservation(res);
             return;
-        }
-        // Up to here is edited by ZY, not sure yet, need confirmation..
-        
+        }        
 
         System.out.println("Please fill in your requirements: ");
-        
 	    LocalDateTime checkInTime = super.getInputDateTime("Check In time (yyyy-MM-dd HH:mm): ");
 	    int noOfPax = super.getInputInt("Number Of people: ");
 

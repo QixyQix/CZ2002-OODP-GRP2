@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import entities.Entities;
 import entities.Table;
 import enums.TableState;
 import java.time.LocalDateTime;
@@ -18,14 +19,15 @@ import java.time.LocalDateTime;
  * 
  * @author Benjamin Ho JunHao
  */
-public class TableMgr {
+public class TableMgr extends DataMgr {
     private static TableMgr instance;
     private HashMap<Integer, Table> tables;
-
+    private int nextId ;
     private TableMgr() {
         try {
             tables = new HashMap<Integer, Table>();
-            loadSavedData();
+            downcast(super.loadSavedData("tables"));
+            nextId = super.loadNextIdData("tableNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load Tables data");
@@ -33,6 +35,25 @@ public class TableMgr {
 
     };
 
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Table)
+                this.tables.put(id,(Table) object.get(id));
+            else throw new ClassCastException();
+        }
+    }
+
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: tables.keySet()){
+           object.put(id,tables.get(id)); 
+        }
+        return object;
+    }
+    
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "tables", "tableNextId");
+    }
     /**
      * Returns the TableMgr instance and creates an instance if it does not exist
      * 
@@ -139,56 +160,4 @@ public class TableMgr {
 
     }
 
-    /***
-     * Serializes and saves the Table objects into the data/table folder Creates the
-     * data/table folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/table");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
-        }
-
-        for (int tableId : tables.keySet()) {
-            Table table = tables.get(tableId);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/table/" + tableId);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(table);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-    }
-
-    /***
-     * Reads Serialized Table data in the data/table folder and stores it into the
-     * tables HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Table class
-     */
-    public void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/table");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Table table = this.createTableFromSerializedData(objectInputStream.readObject());
-            this.tables.put(table.getId(), table);
-            objectInputStream.close();
-        }
-    }
 }

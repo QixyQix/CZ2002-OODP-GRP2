@@ -9,100 +9,53 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import entities.DiscountFilter;
+import entities.Entities;
 import entities.Membership;
 
-public class MembershipMgr {
+public class MembershipMgr extends DataMgr{
 
     private static MembershipMgr INSTANCE;
     private HashMap<Integer, Membership> membership;
-    private int membershipId;
+    private int nextId;
     /**
      * Constructor
      */
     private MembershipMgr() {
         this.membership = new HashMap<Integer, Membership>();
         try {
-            loadSavedData();
+            downcast(super.loadSavedData("membership"));
+            this.nextId = super.loadNextIdData("membershipNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load Membership data");
         }
     }
 
-    /***
-     * Serializes and saves the Customers objects into the data/customers folder
-     * Creates the data/customers folder if it does not exist
-     * 
-     * @throws IOException
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/membership");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Membership)
+                this.membership.put(id,(Membership) object.get(id));
+            else throw new ClassCastException();
         }
+    }
 
-        for (int id : this.membership.keySet()) {
-            Membership customer = this.membership.get(id);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/membership/" + id);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(customer);
-            objectOutputStream.flush();
-            objectOutputStream.close();
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: membership.keySet()){
+           object.put(id,membership.get(id)); 
         }
-
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/membershipId");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(membershipId);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-
+        return object;
     }
     
-    /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
-     * 
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/membership");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-           
-            Membership membership = (Membership) objectInputStream.readObject();
-            this.membership.put(membership.getId(), membership);
-            objectInputStream.close();
-        }
-        try{
-            FileInputStream fileInputStream = new FileInputStream("membershipId");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.membershipId = (int) objectInputStream.readObject();
-            objectInputStream.close();
-        }catch(Exception e){
-            this.membershipId = 1;
-        }
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "invoices", "invoiceNextId");
     }
 
+    
     public Membership createMembership(DiscountFilter discountFilter) {
-        Membership membership = new Membership(this.membershipId, discountFilter);
-        this.membership.put(this.membershipId, membership);
-        this.membershipId++;
+        Membership membership = new Membership(this.nextId, discountFilter);
+        this.membership.put(this.nextId, membership);
+        this.nextId++;
         return membership;
     }
 

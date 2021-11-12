@@ -1,8 +1,9 @@
 package entities;
 
-public class Customer extends Person {
+
+public class Customer extends Person implements Entities {
     private Membership membership;
-    private int customerid;
+    private int id;
 
     public Customer(){
         super();
@@ -11,7 +12,7 @@ public class Customer extends Person {
     public Customer(Membership membership, int customerid, String name, String gender, String contact) {
         super(name, gender, contact);
         this.membership = membership;
-        this.customerid = customerid;
+        this.id = customerid;
     }
 
     public Membership getMembership() {
@@ -22,12 +23,10 @@ public class Customer extends Person {
         this.membership = membership;
     }
     
-    public int getCustomerid() {
-        return this.customerid;
+    public int getId() {
+        return this.id;
     }
 
-    public void setCustomerid(int customerid) {
-        this.customerid = customerid;
-    }
+  
 
 }

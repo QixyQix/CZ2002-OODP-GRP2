@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import entities.Customer;
+import entities.Entities;
 import entities.Membership;
 
 /***
@@ -16,18 +17,21 @@ import entities.Membership;
  * @author Zong Yu Lee
  * @author Lim Yan Kai
  */
-public final class CustomerMgr {
+public final class CustomerMgr extends DataMgr{
 
     private static CustomerMgr instance;
     private HashMap<Integer, Customer> customers;
     private HashMap<String, Integer> phonetoid;
-    private int customerId;
+    private int nextId;
 
     private CustomerMgr() {
         try {
             this.customers = new HashMap<Integer, Customer>();
             this.phonetoid = new HashMap<String, Integer>();
-            loadSavedData();
+            
+            downcast(super.loadSavedData("customers"));
+            this.nextId  = super.loadNextIdData("CustomernextId");
+
             this.convertToPhone();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -35,84 +39,34 @@ public final class CustomerMgr {
         }
     };
 
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Customer)
+                this.customers.put(id,(Customer) object.get(id));
+            else throw new ClassCastException();
+        }
+    }
+
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: customers.keySet()){
+           object.put(id,customers.get(id)); 
+        }
+        return object;
+    }
+
+    public void saveData() throws IOException{
+        super.saveDataSerialize(upcast(), nextId, "customers","CustomernextId");
+    }
+    
     private void convertToPhone(){
         for(int id : customers.keySet()){
-            Customer cus = customers.get(id);
+            Customer cus = (Customer)customers.get(id);
             phonetoid.put(cus.getContact(), id);
         }
     }
 
-    /***
-     * Serializes and saves the Customers objects into the data/customers folder
-     * Creates the data/customers folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/customers");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
-        }
-
-        for (int customerID : this.customers.keySet()) {
-            Customer customer = this.customers.get(customerID);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/customers/" + customerID);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(customer);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/customerId");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(customerId);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-
-    }
-
-    /***
-     * Reads Serialized Customer data in the data/customers folder and stores it
-     * into the customers HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/customers");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            Customer customer = (Customer) objectInputStream.readObject();
-            this.customers.put(customer.getCustomerid(), customer);
-            objectInputStream.close();
-        }
-        try {
-            FileInputStream fileInputStream = new FileInputStream("customerId");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.customerId = (int) objectInputStream.readObject();
-            objectInputStream.close();
-        } catch (Exception e) {
-            this.customerId = 1;
-        }
-    }
+    
 
     /**
      * Returns the CustomerMgr instance and creates an instance if it does not exist
@@ -127,15 +81,6 @@ public final class CustomerMgr {
     }
 
     /**
-     * Returns hashmap of invoice id and Customer object
-     * 
-     * @return hashmap of invoice id and Customer object
-     */
-    public HashMap<Integer, Customer> getInvoicesMap() {
-        return this.customers;
-    }
-
-    /**
      * Creates Customer object
      * 
      * @param membership customer membership
@@ -147,12 +92,12 @@ public final class CustomerMgr {
      */
     public Customer createCustomer(Membership membership, String name, String gender, String contact) {
 
-        Customer customer = new Customer(membership, customerId, name, gender, contact);
+        Customer customer = new Customer(membership, nextId, name, gender, contact);
 
-        this.phonetoid.put(contact, customerId);
-        this.customers.put(customerId, customer);
+        this.phonetoid.put(contact, nextId);
+        this.customers.put(nextId, customer);
 
-        customerId++;
+        nextId++;
 
         return customer;
 
@@ -166,7 +111,8 @@ public final class CustomerMgr {
      */
     public Customer getExistingCustomer(String phoneNumber) {
         int cusid = this.phonetoid.get(phoneNumber);
-        return this.customers.get(cusid);
+        
+        return (Customer)this.customers.get(cusid);
     }
 
     /**
@@ -190,7 +136,7 @@ public final class CustomerMgr {
         Customer customer = getExistingCustomer(phoneNumber);
 
         if (customer == null) {
-            System.out.println("cusotmer not found");
+            System.out.println("Customer not found");
             return;
         }
 
@@ -198,4 +144,5 @@ public final class CustomerMgr {
         return;
 
     }
+
 }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 
-public class Invoice implements Serializable {
-    private int invoiceId;
+public class Invoice implements Serializable, Entities {
+    private int id;
     private Order order;
     private ArrayList<PriceFilter> priceFilters;
     private double finalPrice;
@@ -25,18 +25,18 @@ public class Invoice implements Serializable {
     }
     public Invoice(){}
 
-    public Invoice(Order order, int invoiceId) {
+    public Invoice(Order order, int id) {
         this.order = order;
         this.finalPrice = order.getTotalPrice();
-        this.invoiceId = invoiceId;
+        this.id = id;
         this.priceFilters = new ArrayList<PriceFilter>();
     }
     
 
     public int getId(){
-        return this.invoiceId;
+        return this.id;
     }
-
+    
     public Order getOrder(){
         return order;
     }
@@ -88,7 +88,7 @@ public class Invoice implements Serializable {
 
         System.out.println(" PROMOTIONAL STUFS");
 
-        System.out.println(" InvoiceNumber : " + this.invoiceId);
+        System.out.println(" InvoiceNumber : " + this.id);
         
     }
     

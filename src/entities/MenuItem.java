@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable{
+public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, Entities{
     private String type;
     private String name;
     private String description;
@@ -54,10 +54,6 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable{
 
     public int getId() {
         return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

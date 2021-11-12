@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 
-public class Reservation implements Serializable {
+public class Reservation implements Serializable, Entities {
     private Customer customer;
     private LocalDateTime checkInTime;
     private int noOfPax;
     private Table table;
-    private int reservationID;
+    private int id;
 
     public Reservation(){}
 
@@ -18,7 +18,7 @@ public class Reservation implements Serializable {
 		this.checkInTime = checkInTime;		
 		this.noOfPax = noOfPax;
 		this.table = table;
-        this.reservationID = id;
+        this.id = id;
 	}
 
     public Customer getCustomer() {
@@ -53,13 +53,10 @@ public class Reservation implements Serializable {
 	}
 
 
-    public int getreservationID() {
-		return reservationID;
+    public int getId() {
+		return id;
 	}
 
-	public void setreservationID(int id) {
-		this.reservationID = id;
-	}
     // depends on CustomerMgr and TableMgr
     @Override 
     public String toString() {

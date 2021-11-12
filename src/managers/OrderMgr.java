@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import entities.Order;
 import entities.MenuItem;
 import entities.Customer;
+import entities.Entities;
 import entities.Table;
 import exceptions.IDNotFoundException;
 import entities.Staff;
@@ -20,95 +21,40 @@ import entities.Staff;
  * 
  * @author Eang Sokunthea
  */
-public final class OrderMgr {
+public final class OrderMgr extends DataMgr{
     private static OrderMgr instance;
     private HashMap<Integer, Order> orders;
-    private int orderId;
+    private int nextId;
 
     private OrderMgr() {
         try {
             this.orders = new HashMap<Integer, Order>();
-            loadSavedData();
+            downcast(loadSavedData("orders"));
+            nextId = loadNextIdData("orderNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load orders data");
         }
     }
 
-    /***
-     * Serializes and saves the Staffs objects into the data/staffs folder Creates
-     * the data/staffs folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/orders");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Order)
+                this.orders.put(id,(Order) object.get(id));
+            else throw new ClassCastException();
         }
-
-        for (int orderID : this.orders.keySet()) {
-            Order order = this.orders.get(orderID);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/orders/" + orderID);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(order);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/orderId");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(orderId);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-
     }
 
-    /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/orders");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        try {
-            File file = new File("./data/orderId");
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.orderId = (int) objectInputStream.readInt();
-            objectInputStream.close();
-        } catch (Exception e) {
-            // System.out.println(e.getMessage());
-            this.orderId = 1;
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: orders.keySet()){
+           object.put(id,orders.get(id)); 
         }
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            Order order = (Order) objectInputStream.readObject();
-            this.orders.put(order.getId(), order);
-            objectInputStream.close();
-        }
-
+        return object;
+    }
+    
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "orders", "orderNextId");
     }
 
     /**
@@ -152,10 +98,10 @@ public final class OrderMgr {
             return null;
         }
         
-        Order order = new Order(staff, customer, table, date, orderId);
-        orders.put(orderId, order);
+        Order order = new Order(staff, customer, table, date, nextId);
+        orders.put(nextId, order);
 
-        orderId++;
+        nextId++;
         return order;
     }
 

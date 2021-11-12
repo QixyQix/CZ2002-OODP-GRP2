@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Entities;
 import entities.MenuItem;
 import entities.MenuPackage;
 import exceptions.DuplicateIDException;
@@ -21,20 +22,40 @@ import factories.MenuItemFactory;
  * @author Cho Qi Xiang
  * 
  */
-public final class MenuItemMgr {
+public final class MenuItemMgr extends DataMgr{
     private static MenuItemMgr instance;
     private HashMap<Integer, MenuItem> items;
-
+    private int nextId;
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
-            loadSavedData();
+            downcast(super.loadSavedData("menuitems"));
+            this.nextId = super.loadNextIdData("menuItemNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load menu data");
         }
     }
 
+    private void downcast(HashMap<Integer, Entities> object) throws ClassNotFoundException{
+        for(int id: object.keySet()){
+            MenuItem item = MenuItemFactory.getInstance().createMenuItemFromSerializedData( object.get(id));
+            this.items.put(id, item);
+        }
+    }
+
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: items.keySet()){
+           object.put(id,items.get(id)); 
+        }
+        return object;
+    }
+
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "menuitems", "menuItemNextId");
+    }
+    
     /**
      * Returns the MenuItemMgr instance and creates an instance if it does not exist
      * 
@@ -147,58 +168,6 @@ public final class MenuItemMgr {
         // TODO Remove alacarte items from packages
     }
 
-    /***
-     * Serializes and saves the MenuItem objects into the data/menuItems folder
-     * Creates the data/menuItems folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/menuItems");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
-        }
-
-        for (int itemId : items.keySet()) {
-            MenuItem item = items.get(itemId);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/menuItems/" + itemId);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(item);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-    }
-
-    /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    public void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/menuItems");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            MenuItem item = MenuItemFactory.getInstance()
-                    .createMenuItemFromSerializedData(objectInputStream.readObject());
-            this.items.put(item.getId(), item);
-            objectInputStream.close();
-        }
-    }
+   
+    
 }

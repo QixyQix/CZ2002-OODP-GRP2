@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
+
+import entities.Entities;
 import entities.Staff;
 
 /***
@@ -14,95 +16,40 @@ import entities.Staff;
  * 
  * @author Zong Yu Lee
  */
-public final class StaffMgr {
+public final class StaffMgr extends DataMgr{
     private static StaffMgr instance;
     private HashMap<Integer, Staff> staffs;
-    private int staffId; // will be delete afterward
+    private int nextId; // will be delete afterward
 
     private StaffMgr() {
         try {
             this.staffs = new HashMap<Integer, Staff>();
-            loadSavedData();
+            downcast(super.loadSavedData("staffs"));
+            this.nextId = super.loadNextIdData("staffNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load staffs data");
         }
     }
 
-    /***
-     * Serializes and saves the Staffs objects into the data/staffs folder Creates
-     * the data/staffs folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/staffs");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Staff)
+                this.staffs.put(id,(Staff) object.get(id));
+            else throw new ClassCastException();
         }
-
-        for (int staffID : this.staffs.keySet()) {
-            Staff staff = this.staffs.get(staffID);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/staffs/" + staffID);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(staff);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/staffId");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(staffId);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-
     }
 
-    /***
-     * Reads Serialized MenuItem data in the data/menuItems folder and stores it
-     * into the items HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/staffs");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        try {
-            File file = new File("./data/staffId");
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.staffId = (int) objectInputStream.readInt();
-            objectInputStream.close();
-        } catch (Exception e) {
-            // System.out.println(e.getMessage());
-            this.staffId = 1;
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: staffs.keySet()){
+           object.put(id,staffs.get(id)); 
         }
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            Staff staff = (Staff) objectInputStream.readObject();
-            this.staffs.put(staff.getId(), staff);
-            objectInputStream.close();
-        }
-
+        return object;
+    }
+    
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "staffs", "staffNextId");
     }
 
     /**
@@ -155,9 +102,9 @@ public final class StaffMgr {
      * @return Staff object
      */
     public Staff createStaff(String jobTitle, String name, String gender, String contact) {
-        Staff staff = new Staff(staffId, jobTitle, name, gender, contact);
-        this.staffs.put(staffId, staff);
-        this.staffId++;
+        Staff staff = new Staff(nextId, jobTitle, name, gender, contact);
+        this.staffs.put(nextId, staff);
+        this.nextId++;
         return staff;
     }
 

@@ -22,6 +22,23 @@ public final class CustomerUI extends UserInterface {
 
         return INSTANCE;
     }
+    
+    public Customer getCustomer() {
+        String contact = super.getContact("Customer contact: ");
+        try {
+            return CustomerMgr.getInstance().getExistingCustomer(contact);
+        } catch(Exception ex) {
+            return createCustomer(contact);
+        }
+    }
+
+    private Customer createCustomer(String contact) {
+        String name = super.getInputString("Customer name: ");
+        String gender = super.getGender("Customer gender: ");
+        Membership membership = this.getMembershipInput();
+
+        return CustomerMgr.getInstance().createCustomer(membership, name, gender, contact);
+    }
 
     private Membership getMembershipInput() {
 
@@ -61,20 +78,5 @@ public final class CustomerUI extends UserInterface {
         return membership;
     }
 
-    public Customer getCustomer() {
-        String contact = super.getContact("Customer contact: ");
-        try {
-            return CustomerMgr.getInstance().getExistingCustomer(contact);
-        } catch(Exception ex) {
-            return createCustomer(contact);
-        }
-    }
-
-    private Customer createCustomer(String contact) {
-        String name = super.getInputString("Customer name: ");
-        String gender = super.getGender("Customer gender: ");
-        Membership membership = this.getMembershipInput();
-
-        return CustomerMgr.getInstance().createCustomer(membership, name, gender, contact);
-    }
+    
 }

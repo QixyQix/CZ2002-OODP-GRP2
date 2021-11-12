@@ -21,43 +21,40 @@ public class ReservationUI extends UserInterface {
         return singleInstance;
     }
 
+    private void displayOptions(){
+        System.out.println("==========Reservation Manager==========");
+        System.out.println("(0) Go back to Main Page");
+        System.out.println("(1) Create a new reservation ");
+        System.out.println("(2) Check/remove reservation booking");
+        System.out.println("(3) Print Reservation");
+        System.out.println("=======================================");
+    }
 
     public void selectOption() {
-        while(true){
-            System.out.println("==========Reservation Manager==========");
-            System.out.println("(0) Go back to Main Page");
-            System.out.println("(1) Create a new reservation ");
-            System.out.println("(2) Check/remove reservation booking");
-            System.out.println("(3) Print Reservation");
-            System.out.println("=======================================");
-
+        int choice;
+        do{
+            
+            this.displayOptions();
           
-            int choice = super.getInputInt("Please enter your choice: ");
+            choice = super.getInputInt("Please enter your choice: ",0,3);
             
             switch (choice) {
-                case 0: 
-                    super.waitEnter();
-                    return;
                 case 1:
                     this.createReservationUI();
                     break; 
                 case 2:
                     this.checkRemoveReservationUI();
                     break;
-                case 3: printReservationUI();
-                    break;
-                default: System.out.println("Invalid Choice");
-                    break;
-
+                case 3: 
+                    this.printReservationUI();
+                    break;     
+                
             } 
-        }
+            super.waitEnter();
+        }while(choice !=0);
     }
 
-    private void printReservation(Reservation res){
-        System.out.println("There is a reservation made by the customer");
-        System.out.println(res.toString());
-        System.out.println();
-    }
+    
     
     private void createReservationUI() {
         Customer customer = CustomerUI.getInstance().getCustomer();
@@ -65,7 +62,6 @@ public class ReservationUI extends UserInterface {
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         if(res != null) {
             printReservation(res);
-            super.waitEnter();
             return;
         }
         // Up to here is edited by ZY, not sure yet, need confirmation..
@@ -89,17 +85,22 @@ public class ReservationUI extends UserInterface {
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());
         }
-        super.waitEnter();
     }
 
+    private void printReservation(Reservation res){
+        System.out.println("There is a reservation made by the customer");
+        System.out.println(res.toString());
+        System.out.println();
+    }
+    
     private void checkRemoveReservationUI(){
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         
         //May change if YanKai want it to be check first then only take O(2N) tho;
+        // TODO  this actually also can,t catch error unless we throw ourself.
         if(res == null){
             System.out.println("There is no reservation made by the customer");
-            super.waitEnter();
             return;
         }
 
@@ -109,7 +110,6 @@ public class ReservationUI extends UserInterface {
             ReservationMgr.getInstance().removeReservation(res);
             System.out.println("Reservation successfully removed from the system: ");
         }
-        super.waitEnter();
     }
 
     private void printReservationUI(){
@@ -124,6 +124,5 @@ public class ReservationUI extends UserInterface {
 				System.out.print('\n');
 			}
 		}
-        super.waitEnter();
     }   
 }

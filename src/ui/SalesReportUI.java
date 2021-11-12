@@ -60,6 +60,11 @@ public final class SalesReportUI extends UserInterface{
         
     }
     
+
+
+    // Second Public Method
+
+    
     public void createreport(){
         if(super.getYNOption("Are you sure it is end of the day? (The time will be automatically skipped to tomorrow 0.00 AM)"))
             SalesReportMgr.getInstance().createReport(LocalDate.now() );// CurrentTime.currentTime.toLocalDate() );

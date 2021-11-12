@@ -42,9 +42,30 @@ public class MainUI extends UserInterface{
         
     }
 
+    
+    public void systemBoot(){
+        do{
+            Staff staff = StaffUI.getInstance().staffSelectionscreen();
+            if(staff == null) {
+                if(!endsystem()) continue;
+                // Make sure data is save properly
+                break;
+            }
+            else {
+                entersystem(staff);
+                System.out.println("Succesfully Log Out");
+                super.waitEnter();
+            }
+        
+        }while(true);
+        System.out.println("GoodBye and Thank you for using our system !!");
+
+
+    }
 
     private void displayOptions(){
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
+        System.out.println("(0) Log Out");
         System.out.println("(1) Alter MenuItem/Promotion");
         System.out.println("(2) Open Order");
         System.out.println("(3) Open Reservation");
@@ -52,8 +73,7 @@ public class MainUI extends UserInterface{
         System.out.println("(5) Print Order invoice");
         System.out.println("(6) Print Sale Revenue Report");
         System.out.println("(7) End of the day (report)");
-        System.out.println("(8) Log Out");
-        System.out.println("(9) ChangeCurrentTime");
+        System.out.println("(8) ChangeCurrentTime");
         System.out.println("===========================================================================");
         System.out.println(" ");
     }
@@ -64,7 +84,7 @@ public class MainUI extends UserInterface{
         
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", 1, 9);
+            option = super.getInputInt("Enter your selection: ", 0, 8);
             switch(option){
                 case 1:
                     MenuItemUI.getInstance().showMenu();
@@ -97,24 +117,7 @@ public class MainUI extends UserInterface{
 
     }
 
-    public void systemBoot(){
-        do{
-            Staff staff = StaffUI.getInstance().staffSelectionscreen();
-            if(staff == null) {
-                if(!endsystem()) continue;
-                break;
-            }
-            else {
-                entersystem(staff);
-                System.out.println("Succesfully Log Out");
-                super.waitEnter();
-            }
-        
-        }while(true);
-        System.out.println("GoodBye and Thank you for using our system !!");
-
-
-    }
+    
     
     
 }

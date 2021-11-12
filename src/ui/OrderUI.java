@@ -23,6 +23,13 @@ public final class OrderUI extends UserInterface {
         return INSTANCE;
     }
 
+    private void displayOptions(){
+        System.out.println("===========Order Manager============");
+        System.out.println("(0) Go Back to Main Page");
+        System.out.println("(1) Create Order");
+        System.out.println("(2) Modify Order");
+        System.out.println("====================================");
+    }
 
     public void showMenu(Staff staff) {
         int option = 0;
@@ -43,6 +50,22 @@ public final class OrderUI extends UserInterface {
 
     }
 
+    private void createOrder(Staff staff) {
+        LocalDateTime date = LocalDateTime.now();
+
+        Integer noofpax = super.getInputInt("No of pax");
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
+        // TODO: ??Want to throw an error and catch with self define exception???
+        if(order == null){
+            System.out.println("Order is not created, Table are full.");
+            return;
+        }
+        System.out.println("Order has been created. Your order id is: " + order.getId());
+    }
+
+
+    // SECOND LEVEL LOGIC 
     private Order getOrder(){
         Order order;
         int orderid;
@@ -61,6 +84,16 @@ public final class OrderUI extends UserInterface {
         }
     }
 
+    private void displayOrderOptions(int orderid){
+        System.out.println("===========Orderid " + orderid + "============");
+        System.out.println("(0) Go Back to Order Page");
+        System.out.println("(1) Show current order");
+        System.out.println("(2) Add order items");
+        System.out.println("(3) Delete order items from order");
+        System.out.println("(4) Show Menu");
+        System.out.println("(5) Confirm Order");
+        System.out.println("====================================");
+    }
     private void modifyOrderMenu(){
         int option;
         Order order = getOrder();
@@ -92,42 +125,13 @@ public final class OrderUI extends UserInterface {
         } while (option != 0);
     }
 
-    private void displayOptions(){
-        System.out.println("===========Order Manager============");
-        System.out.println("(0) Go Back to Main Page");
-        System.out.println("(1) Create Order");
-        System.out.println("(2) Modify Order");
-        System.out.println("====================================");
-    }
-
-    private void displayOrderOptions(int orderid){
-        System.out.println("===========Orderid " + orderid + "============");
-        System.out.println("(0) Go Back to Order Page");
-        System.out.println("(1) Show current order");
-        System.out.println("(2) Add order items");
-        System.out.println("(3) Delete order items from order");
-        System.out.println("(4) Show Menu");
-        System.out.println("(5) Confirm Order");
-        System.out.println("====================================");
-    }
 
     private void printOrder(Order order) {     
         // TODO This want call manager?     
         order.printOrder();        
     }
 
-    public void createOrder(Staff staff) {
-        LocalDateTime date = LocalDateTime.now();
-
-        Integer noofpax = super.getInputInt("No of pax");
-        Customer customer = CustomerUI.getInstance().getCustomer();
-        Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
-        if(order == null){
-            System.out.println("Order is not created, Table are full.");
-            return;
-        }
-        System.out.println("Order has been created. Your order id is: " + order.getId());
-    }
+    
 
     private void addOrderItem(Order order) {
         int menuItemid;
@@ -135,7 +139,7 @@ public final class OrderUI extends UserInterface {
         try {
             menuItemid = super.getInputInt("Please enter the Menu item id");
             menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
-            OrderMgr.getInstance().addItem(menuItem, order);
+            OrderMgr.getInstance().addItem( (MenuItem) menuItem.clone(), order);
             System.out.println("Order item added");
         } catch (Exception ex) {
             System.out.println("Invalid menu item id. ");
@@ -156,6 +160,9 @@ public final class OrderUI extends UserInterface {
         }
        
     }
+
+    // TODO Get menu;
+
 
     private void confirmOrder(Order order){
         if(super.getYNOption("Are you sure you want to make order?")){

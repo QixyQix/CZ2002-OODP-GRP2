@@ -22,6 +22,15 @@ public class InvoiceUI extends UserInterface{
         return INSTANCE;
     }
 
+    private void displayOptions() {
+        System.out.println("====Payment Manager================");
+        System.out.println("(0) Exit");
+        System.out.println("(1) Close order and create invoice");
+        System.out.println("(2) Print order invoice");
+        System.out.println("===================================");
+        System.out.println();
+    }
+
     public void showMenu() {
         int option = 0;
         do {
@@ -40,15 +49,6 @@ public class InvoiceUI extends UserInterface{
             super.waitEnter();
         } while (option != 0);
     }
-
-    private void displayOptions() {
-        System.out.println("====Payment Manager====");
-        System.out.println("(0) Exit");
-        System.out.println("(1) Close order and create invoice");
-        System.out.println("(2) Print order invoice");
-        System.out.println();
-    }
-
 
     private void createInvoice() {
         

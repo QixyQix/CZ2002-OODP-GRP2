@@ -59,7 +59,6 @@ public class Order implements Serializable{
             originalQuantitiy = target.get(menuitem);
         }
         catch(NullPointerException ex){
-            System.out.println("Try");
             originalQuantitiy = 0;
         }   
             

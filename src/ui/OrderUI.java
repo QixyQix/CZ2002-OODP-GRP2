@@ -38,6 +38,7 @@ public final class OrderUI extends UserInterface {
                     modifyOrderMenu();
                     break;
             }
+            super.waitEnter();
         } while (option != 0);
 
     }
@@ -48,9 +49,14 @@ public final class OrderUI extends UserInterface {
         orderid = super.getInputInt("Enter your order id");
         try {
             order = OrderMgr.getInstance().getOrder(orderid);
+            // TODO ask yan kai seee or others seeee.
+            if(order.getStatus()=="Close"){
+                System.out.println("You should not modify this order anymore");
+                return null;
+            }
             return order;
         } catch(Exception ex) {
-            System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid. Enter -1 to return");
+            System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid.");
             return null;
         }
     }
@@ -65,6 +71,8 @@ public final class OrderUI extends UserInterface {
             option = super.getInputInt("Please enter your choice: ");
 
             switch (option) {
+                case 0: 
+                    return;
                 case 1:
                     printOrder(order);
                     break;
@@ -75,11 +83,12 @@ public final class OrderUI extends UserInterface {
                     deleteOrderItem(order);
                     break;
                 case 4:
-                    //depends see what or not
+                    //TODO depends see what or not
                     break;
                 case 5:
                     confirmOrder(order);
             }
+            super.waitEnter();
         } while (option != 0);
     }
 
@@ -102,9 +111,9 @@ public final class OrderUI extends UserInterface {
         System.out.println("====================================");
     }
 
-    private void printOrder(Order order) {          
+    private void printOrder(Order order) {     
+        // TODO This want call manager?     
         order.printOrder();        
-        super.waitEnter();
     }
 
     public void createOrder(Staff staff) {
@@ -113,8 +122,11 @@ public final class OrderUI extends UserInterface {
         Integer noofpax = super.getInputInt("No of pax");
         Customer customer = CustomerUI.getInstance().getCustomer();
         Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
+        if(order == null){
+            System.out.println("Order is not created, Table are full.");
+            return;
+        }
         System.out.println("Order has been created. Your order id is: " + order.getId());
-        super.waitEnter();
     }
 
     private void addOrderItem(Order order) {

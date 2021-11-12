@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class MenuItem implements Serializable{
+public class MenuItem implements Serializable, Comparable<MenuItem>{
     private String type;
     private String name;
     private String description;
@@ -59,4 +59,12 @@ public class MenuItem implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
+    
+    @Override
+    public int compareTo(MenuItem o){
+        return ( this.name.compareTo(o.name) );
+        
+    }
+
+    
 }

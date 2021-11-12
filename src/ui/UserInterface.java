@@ -112,7 +112,7 @@ public class UserInterface {
         while(true){
             try{
                 System.out.println(prompt);
-                String input = this.getInputString().replace(" ", "T");
+                String input = this.getInputString().replace(" ", "");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//input format:yyyy-mm-ddThh:mm	
                 LocalDate input_date = LocalDate.parse(input, formatter);
                 

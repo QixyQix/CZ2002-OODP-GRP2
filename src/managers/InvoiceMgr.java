@@ -83,14 +83,14 @@ public final class InvoiceMgr {
      *                                class
      */
     private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/orders");
+        File dataDirectory = new File("./data/invoices");
         File fileList[] = dataDirectory.listFiles();
 
         if (fileList == null)
             return;
 
         try {
-            File file = new File("./data/orderId");
+            File file = new File("./data/invoiceId");
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -131,10 +131,20 @@ public final class InvoiceMgr {
      * @return created invoice
      */
     public Invoice createInvoice(Order order) {
+        if(order.getPendingItems().size() !=0){
+            // ask see should I print this at UI?
+            System.out.println("The order contains Pending Items. You are not allowed to create invoice.");
+            return null;
+            
+        }
+        if(order.getStatus()=="Close"){
+            System.out.println("The order have been paid");
+        }
         Invoice invoice = new Invoice(order, this.invoiceId);
         invoices.put(this.invoiceId, invoice);
-        this.invoiceId += 1;
         this.choosePriceFilter(this.invoiceId);
+        order.closeStatus();
+        this.invoiceId += 1;
         return invoice;
     }
 

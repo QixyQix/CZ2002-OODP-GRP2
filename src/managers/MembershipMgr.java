@@ -25,7 +25,7 @@ public class MembershipMgr {
             loadSavedData();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Failed to load menu data");
+            System.out.println("Failed to load Membership data");
         }
     }
 

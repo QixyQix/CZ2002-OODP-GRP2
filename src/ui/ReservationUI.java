@@ -44,7 +44,6 @@ public class ReservationUI extends UserInterface {
                 case 2:
                     this.checkRemoveReservationUI();
                     break;
-                        
                 case 3: printReservationUI();
                     break;
                 default: System.out.println("Invalid Choice");

@@ -26,7 +26,7 @@ class Main{
     
         OrderUI.getInstance();
         SalesReportMgr.getInstance();
-        //InvoiceMgr.getInstance();
+        InvoiceMgr.getInstance();
         try{
         CurrentTime.loadSavedData();
         } catch(Exception ex){

@@ -223,13 +223,19 @@ public final class SalesReportMgr {
         if (!total & !items)
             return;
         double totalRevenue = 0;
+      
         TreeMap<MenuItem, Double> menuItemTotalRevenue = new TreeMap<MenuItem, Double>();
-        for (LocalDate date = startDate; date != endDate; date.plusDays(1)) {
-            Report report = this.findReportByDay(startDate);
-            if (total)
-                totalRevenue += report.getTotalRevenue();
-            if (items)
-                menuItemTotalRevenue = addtomenuItemRevenue(menuItemTotalRevenue, report.getMenuItemRevenue());
+
+        for (LocalDate date = startDate; !date.isEqual(endDate.plusDays(1)); date =date.plusDays(1)) {
+            try{
+                Report report = this.findReportByDay(startDate);
+                if (total)
+                    totalRevenue += report.getTotalRevenue();
+                if (items)
+                    menuItemTotalRevenue = addtomenuItemRevenue(menuItemTotalRevenue, report.getMenuItemRevenue());
+            }catch(Exception ex){
+
+            }
         }
 
         System.out.println("Restaurant Name ...");// Some formatting with date

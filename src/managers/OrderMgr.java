@@ -147,7 +147,11 @@ public final class OrderMgr {
      */
     public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noOfPax) {
         Table table = this.allocateTable(date, noOfPax);
-
+        if(table == null) {
+            
+            return null;
+        }
+        
         Order order = new Order(staff, customer, table, date, orderId);
         orders.put(orderId, order);
 
@@ -163,7 +167,7 @@ public final class OrderMgr {
      * 
      */
     public void addItem(MenuItem menuItem, Order order) {
-        order.addPendingItems(menuItem);
+        order.addPendingItems(menuItem,1);
     }
 
     /**

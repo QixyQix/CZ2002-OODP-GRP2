@@ -159,8 +159,10 @@ public final class InvoiceMgr {
         // Need depends on KT & Ben
         Membership membership = invoice.getOrder().getCustomer().getMembership();
         PriceFilter membershipDiscountFilter = membership.getDiscount();
+        // System.out.println(membership.getDiscount());
         // we noted this for membership class
         invoice.addPriceFilters(membershipDiscountFilter);
+        // System.out.println(invoice.getPriceFilters());
 
         PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
         PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE,

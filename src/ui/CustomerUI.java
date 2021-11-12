@@ -43,7 +43,7 @@ public final class CustomerUI extends UserInterface {
     private Membership getMembershipInput() {
 
         int validMembershipOption;
-        validMembershipOption = super.getInputInt("Please enter your desired membership.\n 1. Gold Membership\n 2. Silver Membership\n 3. Bronze Membership\n 4. No membership");
+        validMembershipOption = super.getInputInt("Please enter your desired membership.\n 1. Gold Membership\n 2. Silver Membership\n 3. Bronze Membership\n 4. No membership", 1 , 4);
         Membership membership = createMembership(validMembershipOption);
         return membership;
     }

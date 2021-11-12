@@ -16,6 +16,7 @@ import ui.*;
 class Main{
     
     public static void loadData(){
+        AvailPriceFilter.createPriceFilters();
         OrderMgr.getInstance();
         CustomerMgr.getInstance();
         StaffMgr.getInstance();

@@ -6,9 +6,12 @@ import entities.Table;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
+import managers.TableMgr;
 import managers.MenuItemMgr;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public final class OrderUI extends UserInterface {
     private static OrderUI INSTANCE;
@@ -54,9 +57,14 @@ public final class OrderUI extends UserInterface {
     private void createOrder() {
         LocalDateTime date = LocalDateTime.now();
 
+        int minute = date.getMinute();
+        if (minute>=0){
+            date = date.plusHours(1);
+            date = date.truncatedTo(ChronoUnit.HOURS);
+        }
         Integer noofpax = super.getInputInt("No of pax");
         Customer customer = CustomerUI.getInstance().getCustomer();
-        Table table = OrderMgr.getInstance().allocateTable(date, noofpax);
+        Table table = TableMgr.getInstance().findAvailTable(date, noofpax);
         Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax,table);
         // TODO: ??Want to throw an error and catch with self define exception???
         if(order == null){

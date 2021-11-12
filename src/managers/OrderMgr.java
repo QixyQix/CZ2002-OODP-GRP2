@@ -70,17 +70,17 @@ public final class OrderMgr extends DataMgr{
         return instance;
     }
 
-    /**
-     * Returns a Table object that is available
-     * 
-     * @param date    date and time
-     * @param noOfPax number of pax at the table
-     * @return Table object if available, null if no available tables
-     */
-    public Table allocateTable(LocalDateTime date, int noOfPax) {
-        Table table = TableMgr.getInstance().findAvailTable(date, noOfPax);
-        return table;
-    }
+    // /**
+    //  * Returns a Table object that is available
+    //  * 
+    //  * @param date    date and time
+    //  * @param noOfPax number of pax at the table
+    //  * @return Table object if available, null if no available tables
+    //  */
+    // public Table allocateTable(LocalDateTime date, int noOfPax) {
+    //     Table table = TableMgr.getInstance().findAvailTable(date, noOfPax);
+    //     return table;
+    // }
 
     /**
      * Creates and returns Order object
@@ -138,13 +138,6 @@ public final class OrderMgr extends DataMgr{
         invoiceMgr.createInvoice(order);
     }
 
-    /**
-     * Returns true or false depending on whether the order corresponding to the
-     * order id exists
-     * 
-     * @param orderId id of order
-     * @return true if order exists, false if order does not exist
-     */
     public boolean checkAvailableOrder(int orderId) {
         return this.orders.containsKey(orderId);
     }

@@ -110,13 +110,14 @@ public class ReservationUI extends UserInterface {
 
 		this.printReservation(res);
         
-        if (res.getCheckInTime().isAfter(LocalDateTime.now())){
+        if (res.getCheckInTime().isBefore(LocalDateTime.now())){
             if (super.getYNOption("Would you like to check in now?")){
                 res.setCheckInStatus(true);
                 OrderMgr.getInstance().createOrder(super.getStaff(), customer, res.getCheckInTime(), res.getnoOfPax(), res.getTable());
             }
         }
         else{
+            System.out.println("The current time now is "+ LocalDateTime.now() );
             System.out.println("Sorry please wait until "+res.getCheckInTime()+" to check in");
         }
     }

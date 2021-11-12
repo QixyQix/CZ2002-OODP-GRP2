@@ -22,7 +22,6 @@
 ./exceptions/IDNotFoundException.java
 ./factories/MenuItemFactory.java
 ./global/AvailPriceFilter.java
-./global/CurrentTime.java
 ./Main.java
 ./managers/CustomerMgr.java
 ./managers/DataMgr.java

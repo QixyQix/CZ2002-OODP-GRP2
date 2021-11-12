@@ -4,6 +4,7 @@ import entities.Invoice;
 import entities.Order;
 import managers.InvoiceMgr;
 import managers.OrderMgr;
+import managers.TableMgr;
 
 
 public class InvoiceUI extends UserInterface{
@@ -65,10 +66,12 @@ public class InvoiceUI extends UserInterface{
             return;
         }
 
-        invoice = InvoiceMgr.getInstance().createInvoice(order);       
+        invoice = InvoiceMgr.getInstance().createInvoice(order);  
+        TableMgr.getInstance().deallocateTable(order.getTable(), order.getDate());
         
         try{
             System.out.println("Invoice has been created with Invoice id = " + invoice.getId());
+            System.out.println("Table ID= "+order.getTable().getId()+" has become available.");
         }catch(Exception ex){
             return;
         }

@@ -28,14 +28,14 @@ public class StaffUI extends UserInterface {
         int option;
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", 1, 3);
+            option = super.getInputInt("Enter your selection: ", 0, 2);
             switch(option){
                 case 1:
                     return enterSystem();
                 case 2:
                     registerAccount();
                     break;
-                case 3: 
+                case 0: 
                     return null;
             }
             super.waitEnter();

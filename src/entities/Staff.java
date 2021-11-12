@@ -1,6 +1,6 @@
 package entities;
 
-public class Staff extends Person{
+public class Staff extends Person implements Entities{
     private int id;
     private String jobTitle;
     
@@ -18,9 +18,6 @@ public class Staff extends Person{
         return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getJobTitle() {
         return this.jobTitle;

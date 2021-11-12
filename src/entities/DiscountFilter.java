@@ -54,9 +54,9 @@ public class DiscountFilter implements PriceFilter, Serializable{
     public double execute(double rawPrice){
         switch(type){
             case ABSOLUTE:
-                return amount;
+                return -amount;
             case PERCENTAGE: 
-                return rawPrice*amount/100;
+                return -rawPrice*amount/100;
             default:
                 return 0;
         }

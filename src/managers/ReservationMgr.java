@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import entities.Reservation;
 import entities.Customer;
+import entities.Entities;
 import entities.Table;
 
 /***
@@ -13,20 +14,41 @@ import entities.Table;
  * 
  * @author Eang Sokunthea
  */
-public final class ReservationMgr {
+public final class ReservationMgr extends DataMgr {
     private static ReservationMgr instance;
     private HashMap<Integer, Reservation> reservations;
-    private int reservationID;
+    private int nextId;
 
     private ReservationMgr() {
         this.reservations = new HashMap<Integer, Reservation>();
         try {
-            loadSavedData();
+            this.downcast(super.loadSavedData("reservations"));
+            nextId = super.loadNextIdData("reservationNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load reservation data");
         }
     };
+
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Reservation)
+                this.reservations.put(id,(Reservation) object.get(id));
+            else throw new ClassCastException();
+        }
+    }
+
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: reservations.keySet()){
+           object.put(id,reservations.get(id)); 
+        }
+        return object;
+    }
+    
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "reservations", "reservationNextId");
+    }
 
     /**
      * Returns the ReservationMgr instance and creates an instance if it does not
@@ -51,9 +73,9 @@ public final class ReservationMgr {
      * @return Reservation object
      */
     public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table) {
-        Reservation reservation = new Reservation(customer, checkInDateTime, noOfPax, table, this.reservationID);
-        reservations.put(this.reservationID, reservation);
-        this.reservationID += 1;
+        Reservation reservation = new Reservation(customer, checkInDateTime, noOfPax, table, this.nextId);
+        reservations.put(this.nextId, reservation);
+        this.nextId += 1;
         return reservation;
 
     }
@@ -73,7 +95,7 @@ public final class ReservationMgr {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
-                IDsToRemove.add(reservation.getreservationID());
+                IDsToRemove.add(reservation.getId());
             } 
             else if (reservation.getCustomer().getContact() == customer.getContact()){
                 result = reservation;
@@ -95,8 +117,9 @@ public final class ReservationMgr {
      * @param reservationMade Reservation object
      */
     public void removeReservation(Reservation reservationMade) {
+        this.reservations.remove(reservationMade.getId());
         TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
-        this.reservations.remove(reservationMade.getreservationID());
+        this.reservations.remove(reservationMade.getId());
     }
 
     /**
@@ -112,8 +135,8 @@ public final class ReservationMgr {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
-                IDsToRemove.add(reservation.getreservationID());
-                System.out.println("Reservation ID:  " + reservation.getreservationID()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime());
+                IDsToRemove.add(reservation.getId());
+                System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime());
             }
         }
         int counter=0;
@@ -123,76 +146,6 @@ public final class ReservationMgr {
             counter++;
         }
         return reservations;
-    }
-
-    /***
-     * Serializes and saves the reservation objects into the data/reservation folder
-     * Creates the data/reservation folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/reservations");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
-        }
-
-        for (int reservationID : reservations.keySet()) {
-            Reservation reservation = reservations.get(reservationID);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/reservations/" + reservationID);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(reservation);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/reservationID");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(reservationID);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-    }
-
-    /***
-     * Reads Serialized Reservation data in the data/reservation folder and stores
-     * it into the reservations HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    public void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/reservations");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            Reservation reservation = (Reservation) objectInputStream.readObject();
-            this.reservations.put(reservation.getreservationID(), reservation);
-            objectInputStream.close();
-        }
-        try {
-            FileInputStream fileInputStream = new FileInputStream("reservationID");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.reservationID = (int) objectInputStream.readObject();
-            objectInputStream.close();
-        } catch (Exception e) {
-            this.reservationID = 1;
-        }
     }
 
 }

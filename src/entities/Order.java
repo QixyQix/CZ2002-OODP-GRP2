@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class Order implements Serializable{
+public class Order implements Serializable, Entities{
     private Staff servedBy;
     private double totalPrice;
     private TreeMap<MenuItem, Integer> orderedItems;
@@ -15,17 +15,17 @@ public class Order implements Serializable{
     private Customer customer;
     private Table table;
     private LocalDateTime date;     
-    private int orderid;
+    private int id;
     private String status = "Open";
 
     public Order(){}
 
-    public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int orderid){
+    public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int id){
         this.servedBy = staff;
         this.customer = customer;
         this.table = table;
         this.date = date;
-        this.orderid = orderid;
+        this.id = id;
         this.orderedItems = new TreeMap<MenuItem, Integer>();
         this.pendingItems = new TreeMap<MenuItem, Integer>();
     }
@@ -190,7 +190,7 @@ public class Order implements Serializable{
     }
 
     public int getId(){
-        return this.orderid;
+        return this.id;
     }
 
     public void deleteOrderItem(MenuItem orderItem, int qty) {

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+
+import entities.Entities;
 import entities.Invoice;
 import entities.PriceFilter;
 import entities.TaxFilter;
@@ -20,96 +22,41 @@ import enums.TaxFilterNameEnum;
  * 
  * @author Zong Yu Lee
  */
-public final class InvoiceMgr {
+public final class InvoiceMgr extends DataMgr {
 
     private static InvoiceMgr instance;
     private HashMap<Integer, Invoice> invoices;
-    private int invoiceId;
+    private int nextId;
 
     private InvoiceMgr() {
         try {
             this.invoices = new HashMap<Integer, Invoice>();
-            loadSavedData();
+            downcast(super.loadSavedData("invoices"));
+            nextId = super.loadNextIdData("invoiceNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load invoices data");
         }
     }
-
-    /***
-     * Serializes and saves the invoice objects into the data/invoice folder Creates
-     * the data/invoice folder if it does not exist
-     * 
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-    public void saveData() throws IOException {
-        // Create directory & clear exisring data if needed
-        File dataDirectory = new File("./data/invoices");
-        if (!dataDirectory.exists()) {
-            dataDirectory.mkdirs();
-        } else {
-            for (File existingData : dataDirectory.listFiles()) {
-                existingData.delete();
-            }
+    
+    private void downcast(HashMap<Integer, Entities> object){
+        for(int id: object.keySet()){
+            if(object.get(id) instanceof Invoice)
+                this.invoices.put(id,(Invoice) object.get(id));
+            else throw new ClassCastException();
         }
-
-        for (int invoiceID : this.invoices.keySet()) {
-            Invoice invoice = this.invoices.get(invoiceID);
-
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/invoices/" + invoiceID);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(invoice);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        }
-
-        FileOutputStream fileOutputStream = new FileOutputStream("./data/invoiceId");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeInt(this.invoiceId);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-
     }
 
-    /***
-     * Reads Serialized invoice data in the data/invoice folder and stores it into
-     * the invoices HashMap
-     * 
-     * @throws IOException            if stream to file cannot be written to or
-     *                                closed
-     * @throws ClassNotFoundException if serialized data is not of the Customer
-     *                                class
-     */
-    private void loadSavedData() throws IOException, ClassNotFoundException {
-        File dataDirectory = new File("./data/invoices");
-        File fileList[] = dataDirectory.listFiles();
-
-        if (fileList == null)
-            return;
-
-        try {
-            File file = new File("./data/invoiceId");
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            this.invoiceId = (int) objectInputStream.readInt();
-            objectInputStream.close();
-        } catch (Exception e) {
-            // System.out.println(e.getMessage());
-            this.invoiceId = 1;
+    private HashMap<Integer, Entities> upcast(){
+        HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
+        for(int id: invoices.keySet()){
+           object.put(id,invoices.get(id)); 
         }
-
-        for (File file : fileList) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            Invoice invoice = (Invoice) objectInputStream.readObject();
-            this.invoices.put(invoice.getId(), invoice);
-            objectInputStream.close();
-        }
-
+        return object;
+    }
+    
+    public void saveData() throws IOException {
+        saveDataSerialize(upcast(), nextId, "invoices", "invoiceNextId");
     }
 
     /**
@@ -140,11 +87,11 @@ public final class InvoiceMgr {
         if(order.getStatus()=="Close"){
             System.out.println("The order have been paid");
         }
-        Invoice invoice = new Invoice(order, this.invoiceId);
-        invoices.put(this.invoiceId, invoice);
-        this.choosePriceFilter(this.invoiceId);
+        Invoice invoice = new Invoice(order, this.nextId);
+        invoices.put(this.nextId, invoice);
+        this.choosePriceFilter(this.nextId);
         order.closeStatus();
-        this.invoiceId += 1;
+        this.nextId += 1;
         return invoice;
     }
 
@@ -159,8 +106,10 @@ public final class InvoiceMgr {
         // Need depends on KT & Ben
         Membership membership = invoice.getOrder().getCustomer().getMembership();
         PriceFilter membershipDiscountFilter = membership.getDiscount();
+        // System.out.println(membership.getDiscount());
         // we noted this for membership class
         invoice.addPriceFilters(membershipDiscountFilter);
+        // System.out.println(invoice.getPriceFilters());
 
         PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
         PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE,

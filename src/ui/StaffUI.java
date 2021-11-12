@@ -15,7 +15,7 @@ public class StaffUI extends UserInterface {
 
         return INSTANCE;
     }
-
+    
     private void displayOptions() {
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
         System.out.println("(0) End System");
@@ -24,7 +24,7 @@ public class StaffUI extends UserInterface {
         System.out.println("===========================================================================");
         System.out.println(" ");
     }
-    
+
     public Staff staffSelectionscreen(){
         int option;
         do{

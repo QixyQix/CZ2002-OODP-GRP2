@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import enums.TableState;
 
-public class Table implements Serializable {
+public class Table implements Serializable,Entities {
     private int seatingCapacity;
     private HashMap<LocalDateTime, TableState> bookings;
-    private int tableId;
+    private int id;
 
     public Table() {
     }
 
-    public Table(int seatingCapacity, int tableId) {
+    public Table(int seatingCapacity, int id) {
         this.seatingCapacity = seatingCapacity;
         this.bookings = new HashMap<LocalDateTime, TableState>();
-        this.tableId = tableId;
+        this.id = id;
     }
 
     public int getSeatingCapacity() {
@@ -43,11 +43,7 @@ public class Table implements Serializable {
     }
 
     public int getId() {
-        return this.tableId;
-    }
-
-    public void setId(int tableId) {
-        this.tableId = tableId;
+        return this.id;
     }
 
     public String toString() {

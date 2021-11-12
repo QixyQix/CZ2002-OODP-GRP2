@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 
-public class Reservation implements Serializable {
+public class Reservation implements Serializable, Entities {
     private Customer customer;
     private LocalDateTime checkInTime;
     private int noOfPax;
     private Table table;
-    private int reservationID;
+    private int id;
 	private boolean checkInStatus;
 
     public Reservation(){}
@@ -19,7 +19,7 @@ public class Reservation implements Serializable {
 		this.checkInTime = checkInTime;		
 		this.noOfPax = noOfPax;
 		this.table = table;
-        this.reservationID = id;
+        this.id = id;
 		this.checkInStatus = false;
 	}
 
@@ -55,13 +55,11 @@ public class Reservation implements Serializable {
 	}
 
 
-    public int getreservationID() {
-		return reservationID;
+    public int getId() {
+		return id;
 	}
 
-	public void setreservationID(int id) {
-		this.reservationID = id;
-	}
+
 
 	public boolean getCheckInStatus() {
 		return checkInStatus;
@@ -74,12 +72,13 @@ public class Reservation implements Serializable {
     @Override 
     public String toString() {
         return  "\n" +
-				"Reservation ID= " + getreservationID()+ 
+				"Reservation ID= " + this.getId()+ 
                 "Customer= " + customer.getName() + '\n' +
                 "customerContact= " + customer.getContact() + '\n' +
                 "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
                 "noOfPax= " + noOfPax + '\n' +
                 "tableID= " + table.getId() + '\n' +
-				"Check In= " + getCheckInStatus()+ '\n';
+				"Check In= " + getCheckInStatus()+ '\n' +
+                '}';
     }
 }

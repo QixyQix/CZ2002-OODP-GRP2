@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public class Person implements Serializable{
     private String name;
     private String gender;
     private String contact;

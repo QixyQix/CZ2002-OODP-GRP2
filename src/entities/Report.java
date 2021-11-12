@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.TreeMap;
-public class Report implements Serializable{
+public class Report implements Serializable, Entities{
 
     private ArrayList<Invoice> invoiceList;
     private double totalRevenue;

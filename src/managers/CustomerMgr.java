@@ -58,7 +58,7 @@ public final class CustomerMgr extends DataMgr{
     public void saveData() throws IOException{
         super.saveDataSerialize(upcast(), nextId, "customers","CustomernextId");
     }
-    
+
     private void convertToPhone(){
         for(int id : customers.keySet()){
             Customer cus = (Customer)customers.get(id);
@@ -78,6 +78,15 @@ public final class CustomerMgr extends DataMgr{
             instance = new CustomerMgr();
         }
         return instance;
+    }
+
+    /**
+     * Returns hashmap of invoice id and Customer object
+     * 
+     * @return hashmap of invoice id and Customer object
+     */
+    public HashMap<Integer, Customer> getCustomersMap() {
+        return this.customers;
     }
 
     /**

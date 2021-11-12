@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import entities.Entities;
 import entities.Staff;
+import exceptions.IDNotFoundException;
 
 /***
  * Represents a staff manager
@@ -71,13 +72,13 @@ public final class StaffMgr extends DataMgr{
      * @param staffId id of staff
      * @return Staff object if staff exists, null if staff does not exist
      */
-    public Staff checkexisitingStaff(int staffId) {
-        Staff staff = null;
-
-        if (this.staffs.containsKey(staffId))
-            staff = this.staffs.get(staffId);
-
+    public Staff checkexisitingStaff(int staffId) throws IDNotFoundException {
+        
+        Staff staff = this.staffs.get(staffId);
+        
+        if(staff == null) throw new IDNotFoundException();
         return staff;
+    
     }
 
     /**

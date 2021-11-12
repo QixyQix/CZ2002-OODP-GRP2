@@ -87,10 +87,11 @@ public class TableMgr extends DataMgr {
      */
     public Table findAvailTable(LocalDateTime checkInTime, int noOfPax) {
         for (Table table : tables.values()) {
-            if ((table.getTableState(checkInTime) == TableState.AVAILABLE) && (table.getSeatingCapacity() >= noOfPax)) {
+            if ((table.getTableState(checkInTime) == TableState.AVAILABLE)
+                    && ((table.getTableState(checkInTime.plusHours(1)) == TableState.AVAILABLE))
+                    && (table.getSeatingCapacity() >= noOfPax)) {
                 table.setState(checkInTime, TableState.RESERVED);
                 table.setState(checkInTime.plusHours(1), TableState.RESERVED);
-                table.setState(checkInTime.minusHours(1), TableState.RESERVED);
                 return table;
             }
         }
@@ -106,7 +107,6 @@ public class TableMgr extends DataMgr {
     public void deallocateTable(Table table, LocalDateTime date) {
         table.setTableToAvailable(date);
         table.setTableToAvailable(date.plusHours(1));
-        table.setTableToAvailable(date.minusHours(1));
     }
 
     /**

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class CurrentTime {
-    public static LocalDateTime currentTime;
+    public static LocalDateTime currentTime = LocalDateTime.now();
 
     public static void setCurrentTime(){
         if(currentTime == null){
@@ -25,12 +25,13 @@ public class CurrentTime {
                 
                 do{
                     option = sc.nextInt();
+                    //sc.nextLine();
                 }while(option != 1 && option !=2 && option != 3);
                 if(option == 3) break;
 
                 System.out.println("Enter the minutes you want to change");
                 minutes = sc.nextInt();
-
+                //sc.nextLine();
                 if(option==1) currentTime = currentTime.plusMinutes(minutes);
                 else currentTime=currentTime.minusMinutes(minutes);
 
@@ -42,6 +43,7 @@ public class CurrentTime {
 
             
         }while(option != 3);
+        
         sc.close();
     }
 

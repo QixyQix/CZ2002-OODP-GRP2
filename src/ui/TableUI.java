@@ -33,32 +33,45 @@ public class TableUI extends UserInterface {
 
     public void selectOption() {
         int option = 0;
-        int noOfPax;
-        LocalDateTime date;
+        
         do {
             displayOptions();
             option = super.getInputInt("Please enter your choice: ");
 
             switch (option) {
             case 1:
-                noOfPax = super.getInputInt("How many pax?: ");
-                date = super.getInputDateTime("Which date and time? (yyyy-MM-dd HH:mm): ");
-
-                TableMgr.getInstance().printTableAvailability(noOfPax, date);
+                checkTableAvailblility();
                 break;
             case 2:
-                int idCounter = 0;
-                for (int j = 2; j <= 10; j = j + 2) {
-                    int noOfTableOfJPax = getInputInt("How many tables of " + j + " pax: ");
-                    for (int i = 0; i < noOfTableOfJPax; i++) {
-                        TableMgr.getInstance().createTable(j, ++idCounter);
-                    }
-                }
+                createTable();
                 break;
             case 3:
                 TableMgr.getInstance().printAllTables();
-            break;
+                break;
             }
+            super.waitEnter();
         } while (option != 0);
     }
+
+    private void checkTableAvailblility(){
+        int noOfPax;
+        LocalDateTime date;
+        noOfPax = super.getInputInt("How many pax?: ");
+        date = super.getInputDateTime("Which date and time? (yyyy-MM-dd HH:mm): ");
+                
+        TableMgr.getInstance().printTableAvailability(noOfPax, date);
+    }
+    
+    private void createTable(){
+        // FROM ZY, better not start from idCounter
+        int idCounter = 0;
+        for (int j = 2; j <= 10; j = j + 2) {
+            int noOfTableOfJPax = getInputInt("How many tables of " + j + " pax: ");
+            for (int i = 0; i < noOfTableOfJPax; i++) {
+                TableMgr.getInstance().createTable(j, ++idCounter);
+            }
+        }
+    }
+
+    
 }

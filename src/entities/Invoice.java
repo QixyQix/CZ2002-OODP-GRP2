@@ -29,6 +29,7 @@ public class Invoice implements Serializable {
         this.order = order;
         this.finalPrice = order.getTotalPrice();
         this.invoiceId = invoiceId;
+        this.priceFilters = new ArrayList<PriceFilter>();
     }
     
 
@@ -66,24 +67,24 @@ public class Invoice implements Serializable {
         System.out.println("Date        : "+ order.getDate().toLocalDate().toString() );
         System.out.println("Time        : "+ order.getDate().toLocalTime().toString() );
 
-        System.out.println(".........................................................");
+        System.out.println("...............................................");
         System.out.println();
 
         TreeMap<MenuItem, Integer> items = order.getOrderedItems();
         for (MenuItem item : items.keySet()){
             int quantity = items.get(item);
             // need somethings to know is it a package order
-            System.out.printf("-3%d  %20 %.2f\n",quantity, item.getName(), item.getPrice()*quantity);
+            System.out.printf("  %3d  %20s %.2f\n",quantity, item.getName(), item.getPrice()*quantity);
         }
 
-        System.out.println(".......................................................");
-        System.out.println("                         SUB-TOTAL:   " +  order.getTotalPrice());
+        System.out.println("...............................................");
+        System.out.printf("%27s %.2f\n" ,"SUB-TOTAL:", order.getTotalPrice());
         
 
-        calculateFinalPrice(true);
-        System.out.println("------------------------------------------------------");
-        System.out.println("                                  TOTAL : "  + finalPrice);
-        System.out.println("=====================================================");
+        this.calculateFinalPrice(true);
+        System.out.println("...............................................");
+        System.out.printf("%27s %.2f\n"  , "TOTAL : ", this.finalPrice);
+        System.out.println("===============================================");
 
         System.out.println(" PROMOTIONAL STUFS");
 

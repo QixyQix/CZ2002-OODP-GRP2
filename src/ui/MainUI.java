@@ -19,6 +19,7 @@ public class MainUI extends UserInterface{
     
     private boolean endsystem() {
         // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
+        
         try{
             CustomerMgr.getInstance().saveData();
             InvoiceMgr.getInstance().saveData();
@@ -38,11 +39,33 @@ public class MainUI extends UserInterface{
             System.out.println("Data are not save properly !"); 
             return false;
         }
+        
     }
 
+    
+    public void systemBoot(){
+        do{
+            Staff staff = StaffUI.getInstance().staffSelectionscreen();
+            if(staff == null) {
+                if(!endsystem()) continue;
+                // Make sure data is save properly
+                break;
+            }
+            else {
+                entersystem(staff);
+                System.out.println("Succesfully Log Out");
+                super.waitEnter();
+            }
+        
+        }while(true);
+        System.out.println("GoodBye and Thank you for using our system !!");
+
+
+    }
 
     private void displayOptions(){
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
+        System.out.println("(0) Log Out");
         System.out.println("(1) Alter MenuItem/Promotion");
         System.out.println("(2) Open Order");
         System.out.println("(3) Open Reservation");
@@ -50,8 +73,7 @@ public class MainUI extends UserInterface{
         System.out.println("(5) Print Order invoice");
         System.out.println("(6) Print Sale Revenue Report");
         System.out.println("(7) End of the day (report)");
-        System.out.println("(8) Log Out");
-        System.out.println("(9) ChangeCurrentTime");
+        System.out.println("(8) ChangeCurrentTime");
         System.out.println("===========================================================================");
         System.out.println(" ");
     }
@@ -62,13 +84,13 @@ public class MainUI extends UserInterface{
         
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", 1, 9);
+            option = super.getInputInt("Enter your selection: ", 0, 8);
             switch(option){
                 case 1:
                     MenuItemUI.getInstance().showMenu();
                     break;
                 case 2:
-                    OrderUI.getInstance().showMenu();
+                    OrderUI.getInstance().showMenu(staff);
                     break;
                 case 3: 
                     ReservationUI.getInstance().selectOption();
@@ -95,24 +117,7 @@ public class MainUI extends UserInterface{
 
     }
 
-    public void systemBoot(){
-        do{
-            Staff staff = StaffUI.getInstance().staffSelectionscreen();
-            if(staff == null) {
-                if(!endsystem()) continue;
-                break;
-            }
-            else {
-                entersystem(staff);
-                System.out.println("Succesfully Log Out");
-                super.waitEnter();
-            }
-        
-        }while(true);
-        System.out.println("GoodBye and Thank you for using our system !!");
-
-
-    }
+    
     
     
 }

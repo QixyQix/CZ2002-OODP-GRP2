@@ -1,159 +1,172 @@
 package ui;
 
 import entities.Order;
+import entities.Staff;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
-import managers.CustomerMgr;
 import managers.MenuItemMgr;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public final class OrderUI extends UserInterface {
     private static OrderUI INSTANCE;
-    private Scanner sc;
-
+ 
     private OrderUI() {
         super();
-        this.sc = new Scanner(System.in);
     }
 
     public static OrderUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new OrderUI();
         }
-
         return INSTANCE;
     }
 
+    private void displayOptions(){
+        System.out.println("===========Order Manager============");
+        System.out.println("(0) Go Back to Main Page");
+        System.out.println("(1) Create Order");
+        System.out.println("(2) Modify Order");
+        System.out.println("====================================");
+    }
 
-    public void showMenu() {
+    public void showMenu(Staff staff) {
         int option = 0;
         do {
             displayOptions();
             option = super.getInputInt("Please enter your choice: ");
-            try {
-                option = sc.nextInt();
-                sc.nextLine();
-            } catch (Exception ex) {
-                System.out.println("Invalid input");
-                continue;
-            }
 
             switch (option) {
                 case 1:
-                    printOrder();
+                    createOrder(staff);
                     break;
                 case 2:
-                    createOrder();
-                    break;
-                case 3:
-                    addOrderItem();
-                    break;
-                case 4:
-                    deleteOrderItem();
+                    modifyOrderMenu();
                     break;
             }
+            super.waitEnter();
         } while (option != 0);
 
     }
 
-    public void displayOptions(){
-        System.out.println("===========Order Manager============");
-        System.out.println("(0) Go Back to Main Page");
+    private void createOrder(Staff staff) {
+        LocalDateTime date = LocalDateTime.now();
+
+        Integer noofpax = super.getInputInt("No of pax");
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
+        // TODO: ??Want to throw an error and catch with self define exception???
+        if(order == null){
+            System.out.println("Order is not created, Table are full.");
+            return;
+        }
+        System.out.println("Order has been created. Your order id is: " + order.getId());
+    }
+
+
+    // SECOND LEVEL LOGIC 
+    private Order getOrder(){
+        Order order;
+        int orderid;
+        orderid = super.getInputInt("Enter your order id");
+        try {
+            order = OrderMgr.getInstance().getOrder(orderid);
+            // TODO ask yan kai seee or others seeee.
+            if(order.getStatus()=="Close"){
+                System.out.println("You should not modify this order anymore");
+                return null;
+            }
+            return order;
+        } catch(Exception ex) {
+            System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid.");
+            return null;
+        }
+    }
+
+    private void displayOrderOptions(int orderid){
+        System.out.println("===========Orderid " + orderid + "============");
+        System.out.println("(0) Go Back to Order Page");
         System.out.println("(1) Show current order");
-        System.out.println("(2) Create a order");
-        System.out.println("(3) Add order items");
-        System.out.println("(4) Delete order items from order");
+        System.out.println("(2) Add order items");
+        System.out.println("(3) Delete order items from order");
+        System.out.println("(4) Show Menu");
+        System.out.println("(5) Confirm Order");
         System.out.println("====================================");
     }
+    private void modifyOrderMenu(){
+        int option;
+        Order order = getOrder();
+        if (order == null)
+            return;
+        do {
+            displayOrderOptions(order.getId());
+            option = super.getInputInt("Please enter your choice: ");
 
-    private void printOrder() {
-        
-        int orderid;
-        Order order;
-
-        while(true) {
-            orderid = super.getInputInt("Enter your order id");
-            if (!OrderMgr.getInstance().checkAvailableOrder(orderid)) {
-                System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid");
-                continue;
-            } else {
-                order = OrderMgr.getInstance().getOrder(orderid);
-                order.printOrder();
-                break;
+            switch (option) {
+                case 0: 
+                    return;
+                case 1:
+                    printOrder(order);
+                    break;
+                case 2:
+                    addOrderItem(order);
+                    break;
+                case 3:
+                    deleteOrderItem(order);
+                    break;
+                case 4:
+                    //TODO depends see what or not
+                    break;
+                case 5:
+                    confirmOrder(order);
             }
-        }
+            super.waitEnter();
+        } while (option != 0);
     }
 
-    private void createOrder() {
 
-        String customerPhoneNumber;
-        Customer customer;
-
-
-        while(true) {
-            customerPhoneNumber = super.getInputString("Customer phone number");
-            if (CustomerMgr.getInstance().checkExististingCustomer(customerPhoneNumber)) {
-                customer = CustomerMgr.getInstance().getExistingCustomer(customerPhoneNumber);
-            }
-            // } else {
-            //     super.getInputString("Please enter your phone number");        
-            // }
-        }
+    private void printOrder(Order order) {     
+        // TODO This want call manager?     
+        order.printOrder();        
     }
 
-    private void addOrderItem() {
-        int orderid;
+    
+
+    private void addOrderItem(Order order) {
         int menuItemid;
         MenuItem menuItem;
-        Order order;
-
-        while(true) {
-            orderid = super.getInputInt("Order id");
-            if (OrderMgr.getInstance().checkAvailableOrder(orderid)) {
-                order = OrderMgr.getInstance().getOrder(orderid);
-                menuItemid = super.getInputInt("Menu item id");
-                if (MenuItemMgr.getInstance().checkIDAvailable(menuItemid)) {
-                    try {
-                        menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
-                        OrderMgr.getInstance().addItem(menuItem, order);
-                    } catch (Exception ex) {
-                        System.out.println("Invalid menu item id");
-                    }
-                }
-            } else {
-                System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid");
-                continue;
-            }
-        }
+        try {
+            menuItemid = super.getInputInt("Please enter the Menu item id");
+            menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
+            OrderMgr.getInstance().addItem( (MenuItem) menuItem.clone(), order);
+            System.out.println("Order item added");
+        } catch (Exception ex) {
+            System.out.println("Invalid menu item id. ");
+        }   
     }
 
-    private void deleteOrderItem() {
-        int orderid;
+    private void deleteOrderItem(Order order) {
         int menuItemid;
         int qty;
         MenuItem menuItem;
-        Order order;
+        try {
+            menuItemid = super.getInputInt("Menu item id");
+            menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
+            qty = super.getInputInt("Quantity to be deleted");
+            OrderMgr.getInstance().deleteOrderItem(menuItem, qty, order);
+        } catch (Exception ex) {
+            System.out.println("Invalid menu item id");
+        }
+       
+    }
 
-        while(true) {
-            orderid = super.getInputInt("Order id");
-            if (OrderMgr.getInstance().checkAvailableOrder(orderid)) {
-                order = OrderMgr.getInstance().getOrder(orderid);
-                menuItemid = super.getInputInt("Menu item id");
-                if (MenuItemMgr.getInstance().checkIDAvailable(menuItemid)) {
-                    try {
-                        menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
-                        qty = super.getInputInt("Quantity to be deleted");
-                        OrderMgr.getInstance().deleteOrderItem(menuItem, qty, order);
-                    } catch (Exception ex) {
-                        System.out.println("Invalid menu item id");
-                    }
-                }
-            } else {
-                System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid");
-                continue;
-            }
+    // TODO Get menu;
+
+
+    private void confirmOrder(Order order){
+        if(super.getYNOption("Are you sure you want to make order?")){
+            OrderMgr.getInstance().makeOrder(order);
         }
     }
 }

@@ -1,13 +1,9 @@
 package ui;
 
-import entities.Invoice;
-import entities.Report;
 import global.CurrentTime;
-import managers.InvoiceMgr;
 import managers.SalesReportMgr;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public final class SalesReportUI extends UserInterface{
     private static SalesReportUI INSTANCE;
@@ -43,8 +39,10 @@ public final class SalesReportUI extends UserInterface{
         do{
             displayOptions();
             option = super.getInputInt("Please enter your choice: ");
-            startDate = super.getInputDate("Enter start date (YYYY:MM:DD)");
-            endDate = super.getInputDate("Enter end date (YYYY:MM:DD)");
+            if(option == 0) break;
+
+            startDate = super.getInputDate("Enter start date (YYYY-MM-DD)");
+            endDate = super.getInputDate("Enter end date (YYYY-MM-DD)");
             switch(option){
                 case 1:
                     SalesReportMgr.getInstance().getReport(startDate, endDate, true, false);
@@ -57,14 +55,19 @@ public final class SalesReportUI extends UserInterface{
                     break;
             }
             
-
+            waitEnter();
         }while(option!=0); 
         
     }
     
+
+
+    // Second Public Method
+
+    
     public void createreport(){
-        if(super.getYNOption("Are you sure it is end of the day? (The time will be automatically skipped to tomorrow 0.00 AM) [Y],[N]"))
-            SalesReportMgr.getInstance().createReport(CurrentTime.currentTime.toLocalDate() );
+        if(super.getYNOption("Are you sure it is end of the day? (The time will be automatically skipped to tomorrow 0.00 AM)"))
+            SalesReportMgr.getInstance().createReport(LocalDate.now() );// CurrentTime.currentTime.toLocalDate() );
     }
 
 }

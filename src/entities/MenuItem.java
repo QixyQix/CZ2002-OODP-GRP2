@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class MenuItem implements Serializable{
+public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable{
     private String type;
     private String name;
     private String description;
@@ -59,4 +59,25 @@ public class MenuItem implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int compareTo(MenuItem o){
+        return ( this.name.compareTo(o.name) );
+        
+    }
+
+    @Override
+    // Haven,t test yet TODO
+	public Object clone() {//throws CloneNotSupportedException {
+        try{
+            MenuItem menuItem = (MenuItem) super.clone();
+            return menuItem;
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        
+    }
+
 }
+    

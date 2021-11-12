@@ -10,6 +10,12 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Membership;
 
+/***
+ * Represents a customer manager
+ * 
+ * @author Zong Yu Lee
+ * @author Lim Yan Kai
+ */
 public final class CustomerMgr {
 
     private static CustomerMgr instance;
@@ -20,6 +26,7 @@ public final class CustomerMgr {
     private CustomerMgr() {
         try {
             this.customers = new HashMap<Integer, Customer>();
+            this.phonetoid = new HashMap<String, Integer>();
             loadSavedData();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -111,6 +118,11 @@ public final class CustomerMgr {
         return instance;
     }
 
+    /**
+     * Returns hashmap of invoice id and Customer object
+     * 
+     * @return hashmap of invoice id and Customer object
+     */
     public HashMap<Integer, Customer> getInvoicesMap() {
         return this.customers;
     }
@@ -118,18 +130,14 @@ public final class CustomerMgr {
     /**
      * Creates Customer object
      * 
-     * @param memebership customer membership
-     * @param name        customer name
-     * @param gender      customer gender
-     * @param contact     customer contact number
+     * @param membership customer membership
+     * @param name       customer name
+     * @param gender     customer gender
+     * @param contact    customer contact number
      * @return Customer object if customer has not been created before, null if
      *         customer data exists
      */
     public Customer createCustomer(Membership membership, String name, String gender, String contact) {
-        if (getExistingCustomer(contact) != null) {
-            System.out.println("Customer Contains already");
-            return null;
-        }
 
         Customer customer = new Customer(membership, customerId, name, gender, contact);
 
@@ -159,7 +167,7 @@ public final class CustomerMgr {
      * @param phoneNumber customer contact number
      * @return true if Customer object exists, false if customer does not exist
      */
-    public boolean checkExististingCustomer(String phoneNumber) {
+    public boolean checkExistingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
 

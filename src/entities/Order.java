@@ -1,8 +1,6 @@
 package entities;
 import java.util.TreeMap;
 
-import managers.MenuItemMgr;
-
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,13 +10,14 @@ public class Order implements Serializable{
     private Staff servedBy;
     private double totalPrice;
     private TreeMap<MenuItem, Integer> orderedItems;
-    private ArrayList<MenuItem> pendingItems;
-    private Invoice invoice;
+    private TreeMap<MenuItem, Integer> pendingItems;
+    //private Invoice invoice;
     private Customer customer;
     private Table table;
     private LocalDateTime date;     
     private int orderid;
-    
+    private String status = "Open";
+
     public Order(){}
 
     public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int orderid){
@@ -27,6 +26,8 @@ public class Order implements Serializable{
         this.table = table;
         this.date = date;
         this.orderid = orderid;
+        this.orderedItems = new TreeMap<MenuItem, Integer>();
+        this.pendingItems = new TreeMap<MenuItem, Integer>();
     }
 
     public Staff getServeby(){
@@ -52,29 +53,87 @@ public class Order implements Serializable{
         }
     }   
 
+    private void addItems(TreeMap<MenuItem,Integer> target, MenuItem menuitem, int quantity){
+        int originalQuantitiy = 0;
+        try{
+            originalQuantitiy = target.get(menuitem);
+        }
+        catch(NullPointerException ex){
+            originalQuantitiy = 0;
+        }   
+            
+        quantity += originalQuantitiy;
+        // not sure will overwrite
+        target.put(menuitem,quantity);
+    }
+
     public void addToOrderedItems(){
-        for(int i =0 ; i<pendingItems.size(); i++){
-            MenuItem item = this.pendingItems.get(i);
-            int val = 0;
-            if( this.orderedItems.containsKey(item))  val= this.orderedItems.get(item);
-            val +=1;
-            // not sure will overwrite
-            this.orderedItems.put(item,val);
+        for( MenuItem item : pendingItems.keySet()){
+            addItems(orderedItems,item,pendingItems.get(item));
         }
         this.pendingItems.clear();
     }
 
-    public void printOrder() {
-        System.out.println("Your current order contains:");
-        System.out.println("................................");
-        System.out.println();
+    public void addPendingItems(MenuItem item, int quantitiy){
+        this.addItems(pendingItems,item,quantitiy);
+    }
 
-        TreeMap<MenuItem, Integer> items = this.getOrderedItems();
-        for (MenuItem item : items.keySet()) {
-            int quantity = items.get(item);
-            System.out.println(quantity + " " + item.getName() + " " + item.getPrice()*quantity);
+    /*
+ private TreeMap<MenuItem,Integer> addItems(TreeMap<MenuItem,Integer> target, MenuItem menuitem, int quantity){
+        int originalQuantitiy = 0;
+        try{
+            originalQuantitiy = target.get(menuitem);
+        }
+        catch(NullPointerException ex){
+            System.out.println("Try");
+            originalQuantitiy = 0;
+        }   
+            
+        quantity += originalQuantitiy;
+        // not sure will overwrite
+        target.put(menuitem,quantity);
+        return target;
+    }
+
+    public void addToOrderedItems(){
+        for( MenuItem item : pendingItems.keySet()){
+            orderedItems=addItems(orderedItems,item,pendingItems.get(item));
+        }
+        this.pendingItems.clear();
+    }
+
+    public void addPendingItems(MenuItem item, int quantitiy){
+        pendingItems = this.addItems(this.pendingItems,item,quantitiy);
+    }
+
+    */
+
+    private void printItem(TreeMap<MenuItem,Integer> target, String status){
+        for (MenuItem item : target.keySet()) {
+            int quantity = target.get(item);
+            System.out.println(quantity + " " + item.getName() + " Price: " + item.getPrice()*quantity + " Status: " +status);
+        }
+    }
+    public void printOrder() {
+  
+
+        if( this.orderedItems.size()+ this.pendingItems.size()==0){
+            System.out.println("Your current order does not contain any items.");
+            return;
         }
 
+        System.out.println("Your current order contains:");
+        if(this.orderedItems.size() !=0){
+            System.out.println(".............[Confirmed]................");
+            System.out.println();
+        
+            printItem(this.orderedItems, "Confirmed");
+        }
+        if(this.pendingItems.size()!=0){
+            System.out.println("..............[Pending].................");
+            
+            printItem(this.pendingItems, "Pending");
+        }
         System.out.println("................................");
 
     }
@@ -83,15 +142,13 @@ public class Order implements Serializable{
         return this.orderedItems;
     }
 
-    public void addPendingItems(MenuItem item){
-        this.pendingItems.add(item);
-    }
-    public ArrayList<MenuItem> getPendingItems(){
+    
+    public TreeMap<MenuItem, Integer> getPendingItems(){
         return this.pendingItems;
     }
 
     // Suggest no setter for ordereditems (not make sesnse)
-
+    /*
     public Invoice getInvoice(){
         return this.invoice;
     }
@@ -99,7 +156,15 @@ public class Order implements Serializable{
     public void setInvoice(Invoice invoice){
         this.invoice = invoice;
     }
+    */
 
+    public String getStatus(){
+        return this.status;
+    }
+
+    public void closeStatus(){
+        this.status = "Close";
+    }
     public Customer getCustomer(){
         return this.customer;
     }
@@ -129,10 +194,10 @@ public class Order implements Serializable{
     }
 
     public void deleteOrderItem(MenuItem orderItem, int qty) {
-        if (this.orderedItems.get(orderItem) <= qty) {
-            this.orderedItems.remove(orderItem);
+        if (this.pendingItems.get(orderItem) <= qty) {
+            this.pendingItems.remove(orderItem);
         } else {
-            this.orderedItems.put(orderItem, this.orderedItems.get(orderItem)-qty);
+            this.pendingItems.put(orderItem, this.pendingItems.get(orderItem)-qty);
         }
     }
 

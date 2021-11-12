@@ -13,6 +13,11 @@ import entities.Table;
 import enums.TableState;
 import java.time.LocalDateTime;
 
+/***
+ * Represents a table manager
+ * 
+ * @author Benjamin Ho JunHao
+ */
 public class TableMgr {
     private static TableMgr instance;
     private HashMap<Integer, Table> tables;
@@ -124,9 +129,14 @@ public class TableMgr {
      * 
      */
     public void printAllTables() {
-        for (Table table : tables.values()) {
-            System.out.println(table.toString());
+        if (tables.isEmpty()) {
+            System.out.println("No tables have been created");
+        } else {
+            for (Table table : tables.values()) {
+                System.out.println(table.toString());
+            }
         }
+
     }
 
     /***

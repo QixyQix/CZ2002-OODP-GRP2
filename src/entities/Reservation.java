@@ -10,6 +10,7 @@ public class Reservation implements Serializable {
     private int noOfPax;
     private Table table;
     private int reservationID;
+	private boolean checkInStatus;
 
     public Reservation(){}
 
@@ -19,6 +20,7 @@ public class Reservation implements Serializable {
 		this.noOfPax = noOfPax;
 		this.table = table;
         this.reservationID = id;
+		this.checkInStatus = false;
 	}
 
     public Customer getCustomer() {
@@ -60,15 +62,24 @@ public class Reservation implements Serializable {
 	public void setreservationID(int id) {
 		this.reservationID = id;
 	}
+
+	public boolean getCheckInStatus() {
+		return checkInStatus;
+	}
+
+	public void setCheckInStatus(boolean status) {
+		this.checkInStatus = true;
+	}
     // depends on CustomerMgr and TableMgr
     @Override 
     public String toString() {
-        return "Reservation{" + '\n' + 
+        return  "\n" +
+				"Reservation ID= " + getreservationID()+ 
                 "Customer= " + customer.getName() + '\n' +
                 "customerContact= " + customer.getContact() + '\n' +
                 "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
                 "noOfPax= " + noOfPax + '\n' +
                 "tableID= " + table.getId() + '\n' +
-                '}';
+				"Check In= " + getCheckInStatus()+ '\n';
     }
 }

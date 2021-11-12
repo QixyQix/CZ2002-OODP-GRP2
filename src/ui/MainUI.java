@@ -113,7 +113,7 @@ public class MainUI extends UserInterface{
             }
             
 
-        }while(option != 8);
+        }while(option != 0);
 
     }
 

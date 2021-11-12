@@ -26,7 +26,8 @@ public class ReservationUI extends UserInterface {
         System.out.println("(0) Go back to Main Page");
         System.out.println("(1) Create a new reservation ");
         System.out.println("(2) Check/remove reservation booking");
-        System.out.println("(3) Print Reservation");
+        System.out.println("(3) Print All Reservation");
+        System.out.println("(4) Check in");
         System.out.println("=======================================");
     }
 
@@ -36,7 +37,7 @@ public class ReservationUI extends UserInterface {
             
             this.displayOptions();
           
-            choice = super.getInputInt("Please enter your choice: ",0,3);
+            choice = super.getInputInt("Please enter your choice: ",0,4);
             
             switch (choice) {
                 case 1:
@@ -47,7 +48,10 @@ public class ReservationUI extends UserInterface {
                     break;
                 case 3: 
                     this.printReservationUI();
-                    break;     
+                    break;  
+                case 4: 
+                    this.checkInUI();
+                    break;    
             } 
             super.waitEnter();
         }while(choice != 0);
@@ -65,6 +69,12 @@ public class ReservationUI extends UserInterface {
 
         System.out.println("Please fill in your requirements: ");
 	    LocalDateTime checkInTime = super.getInputDateTime("Check In time (yyyy-MM-dd HH:mm): ");
+        LocalDateTime current = LocalDateTime.now();
+        while (checkInTime.isBefore(current)){
+            System.out.println("Please input a valid future date.");
+            checkInTime = super.getInputDateTime("Check In time (yyyy-MM-dd HH:mm): ");
+        }
+
 	    int noOfPax = super.getInputInt("Number Of people: ");
 
         Table table = TableMgr.getInstance().findAvailTable(checkInTime, noOfPax);
@@ -87,13 +97,32 @@ public class ReservationUI extends UserInterface {
         System.out.println(res.toString());
         System.out.println();
     }
+
+    private void checkInUI(){
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
+        
+        if(res == null){
+            System.out.println("There is no reservation made by the customer");
+            return;
+        }
+
+		this.printReservation(res);
+        
+        if (res.getCheckInTime().isAfter(LocalDateTime.now())){
+            if (super.getYNOption("Would you like to check in now?")){
+                res.setCheckInStatus(true);
+            }
+        }
+        else{
+            System.out.println("Sorry please wait until "+res.getCheckInTime()+" to check in");
+        }
+    }
     
     private void checkRemoveReservationUI(){
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         
-        //May change if YanKai want it to be check first then only take O(2N) tho;
-        // TODO  this actually also can,t catch error unless we throw ourself.
         if(res == null){
             System.out.println("There is no reservation made by the customer");
             return;
@@ -113,10 +142,10 @@ public class ReservationUI extends UserInterface {
         	System.out.println("No records found!");
         }
 		else {
-			System.out.println("Printing all reservations in the system record...");
+			System.out.println("\n"+ "Printing all reservations in the system record...");
 			for(Reservation reservation: reservations.values()) {
 				System.out.println(reservation.toString());
-				System.out.print('\n');
+
 			}
 		}
     }   

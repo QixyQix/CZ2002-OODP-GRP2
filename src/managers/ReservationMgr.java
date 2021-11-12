@@ -68,25 +68,35 @@ public final class ReservationMgr {
     public Reservation checkReservation(Customer customer) {
         Reservation result = null;
         LocalDateTime current = LocalDateTime.now();
+        ArrayList<Integer> IDsToRemove = new ArrayList<Integer>();
         for (Reservation reservation : reservations.values()) {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
-            if (current.isAfter(expiredTime) == true) {
-                removeReservation(reservation);
-            } else if (reservation.getCustomer().getContact() == customer.getContact())
+            if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
+                IDsToRemove.add(reservation.getreservationID());
+            } 
+            else if (reservation.getCustomer().getContact() == customer.getContact()){
                 result = reservation;
+            }
+        }
+        int counter=0;
+        while(IDsToRemove.size()>counter){
+            Reservation resToRemoved = this.reservations.get(IDsToRemove.get(counter));
+            removeReservation(resToRemoved);
+            counter++;
         }
         return result;
     }
 
     /**
+     * 
      * Removes a reservation
      * 
      * @param reservationMade Reservation object
      */
     public void removeReservation(Reservation reservationMade) {
-        this.reservations.remove(reservationMade.getreservationID());
         TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
+        this.reservations.remove(reservationMade.getreservationID());
     }
 
     /**
@@ -96,12 +106,21 @@ public final class ReservationMgr {
      */
     public HashMap<Integer, Reservation> getAllReservations() {
         LocalDateTime current = LocalDateTime.now();
+        System.out.println("Current Time now is= " + current);
+        ArrayList<Integer> IDsToRemove = new ArrayList<Integer>();
         for (Reservation reservation : reservations.values()) {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
-            if (current.isAfter(expiredTime) == true) {
-                removeReservation(reservation);
+            if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
+                IDsToRemove.add(reservation.getreservationID());
+                System.out.println("Reservation ID:  " + reservation.getreservationID()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime());
             }
+        }
+        int counter=0;
+        while(IDsToRemove.size()>counter){
+            Reservation resToRemoved = this.reservations.get(IDsToRemove.get(counter));
+            removeReservation(resToRemoved);
+            counter++;
         }
         return reservations;
     }

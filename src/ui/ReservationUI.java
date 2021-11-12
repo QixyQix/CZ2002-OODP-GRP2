@@ -32,7 +32,7 @@ public class ReservationUI extends UserInterface {
             System.out.println("==========Reservation Manager==========");
             System.out.println("(0) Go back to Main Page");
             System.out.println("(1) Create a new reservation ");
-            System.out.println("(2) Check/remove reservation booking");
+            System.out.println("(2) Check/Remove reservation booking");
             System.out.println("(3) Print Reservation");
             System.out.println("=======================================");
 
@@ -88,8 +88,10 @@ public class ReservationUI extends UserInterface {
         }
         else {
             System.out.println("We have an available table. But first we need your particulars.");
-            // depends on yk and zong yu to create CustomerMgr + findExistingCustomer(if dont have must create) method
             Customer customer = CustomerMgr.getInstance().getExistingCustomer(customerContact);
+            // if (customer==null) {
+            //     customer = CustomerUI.getInstance().createCustomerUI();
+            // }
             res = ReservationMgr.getInstance().createReservation(customer, checkInTime, noOfPax, table);
             System.out.println("New reservation added to the system: ");
 	        System.out.println(res.toString());

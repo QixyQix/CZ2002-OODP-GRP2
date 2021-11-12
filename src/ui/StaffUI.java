@@ -1,6 +1,7 @@
 package ui;
 import managers.StaffMgr;
 import entities.Staff;
+import exceptions.IDNotFoundException;
 
 public class StaffUI extends UserInterface {
     private static StaffUI INSTANCE;
@@ -31,31 +32,27 @@ public class StaffUI extends UserInterface {
             option = super.getInputInt("Enter your selection: ", 0, 2);
             switch(option){
                 case 1:
-                    return enterSystem();
+                    try{
+                        return this.enterSystem();
+                    }
+                    catch(Exception ex){
+                        System.out.println(ex.getMessage());
+                    }
+                    break;
                 case 2:
                     registerAccount();
                     break;
-                case 0: 
-                    return null;
             }
             super.waitEnter();
-            
-
-        }while(true);
-
+        }while(option !=0);
+        return null;
     }
-
-    private Staff enterSystem(){
+    
+    
+    private Staff enterSystem() throws IDNotFoundException{
         int staffID;
-        Staff staff = null;
         staffID = super.getInputInt("Please enter your StaffID: ");
-        try{
-            staff = StaffMgr.getInstance().checkexisitingStaff(staffID);
-        }
-        catch(Exception ex){
-            System.out.println("Invalid StaffID / StaffID not Found");
-        }
-        return staff;
+        return StaffMgr.getInstance().checkexisitingStaff(staffID);
     }
 
     private void registerAccount(){

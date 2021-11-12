@@ -93,16 +93,16 @@ public class MainUI extends UserInterface{
                     OrderUI.getInstance().showMenu();
                     break;
                 case 3: 
-                    ReservationUI.getInstance().selectOption();
+                    ReservationUI.getInstance().showMenu();
                     break;
                 case 4:
-                    TableUI.getInstance().selectOption();
+                    TableUI.getInstance().showMenu();
                     break;
                 case 5:
                     InvoiceUI.getInstance().showMenu();;
                     break;
                 case 6:
-                    SalesReportUI.getInstance().printrevenue();
+                    SalesReportUI.getInstance().showMenu();
                     break;
                 case 7:
                     SalesReportUI.getInstance().createreport();

@@ -32,7 +32,7 @@ public final class SalesReportUI extends UserInterface{
 
     
 
-    public void printrevenue(){
+    public void showMenu(){
         int option;
         LocalDate startDate;
         LocalDate endDate;

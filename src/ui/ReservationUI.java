@@ -30,7 +30,7 @@ public class ReservationUI extends UserInterface {
         System.out.println("=======================================");
     }
 
-    public void selectOption() {
+    public void showMenu() {
         int choice;
         do{
             

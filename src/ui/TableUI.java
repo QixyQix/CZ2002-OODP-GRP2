@@ -31,7 +31,7 @@ public class TableUI extends UserInterface {
         System.out.println("=================================");
     }
 
-    public void selectOption() {
+    public void showMenu() {
         int option = 0;
         
         do {

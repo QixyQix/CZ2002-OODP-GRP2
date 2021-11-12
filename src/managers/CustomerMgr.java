@@ -131,7 +131,7 @@ public final class CustomerMgr {
      * 
      * @return hashmap of invoice id and Customer object
      */
-    public HashMap<Integer, Customer> getInvoicesMap() {
+    public HashMap<Integer, Customer> getCustomersMap() {
         return this.customers;
     }
 

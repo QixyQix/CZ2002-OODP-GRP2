@@ -107,13 +107,13 @@ public class MainUI extends UserInterface{
                 case 7:
                     SalesReportUI.getInstance().createreport();
                     break;
-                case 9:
+                case 8:
                     CurrentTime.setCurrentTime();
                     break;
             }
             
 
-        }while(option != 8);
+        }while(option != 0);
 
     }
 

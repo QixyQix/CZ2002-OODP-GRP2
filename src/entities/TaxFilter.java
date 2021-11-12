@@ -48,7 +48,7 @@ public class TaxFilter implements PriceFilter, Serializable{
     public double execute(double rawPrice){
         switch(this.type){
             case ABSOLUTE:
-                return this.amount;
+                return rawPrice - this.amount;
             case PERCENTAGE: 
                 return rawPrice*amount/100;
             default:

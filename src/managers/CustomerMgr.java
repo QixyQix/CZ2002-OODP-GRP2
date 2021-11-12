@@ -28,11 +28,19 @@ public final class CustomerMgr {
             this.customers = new HashMap<Integer, Customer>();
             this.phonetoid = new HashMap<String, Integer>();
             loadSavedData();
+            this.convertToPhone();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load customers data");
         }
     };
+
+    private void convertToPhone(){
+        for(int id : customers.keySet()){
+            Customer cus = customers.get(id);
+            phonetoid.put(cus.getContact(), id);
+        }
+    }
 
     /***
      * Serializes and saves the Customers objects into the data/customers folder

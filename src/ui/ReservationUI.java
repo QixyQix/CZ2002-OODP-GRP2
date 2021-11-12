@@ -1,6 +1,7 @@
 package ui;
 
 import managers.TableMgr;
+import managers.OrderMgr;
 import managers.ReservationMgr;
 import entities.Reservation;
 import entities.Customer;
@@ -112,6 +113,7 @@ public class ReservationUI extends UserInterface {
         if (res.getCheckInTime().isAfter(LocalDateTime.now())){
             if (super.getYNOption("Would you like to check in now?")){
                 res.setCheckInStatus(true);
+                OrderMgr.getInstance().createOrder(super.getStaff(), customer, res.getCheckInTime(), res.getnoOfPax(), res.getTable());
             }
         }
         else{

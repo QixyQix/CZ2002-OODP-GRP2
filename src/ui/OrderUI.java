@@ -2,6 +2,7 @@ package ui;
 
 import entities.Order;
 import entities.Staff;
+import entities.Table;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
@@ -55,8 +56,8 @@ public final class OrderUI extends UserInterface {
 
         Integer noofpax = super.getInputInt("No of pax");
         Customer customer = CustomerUI.getInstance().getCustomer();
-        System.out.println(super.getStaff().getId());
-        Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax);
+        Table table = OrderMgr.getInstance().allocateTable(date, noofpax);
+        Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax,table);
         // TODO: ??Want to throw an error and catch with self define exception???
         if(order == null){
             System.out.println("Order is not created, Table are full.");

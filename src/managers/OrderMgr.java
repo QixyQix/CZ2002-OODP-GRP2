@@ -91,8 +91,8 @@ public final class OrderMgr extends DataMgr{
      * @param noOfPax  number of pax at the table
      * @return Order object
      */
-    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noOfPax) {
-        Table table = this.allocateTable(date, noOfPax);
+    public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noOfPax, Table table) {
+        // Table table = this.allocateTable(date, noOfPax);
         if(table == null) {
             
             return null;

@@ -1,7 +1,6 @@
 package ui;
 
 import entities.Order;
-import entities.Staff;
 import entities.Table;
 import entities.Customer;
 import entities.MenuItem;
@@ -65,13 +64,13 @@ public final class OrderUI extends UserInterface {
         Integer noofpax = super.getInputInt("No of pax");
         Customer customer = CustomerUI.getInstance().getCustomer();
         Table table = TableMgr.getInstance().findAvailTable(date, noofpax);
-        Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax,table);
-        // TODO: ??Want to throw an error and catch with self define exception???
-        if(order == null){
+        if(table == null){
             System.out.println("Order is not created, Table are full.");
             return;
         }
-        System.out.println("Order has been created. Your order id is: " + order.getId());
+
+        Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax,table);
+        System.out.println("Order has been created. Your order id is: " + order.getId());    
     }
 
 
@@ -126,7 +125,7 @@ public final class OrderUI extends UserInterface {
                     deleteOrderItem(order);
                     break;
                 case 4:
-                    //TODO depends see what or not
+                    MenuItemUI.getInstance().showCurrentMenuItems();
                     break;
                 case 5:
                     confirmOrder(order);
@@ -138,7 +137,6 @@ public final class OrderUI extends UserInterface {
 
 
     private void printOrder(Order order) {     
-        // TODO This want call manager?     
         order.printOrder();        
     }
 
@@ -171,9 +169,6 @@ public final class OrderUI extends UserInterface {
         }
        
     }
-
-    // TODO Get menu;
-
 
     private void confirmOrder(Order order){
         if(super.getYNOption("Are you sure you want to make order?")){

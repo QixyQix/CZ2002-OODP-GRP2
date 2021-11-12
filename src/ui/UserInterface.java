@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import entities.Staff;
+import enums.MenuItemTypeEnum;
 public class UserInterface {
     private Scanner sc;
     private static Staff staff;
@@ -175,7 +176,8 @@ public class UserInterface {
         }
         
     }
-
+    
+    
     public void print(String prompt){
         System.out.println(prompt);
     }

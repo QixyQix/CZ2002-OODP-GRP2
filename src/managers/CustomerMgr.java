@@ -1,11 +1,6 @@
 package managers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import entities.Customer;
 import entities.Entities;
@@ -65,8 +60,6 @@ public final class CustomerMgr extends DataMgr{
             phonetoid.put(cus.getContact(), id);
         }
     }
-
-    
 
     /**
      * Returns the CustomerMgr instance and creates an instance if it does not exist

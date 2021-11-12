@@ -1,16 +1,8 @@
 import ui.MainUI;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-
-import entities.Membership;
 import global.AvailPriceFilter;
-import entities.*;
 import managers.*;
-import enums.*;
-import factories.*;
-import exceptions.*;
-import ui.*;
 
 class Main{
     
@@ -24,7 +16,6 @@ class Main{
         ReservationMgr.getInstance();
         
     
-        OrderUI.getInstance();
         SalesReportMgr.getInstance();
         InvoiceMgr.getInstance();
         MembershipMgr.getInstance();

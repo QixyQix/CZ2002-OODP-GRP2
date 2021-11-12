@@ -1,13 +1,7 @@
 package managers;
 
 import java.util.HashMap;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import entities.Entities;
 import entities.Table;
@@ -22,7 +16,8 @@ import java.time.LocalDateTime;
 public class TableMgr extends DataMgr {
     private static TableMgr instance;
     private HashMap<Integer, Table> tables;
-    private int nextId ;
+    private int nextId;
+
     private TableMgr() {
         try {
             tables = new HashMap<Integer, Table>();
@@ -35,25 +30,27 @@ public class TableMgr extends DataMgr {
 
     };
 
-    private void downcast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Table)
-                this.tables.put(id,(Table) object.get(id));
-            else throw new ClassCastException();
+    private void downcast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Table)
+                this.tables.put(id, (Table) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    private HashMap<Integer, Entities> upcast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: tables.keySet()){
-           object.put(id,tables.get(id)); 
+        for (int id : tables.keySet()) {
+            object.put(id, tables.get(id));
         }
         return object;
     }
-    
+
     public void saveData() throws IOException {
         saveDataSerialize(upcast(), nextId, "tables", "tableNextId");
     }
+
     /**
      * Returns the TableMgr instance and creates an instance if it does not exist
      * 
@@ -135,7 +132,7 @@ public class TableMgr extends DataMgr {
     public void printTableAvailability(int noOfPax, LocalDateTime date) {
         boolean flag = false;
         for (Table table : tables.values()) {
-            if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) == TableState.AVAILABLE)) {
+            if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) != TableState.RESERVED)) {
                 System.out.println(table.toString());
                 flag = true;
             }

@@ -1,18 +1,13 @@
 package managers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Entities;
 import entities.MenuItem;
 import entities.MenuPackage;
-import exceptions.DuplicateIDException;
+import enums.MenuItemTypeEnum;
 import exceptions.IDNotFoundException;
 import factories.MenuItemFactory;
 
@@ -78,18 +73,14 @@ public final class MenuItemMgr extends DataMgr{
      * @param price        menu item price
      * @param id           menu item id
      * @param packageItems menu items in a package
-     * @throws DuplicateIDException if menu item with the same id exists
      * 
      */
-    public void createMenuItem(String type, String name, String description, double price, int id,
-            ArrayList<MenuItem> packageItems) throws DuplicateIDException {
-        if (this.items.containsKey(id)) {
-            throw new DuplicateIDException();
-        }
-
+    public void createMenuItem(MenuItemTypeEnum type, String name, String description, double price,
+            ArrayList<MenuItem> packageItems)  {
+     
+// stop here
         try {
-            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, id,
-                    packageItems);
+            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, nextId,packageItems);
 
             this.items.put(newItem.getId(), newItem);
         } catch (Exception ex) {

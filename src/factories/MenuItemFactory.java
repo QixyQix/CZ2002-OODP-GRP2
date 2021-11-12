@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.MenuItem;
 import entities.MenuPackage;
+import enums.MenuItemTypeEnum;
 
 public final class MenuItemFactory {
     private static MenuItemFactory INSTANCE;
@@ -19,7 +20,7 @@ public final class MenuItemFactory {
         return INSTANCE;
     }
 
-    public MenuItem createMenuItem(String type, String name, String description, double price, int id, ArrayList<MenuItem> packageItems) throws ClassNotFoundException {
+    public MenuItem createMenuItem(MenuItemTypeEnum type, String name, String description, double price, int id, ArrayList<MenuItem> packageItems) throws ClassNotFoundException {
         if(packageItems != null){
             return new MenuPackage(type, name, description, price, id, packageItems);
         }else{

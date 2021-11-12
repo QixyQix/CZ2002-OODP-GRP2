@@ -1,7 +1,5 @@
 package entities;
 import java.util.TreeMap;
-
-import java.util.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -11,7 +9,6 @@ public class Order implements Serializable, Entities{
     private double totalPrice;
     private TreeMap<MenuItem, Integer> orderedItems;
     private TreeMap<MenuItem, Integer> pendingItems;
-    //private Invoice invoice;
     private Customer customer;
     private Table table;
     private LocalDateTime date;     
@@ -78,36 +75,6 @@ public class Order implements Serializable, Entities{
         this.addItems(pendingItems,item,quantitiy);
     }
 
-    /*
- private TreeMap<MenuItem,Integer> addItems(TreeMap<MenuItem,Integer> target, MenuItem menuitem, int quantity){
-        int originalQuantitiy = 0;
-        try{
-            originalQuantitiy = target.get(menuitem);
-        }
-        catch(NullPointerException ex){
-            System.out.println("Try");
-            originalQuantitiy = 0;
-        }   
-            
-        quantity += originalQuantitiy;
-        // not sure will overwrite
-        target.put(menuitem,quantity);
-        return target;
-    }
-
-    public void addToOrderedItems(){
-        for( MenuItem item : pendingItems.keySet()){
-            orderedItems=addItems(orderedItems,item,pendingItems.get(item));
-        }
-        this.pendingItems.clear();
-    }
-
-    public void addPendingItems(MenuItem item, int quantitiy){
-        pendingItems = this.addItems(this.pendingItems,item,quantitiy);
-    }
-
-    */
-
     private void printItem(TreeMap<MenuItem,Integer> target, String status){
         for (MenuItem item : target.keySet()) {
             int quantity = target.get(item);
@@ -146,17 +113,6 @@ public class Order implements Serializable, Entities{
     public TreeMap<MenuItem, Integer> getPendingItems(){
         return this.pendingItems;
     }
-
-    // Suggest no setter for ordereditems (not make sesnse)
-    /*
-    public Invoice getInvoice(){
-        return this.invoice;
-    }
-
-    public void setInvoice(Invoice invoice){
-        this.invoice = invoice;
-    }
-    */
 
     public String getStatus(){
         return this.status;

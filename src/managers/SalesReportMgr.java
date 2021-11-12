@@ -26,8 +26,8 @@ public final class SalesReportMgr extends DataMgr {
             this.reports = new HashMap<Integer, Report>();
             this.reports_day = new HashMap<LocalDate, Integer>();
 
-            downcast(super.loadSavedData("reports"));
-            nextId = super.loadNextIdData("reportNextId");
+            downCast(super.loadSavedData("reports"));
+            this.nextId = super.loadNextIdData("reportNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load reports data");
@@ -35,7 +35,7 @@ public final class SalesReportMgr extends DataMgr {
     };
 
     
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Report)
                 this.reports.put(id,(Report) object.get(id));
@@ -43,7 +43,7 @@ public final class SalesReportMgr extends DataMgr {
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: reports.keySet()){
            object.put(id,reports.get(id)); 
@@ -52,7 +52,7 @@ public final class SalesReportMgr extends DataMgr {
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "reports", "reportNextId");
+        saveDataSerialize(upCast(), nextId, "reports", "reportNextId");
     }
 
     

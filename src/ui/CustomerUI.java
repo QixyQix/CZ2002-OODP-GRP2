@@ -23,12 +23,49 @@ public final class CustomerUI extends UserInterface {
         return INSTANCE;
     }
     
+    private void displayOptions(){
+        System.out.println("==========Customer Manager==========");
+        System.out.println("(0) Go Back to Main Page Exit");
+        System.out.println("(1) Update Membership");
+        System.out.println("=================================");
+    }
+    public void showSelection(){
+        int option = 0;
+        do {
+            displayOptions();
+            
+            option = super.getInputInt("Enter your option", 0, 1);
+
+            switch (option) {
+                case 1:
+                    this.updateMembership();
+                    break;
+            }
+            super.waitEnter();
+        } while (option != 0);
+    }
+
+    private void updateMembership(){
+        try{
+            String contact = super.getContact("Please enter customer contact: ");
+            CustomerMgr.getInstance().getExistingCustomer(contact);
+            Membership membership = this.getMembershipInput();
+            if(!super.getYNOption("Are you sure you want to update your Membership?")) return;
+            CustomerMgr.getInstance().updateMembership(contact ,membership);
+        } catch(Exception ex){
+            System.out.println("Customer Not Exists");
+        }
+    }
+    
     public Customer getCustomer() {
         String contact = super.getContact("Please enter customer contact: ");
         try {
             return CustomerMgr.getInstance().getExistingCustomer(contact);
         } catch(Exception ex) {
-            return createCustomer(contact);
+            if(super.getYNOption("Do you want to register as our Customer?"))
+                return createCustomer(contact);
+            else 
+                return null;
         }
     }
 

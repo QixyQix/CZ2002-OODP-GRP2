@@ -21,7 +21,7 @@ public class TableMgr extends DataMgr {
     private TableMgr() {
         try {
             tables = new HashMap<Integer, Table>();
-            downcast(super.loadSavedData("tables"));
+            downCast(super.loadSavedData("tables"));
             nextId = super.loadNextIdData("tableNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -30,7 +30,7 @@ public class TableMgr extends DataMgr {
 
     };
 
-    private void downcast(HashMap<Integer, Entities> object) {
+    public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
             if (object.get(id) instanceof Table)
                 this.tables.put(id, (Table) object.get(id));
@@ -39,7 +39,7 @@ public class TableMgr extends DataMgr {
         }
     }
 
-    private HashMap<Integer, Entities> upcast() {
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for (int id : tables.keySet()) {
             object.put(id, tables.get(id));
@@ -48,7 +48,7 @@ public class TableMgr extends DataMgr {
     }
 
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "tables", "tableNextId");
+        saveDataSerialize(upCast(), nextId, "tables", "tableNextId");
     }
 
     /**

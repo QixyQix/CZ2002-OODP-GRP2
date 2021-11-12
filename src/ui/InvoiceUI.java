@@ -31,10 +31,10 @@ public class InvoiceUI extends UserInterface{
         System.out.println();
     }
 
-    public void showMenu() {
+    public void showSelection() {
         int option = 0;
         do {
-            displayOptions();
+            this.displayOptions();
             
             option = super.getInputInt("Enter your option", 0, 3);
 
@@ -64,7 +64,8 @@ public class InvoiceUI extends UserInterface{
             System.out.println("Please enter a valid order id, order id: " + orderid + " is not valid");
             return;
         }
-
+        
+        if(!getYNOption("Are you sure you want to make payment for the order?")) return;
         invoice = InvoiceMgr.getInstance().createInvoice(order);       
         
         try{

@@ -19,7 +19,7 @@ import enums.TaxFilterNameEnum;
  * @author Zong Yu Lee
  */
 public final class InvoiceMgr extends DataMgr {
-
+    
     private static InvoiceMgr instance;
     private HashMap<Integer, Invoice> invoices;
     private int nextId;
@@ -27,7 +27,7 @@ public final class InvoiceMgr extends DataMgr {
     private InvoiceMgr() {
         try {
             this.invoices = new HashMap<Integer, Invoice>();
-            downcast(super.loadSavedData("invoices"));
+            downCast(super.loadSavedData("invoices"));
             nextId = super.loadNextIdData("invoiceNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -35,7 +35,7 @@ public final class InvoiceMgr extends DataMgr {
         }
     }
     
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Invoice)
                 this.invoices.put(id,(Invoice) object.get(id));
@@ -43,7 +43,7 @@ public final class InvoiceMgr extends DataMgr {
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: invoices.keySet()){
            object.put(id,invoices.get(id)); 
@@ -52,7 +52,7 @@ public final class InvoiceMgr extends DataMgr {
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "invoices", "invoiceNextId");
+        saveDataSerialize(upCast(), nextId, "invoices", "invoiceNextId");
     }
 
     /**

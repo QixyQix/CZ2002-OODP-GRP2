@@ -25,7 +25,7 @@ public class StaffUI extends UserInterface {
         System.out.println(" ");
     }
 
-    public Staff staffSelectionscreen(){
+    public Staff showSelection(){
         int option;
         do{
             displayOptions();

@@ -45,7 +45,7 @@ public class MainUI extends UserInterface{
     public void systemBoot(){
         Staff staff;
         do{
-            staff = StaffUI.getInstance().staffSelectionscreen();
+            staff = StaffUI.getInstance().showSelection();
         
             if(staff == null) {
         
@@ -76,6 +76,7 @@ public class MainUI extends UserInterface{
         System.out.println("(5) Print Order invoice");
         System.out.println("(6) Print Sale Revenue Report");
         System.out.println("(7) End of the day (report)");
+        System.out.println("(8) Update Membership");
         System.out.println("===========================================================================");
         System.out.println(" ");
     }
@@ -86,28 +87,31 @@ public class MainUI extends UserInterface{
         super.setStaff(staff);
         do{
             displayOptions();
-            option = super.getInputInt("Enter your selection: ", 0, 7);
+            option = super.getInputInt("Enter your selection: ", 0, 8);
             switch(option){
                 case 1:
-                    MenuItemUI.getInstance().showMenu();
+                    MenuItemUI.getInstance().showSelection();
                     break;
                 case 2:
-                    OrderUI.getInstance().showMenu();
+                    OrderUI.getInstance().showSelection();
                     break;
                 case 3: 
-                    ReservationUI.getInstance().showMenu();
+                    ReservationUI.getInstance().showSelection();
                     break;
                 case 4:
-                    TableUI.getInstance().showMenu();
+                    TableUI.getInstance().showSelection();
                     break;
                 case 5:
-                    InvoiceUI.getInstance().showMenu();;
+                    InvoiceUI.getInstance().showSelection();;
                     break;
                 case 6:
-                    SalesReportUI.getInstance().showMenu();
+                    SalesReportUI.getInstance().showSelection();
                     break;
                 case 7:
                     SalesReportUI.getInstance().createreport();
+                    break;
+                case 8:
+                    CustomerUI.getInstance().showSelection();
                     break;
             }
             

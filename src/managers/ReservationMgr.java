@@ -22,7 +22,7 @@ public final class ReservationMgr extends DataMgr {
     private ReservationMgr() {
         this.reservations = new HashMap<Integer, Reservation>();
         try {
-            this.downcast(super.loadSavedData("reservations"));
+            this.downCast(super.loadSavedData("reservations"));
             nextId = super.loadNextIdData("reservationNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -30,7 +30,7 @@ public final class ReservationMgr extends DataMgr {
         }
     };
 
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Reservation)
                 this.reservations.put(id,(Reservation) object.get(id));
@@ -38,7 +38,7 @@ public final class ReservationMgr extends DataMgr {
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: reservations.keySet()){
            object.put(id,reservations.get(id)); 
@@ -47,7 +47,7 @@ public final class ReservationMgr extends DataMgr {
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "reservations", "reservationNextId");
+        saveDataSerialize(upCast(), nextId, "reservations", "reservationNextId");
     }
 
     /**

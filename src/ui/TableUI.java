@@ -31,7 +31,7 @@ public class TableUI extends UserInterface {
         System.out.println("=================================");
     }
 
-    public void showMenu() {
+    public void showSelection() {
         int option = 0;
         
         do {
@@ -63,7 +63,10 @@ public class TableUI extends UserInterface {
     }
     
     private void createTable(){
-        // FROM ZY, better not start from idCounter
+        
+        if( ! super.getYNOption("Do you sure you want to overide the current Tables Object?")) 
+            return;
+
         int idCounter = 0;
         for (int j = 2; j <= 10; j = j + 2) {
             int noOfTableOfJPax = getInputInt("How many tables of " + j + " pax: ");

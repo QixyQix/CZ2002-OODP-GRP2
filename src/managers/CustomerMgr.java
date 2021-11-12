@@ -24,8 +24,8 @@ public final class CustomerMgr extends DataMgr{
             this.customers = new HashMap<Integer, Customer>();
             this.phonetoid = new HashMap<String, Integer>();
             
-            downcast(super.loadSavedData("customers"));
-            this.nextId  = super.loadNextIdData("CustomernextId");
+            downCast(super.loadSavedData("customers"));
+            this.nextId  = super.loadNextIdData("CustomerNextId");
 
             this.convertToPhone();
         } catch (Exception ex) {
@@ -34,7 +34,7 @@ public final class CustomerMgr extends DataMgr{
         }
     };
 
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Customer)
                 this.customers.put(id,(Customer) object.get(id));
@@ -42,7 +42,7 @@ public final class CustomerMgr extends DataMgr{
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public  HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: customers.keySet()){
            object.put(id,customers.get(id)); 
@@ -51,7 +51,7 @@ public final class CustomerMgr extends DataMgr{
     }
 
     public void saveData() throws IOException{
-        super.saveDataSerialize(upcast(), nextId, "customers","CustomernextId");
+        super.saveDataSerialize(upCast(), nextId, "customers","CustomernextId");
     }
 
     private void convertToPhone(){
@@ -100,9 +100,7 @@ public final class CustomerMgr extends DataMgr{
         this.customers.put(nextId, customer);
 
         nextId++;
-
         return customer;
-
     }
 
     /**
@@ -114,19 +112,20 @@ public final class CustomerMgr extends DataMgr{
     public Customer getExistingCustomer(String phoneNumber) {
         int cusid = this.phonetoid.get(phoneNumber);
         
-        return (Customer)this.customers.get(cusid);
+        return this.customers.get(cusid);
     }
-
+    
     /**
      * Check if customer exists by contact number
      * 
      * @param phoneNumber customer contact number
      * @return true if Customer object exists, false if customer does not exist
      */
+    /*
     public boolean checkExistingCustomer(String phoneNumber) {
         return this.phonetoid.containsKey(phoneNumber);
     }
-
+    */
     /**
      * Update customer membership
      * 

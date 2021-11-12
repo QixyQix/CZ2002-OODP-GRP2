@@ -18,7 +18,7 @@ public class MembershipMgr extends DataMgr{
     private MembershipMgr() {
         this.membership = new HashMap<Integer, Membership>();
         try {
-            downcast(super.loadSavedData("membership"));
+            downCast(super.loadSavedData("membership"));
             this.nextId = super.loadNextIdData("membershipNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -26,7 +26,7 @@ public class MembershipMgr extends DataMgr{
         }
     }
 
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Membership)
                 this.membership.put(id,(Membership) object.get(id));
@@ -34,7 +34,7 @@ public class MembershipMgr extends DataMgr{
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public  HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: membership.keySet()){
            object.put(id,membership.get(id)); 
@@ -43,7 +43,7 @@ public class MembershipMgr extends DataMgr{
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "invoices", "invoiceNextId");
+        saveDataSerialize(upCast(), nextId, "membership", "membershipNextId");
     }
 
     

@@ -23,7 +23,7 @@ public final class OrderMgr extends DataMgr{
     private OrderMgr() {
         try {
             this.orders = new HashMap<Integer, Order>();
-            downcast(loadSavedData("orders"));
+            downCast(loadSavedData("orders"));
             nextId = loadNextIdData("orderNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -31,7 +31,7 @@ public final class OrderMgr extends DataMgr{
         }
     }
 
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Order)
                 this.orders.put(id,(Order) object.get(id));
@@ -39,7 +39,7 @@ public final class OrderMgr extends DataMgr{
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: orders.keySet()){
            object.put(id,orders.get(id)); 
@@ -48,7 +48,7 @@ public final class OrderMgr extends DataMgr{
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "orders", "orderNextId");
+        saveDataSerialize(upCast(), nextId, "orders", "orderNextId");
     }
 
     /**

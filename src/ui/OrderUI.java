@@ -31,7 +31,7 @@ public final class OrderUI extends UserInterface {
         System.out.println("====================================");
     }
 
-    public void showMenu() {
+    public void showSelection() {
         int option = 0;
         do {
             displayOptions();
@@ -54,14 +54,17 @@ public final class OrderUI extends UserInterface {
         LocalDateTime date = LocalDateTime.now();
 
         Integer noofpax = super.getInputInt("No of pax");
-        Customer customer = CustomerUI.getInstance().getCustomer();
         Table table = OrderMgr.getInstance().allocateTable(date, noofpax);
         // TODO: ??Want to throw an error and catch with self define exception???
         if(table == null){
             System.out.println("Order is not created, Table are full.");
             return;
         }
-
+        
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        
+        if( !super.getYNOption("Do you confirm with the selection. " )) return;
+        
         Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax,table);
         System.out.println("Order has been created. Your order id is: " + order.getId());    
     }
@@ -139,7 +142,8 @@ public final class OrderUI extends UserInterface {
         int menuItemid;
         MenuItem menuItem;
         try {
-            menuItemid = super.getInputInt("Please enter the Menu item id");
+            menuItemid = super.getInputInt("Please enter the Menu item id To add (0 to Exit)");
+            if(menuItemid == 0) return;
             menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
             OrderMgr.getInstance().addItem( (MenuItem) menuItem.clone(), order);
             System.out.println("Order item added");
@@ -153,7 +157,10 @@ public final class OrderUI extends UserInterface {
         int qty;
         MenuItem menuItem;
         try {
-            menuItemid = super.getInputInt("Menu item id");
+            menuItemid = super.getInputInt("Menu item id (0 to Exit)");
+
+            if(menuItemid ==0) return;
+
             menuItem = MenuItemMgr.getInstance().getMenuItemByID(menuItemid);
             qty = super.getInputInt("Quantity to be deleted");
             OrderMgr.getInstance().deleteOrderItem(menuItem, qty, order);

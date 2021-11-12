@@ -20,7 +20,7 @@ public final class StaffMgr extends DataMgr{
     private StaffMgr() {
         try {
             this.staffs = new HashMap<Integer, Staff>();
-            downcast(super.loadSavedData("staffs"));
+            downCast(super.loadSavedData("staffs"));
             this.nextId = super.loadNextIdData("staffNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -28,7 +28,7 @@ public final class StaffMgr extends DataMgr{
         }
     }
 
-    private void downcast(HashMap<Integer, Entities> object){
+    public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Staff)
                 this.staffs.put(id,(Staff) object.get(id));
@@ -36,7 +36,7 @@ public final class StaffMgr extends DataMgr{
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: staffs.keySet()){
            object.put(id,staffs.get(id)); 
@@ -45,7 +45,7 @@ public final class StaffMgr extends DataMgr{
     }
     
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "staffs", "staffNextId");
+        saveDataSerialize(upCast(), nextId, "staffs", "staffNextId");
     }
 
     /**
@@ -75,7 +75,7 @@ public final class StaffMgr extends DataMgr{
         return staff;
     
     }
-
+    
     /**
      * Returns true or false depending if staff corresponding to the contact number
      * exists
@@ -83,11 +83,12 @@ public final class StaffMgr extends DataMgr{
      * @param phoneNumber contact number
      * @return true if staff exists, false if staff does not exist
      */
+    /*
     public boolean checkexisitingStaff(String phoneNumber) {
 
         return true;
     }
-
+    */
     /**
      * Creates and returns Staff object
      * 

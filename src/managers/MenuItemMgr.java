@@ -24,7 +24,7 @@ public final class MenuItemMgr extends DataMgr{
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
-            downcast(super.loadSavedData("menuitems"));
+            downCast(super.loadSavedData("menuitems"));
             this.nextId = super.loadNextIdData("menuItemNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -32,14 +32,18 @@ public final class MenuItemMgr extends DataMgr{
         }
     }
 
-    private void downcast(HashMap<Integer, Entities> object) throws ClassNotFoundException{
+    public void downCast(HashMap<Integer, Entities> object) {
         for(int id: object.keySet()){
-            MenuItem item = MenuItemFactory.getInstance().createMenuItemFromSerializedData( object.get(id));
-            this.items.put(id, item);
+            try{
+                MenuItem item = MenuItemFactory.getInstance().createMenuItemFromSerializedData( object.get(id));
+                this.items.put(id, item);
+            }catch(Exception ex){
+                System.out.println("Failed to downCast Data");
+            }
         }
     }
 
-    private HashMap<Integer, Entities> upcast(){
+    public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: items.keySet()){
            object.put(id,items.get(id)); 
@@ -48,7 +52,7 @@ public final class MenuItemMgr extends DataMgr{
     }
 
     public void saveData() throws IOException {
-        saveDataSerialize(upcast(), nextId, "menuitems", "menuItemNextId");
+        saveDataSerialize(upCast(), nextId, "menuitems", "menuItemNextId");
     }
     
     /**
@@ -77,12 +81,11 @@ public final class MenuItemMgr extends DataMgr{
      */
     public void createMenuItem(MenuItemTypeEnum type, String name, String description, double price,
             ArrayList<MenuItem> packageItems)  {
-     
-// stop here
+
         try {
             MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, nextId,packageItems);
-
             this.items.put(newItem.getId(), newItem);
+            nextId++;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -111,7 +114,6 @@ public final class MenuItemMgr extends DataMgr{
         if (!this.items.containsKey(id)) {
             throw new IDNotFoundException();
         }
-
         return this.items.get(id);
     }
 

@@ -38,7 +38,7 @@ public final class MenuItemUI extends UserInterface {
         System.out.println("=============================");
     }
 
-    public void showMenu() {
+    public void showSelection() {
         int option = 0;
         do {
             displayOptions();
@@ -126,18 +126,20 @@ public final class MenuItemUI extends UserInterface {
         String description;
         double price = 0.0;
         ArrayList<MenuItem> packageItems = null;
-
+       
         if (super.getYNOption("Is this a package?")) {
             createPackage = true;
-            packageItems = new ArrayList<MenuItem>();
         }
-
+    
         type = this.getInputType("Enter the item type: ");
         name = super.getInputString("Enter the item name: ");
         description = super.getInputString("Enter the item description: ");
         price = super.getInputDouble("Enter the item price: ", 0.0, Double.MAX_VALUE);
 
+        if( !super.getYNOption("Do you confirm with the selection. " )) return;
+        
         if (createPackage) {
+            packageItems = new ArrayList<MenuItem>();
             packageItems = this.buildPackageItems();
         }
 
@@ -175,8 +177,8 @@ public final class MenuItemUI extends UserInterface {
             if (itemToEdit instanceof MenuPackage) {
                 System.out.println("(5) Change package items");
             }
-            System.out.println("(-1) Exit");
-            int choice = super.getInputInt("Enter number of corresponding property to edit", -1, 5);
+            System.out.println("(0) Exit");
+            int choice = super.getInputInt("Enter number of corresponding property to edit", 0, 5);
             switch (choice) {
             case 1:
                 MenuItemTypeEnum newType = this.getInputType("Enter new value for type:");
@@ -208,11 +210,8 @@ public final class MenuItemUI extends UserInterface {
                 }else{
                     System.out.println("This is not a package");
                 }
-            case -1:
+            case 0:
                 loop = false;
-                break;
-            default:
-                System.out.println("Invalid choice");
                 break;
             }
         } while (loop);
@@ -233,12 +232,12 @@ public final class MenuItemUI extends UserInterface {
 
     private ArrayList<MenuItem> buildPackageItems() {
         
-        showCurrentMenuItems();
-        System.out.println("Enter the IDs of items to be included in package (-1) to end: ");
+        
+        System.out.println("Enter the IDs of items to be included in package (0 to end): ");
         int idToAdd = 0;
         ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();
         do {
-            idToAdd = super.getInputInt("Enter ID: ", -1, Integer.MAX_VALUE);
+            idToAdd = super.getInputInt("Enter ID: ", 0, Integer.MAX_VALUE);
             try {
                 MenuItem itemToAdd = MenuItemMgr.getInstance().getMenuItemByID(idToAdd);
                 if (itemToAdd instanceof MenuPackage) {
@@ -248,7 +247,8 @@ public final class MenuItemUI extends UserInterface {
                     System.out.println("Added item " + itemToAdd.getName() + " to package");
                 }
             } catch (Exception ex) {
-                System.out.println("Please enter a valid ID");
+                if(idToAdd!=0)
+                    System.out.println("Please enter a valid ID");
             }
         } while (idToAdd > 0);
 

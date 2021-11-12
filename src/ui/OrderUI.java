@@ -130,7 +130,6 @@ public final class OrderUI extends UserInterface {
 
 
     private void printOrder(Order order) {     
-        // TODO This want call manager?     
         order.printOrder();        
     }
 

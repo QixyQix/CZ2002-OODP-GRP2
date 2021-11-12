@@ -78,15 +78,12 @@ public final class MenuItemMgr extends DataMgr{
      * @param price        menu item price
      * @param id           menu item id
      * @param packageItems menu items in a package
-     * @throws DuplicateIDException if menu item with the same id exists
      * 
      */
     public void createMenuItem(String type, String name, String description, double price, int id,
-            ArrayList<MenuItem> packageItems) throws DuplicateIDException {
-        if (this.items.containsKey(id)) {
-            throw new DuplicateIDException();
-        }
-
+            ArrayList<MenuItem> packageItems)  {
+     
+// stop here
         try {
             MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, id,
                     packageItems);

@@ -56,17 +56,19 @@ public final class MenuItemUI extends UserInterface {
                 deleteMenuItem();
                 break;
             }
+            super.waitEnter();
         } while (option != 0);
     }
 
     
 
     private void showCurrentMenuItems() {
-        // TODO Print no menuitems if no items;
-        System.out.println("MENU ITEMS:");
         try {
             ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
-
+            if(items.size()==0){
+                System.out.println("There is no MenuItems Yet");
+            }
+            System.out.println("MENU ITEMS:");
             for (MenuItem item : items) {
                 System.out.println("ID: " + item.getId() + " | Type: " + item.getType() + " | Name: " + item.getName()
                         + " $" + item.getPrice());
@@ -88,19 +90,9 @@ public final class MenuItemUI extends UserInterface {
         double price = 0.0;
         ArrayList<MenuItem> packageItems = null;
 
-        if (super.getInputString("Is this a package? Enter P for package.").equals("P")) {
+        if (super.getYNOption("Is this a package?")) {
             createPackage = true;
             packageItems = new ArrayList<MenuItem>();
-        }
-
-        while (true) {
-            id = super.getInputInt("Enter an ID for the Menu Item", 0, Integer.MAX_VALUE);
-            if (!MenuItemMgr.getInstance().checkIDAvailable(id)) {
-                System.out.println("ID " + id + " has already been taken. Please enter another ID.");
-                continue;
-            } else {
-                break;
-            }
         }
 
         type = super.getInputString("Enter the item type: ");

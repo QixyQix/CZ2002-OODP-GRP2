@@ -1,17 +1,18 @@
 package entities;
 
 import java.io.Serializable;
+import enums.MenuItemTypeEnum;
 
 public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, Entities{
     private String type;
-    private String name;
+    private MenuItemTypeEnum name;
     private String description;
     private double price;
     private int id;
 
     public MenuItem(){}
 
-    public MenuItem(String type, String name, String description, double price, int id) {
+    public MenuItem(String type, MenuItemTypeEnum name, String description, double price, int id) {
         this.type = type;
         this.name = name;
         this.description = description;
@@ -29,10 +30,10 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
     }
 
     public String getName() {
-        return this.name;
+        return this.name.toString();
     }
 
-    public void setName(String name) {
+    public void setName(MenuItemTypeEnum name) {
         this.name = name;
     }
 

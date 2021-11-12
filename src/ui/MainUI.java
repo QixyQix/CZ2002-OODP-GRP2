@@ -81,7 +81,7 @@ public class MainUI extends UserInterface{
     private void entersystem(Staff staff){
         System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); // TODO Mr/Ms based on the gender
         int option;
-        
+        super.setStaff(staff);
         do{
             displayOptions();
             option = super.getInputInt("Enter your selection: ", 0, 8);
@@ -90,7 +90,7 @@ public class MainUI extends UserInterface{
                     MenuItemUI.getInstance().showMenu();
                     break;
                 case 2:
-                    OrderUI.getInstance().showMenu(staff);
+                    OrderUI.getInstance().showMenu();
                     break;
                 case 3: 
                     ReservationUI.getInstance().selectOption();

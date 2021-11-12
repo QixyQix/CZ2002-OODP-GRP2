@@ -13,7 +13,6 @@
 ./entities/Table.java
 ./entities/TaxFilter.java
 ./enums/DiscountFilterNameEnum.java
-./enums/JobTitleNameEnum.java
 ./enums/MenuItemTypeEnum.java
 ./enums/PriceFilterTypeEnum.java
 ./enums/TableState.java

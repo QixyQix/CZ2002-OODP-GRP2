@@ -31,7 +31,7 @@ public class DataMgr {
         for (int id : entities.keySet()) {
             Object customer = entities.get(id);
 
-            FileOutputStream fileOutputStream = new FileOutputStream("./data/" + name_id + "/" + id);
+            FileOutputStream fileOutputStream = new FileOutputStream("./data/" + name_o + "/" + id);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(customer);

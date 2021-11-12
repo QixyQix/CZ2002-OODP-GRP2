@@ -1,6 +1,5 @@
 package ui;
 
-import global.CurrentTime;
 import managers.SalesReportMgr;
 
 import java.time.LocalDate;
@@ -66,8 +65,8 @@ public final class SalesReportUI extends UserInterface{
 
     
     public void createreport(){
-        if(super.getYNOption("Are you sure it is end of the day? (The time will be automatically skipped to tomorrow 0.00 AM)"))
-            SalesReportMgr.getInstance().createReport(LocalDate.now() );// CurrentTime.currentTime.toLocalDate() );
+        if(super.getYNOption("Are you sure it is end of the day? "))
+            SalesReportMgr.getInstance().createReport(LocalDate.now() );
     }
 
 }

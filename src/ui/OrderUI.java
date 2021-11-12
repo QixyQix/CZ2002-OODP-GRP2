@@ -121,6 +121,7 @@ public final class OrderUI extends UserInterface {
                     break;
                 case 5:
                     confirmOrder(order);
+                    break;
             }
             super.waitEnter();
         } while (option != 0);

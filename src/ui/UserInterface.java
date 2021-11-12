@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-
+import entities.Staff;
 public class UserInterface {
     private Scanner sc;
-
+    private static Staff staff;
     public UserInterface() {
         sc = new Scanner(System.in);
     }
@@ -180,5 +180,11 @@ public class UserInterface {
         System.out.println(prompt);
     }
     
+    public static Staff getStaff(){
+        return staff;
+    }
+    public static void setStaff(Staff s){
+        staff = s;
+    }
 
 }

@@ -31,7 +31,7 @@ public final class OrderUI extends UserInterface {
         System.out.println("====================================");
     }
 
-    public void showMenu(Staff staff) {
+    public void showMenu() {
         int option = 0;
         do {
             displayOptions();
@@ -39,7 +39,7 @@ public final class OrderUI extends UserInterface {
 
             switch (option) {
                 case 1:
-                    createOrder(staff);
+                    createOrder();
                     break;
                 case 2:
                     modifyOrderMenu();
@@ -50,12 +50,13 @@ public final class OrderUI extends UserInterface {
 
     }
 
-    private void createOrder(Staff staff) {
+    private void createOrder() {
         LocalDateTime date = LocalDateTime.now();
 
         Integer noofpax = super.getInputInt("No of pax");
         Customer customer = CustomerUI.getInstance().getCustomer();
-        Order order = OrderMgr.getInstance().createOrder(staff, customer, date, noofpax);
+        System.out.println(super.getStaff().getId());
+        Order order = OrderMgr.getInstance().createOrder(super.getStaff(), customer, date, noofpax);
         // TODO: ??Want to throw an error and catch with self define exception???
         if(order == null){
             System.out.println("Order is not created, Table are full.");

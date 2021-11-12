@@ -46,7 +46,7 @@ public class Report implements Serializable, Entities{
 
         // TODO, to be able to fine out which invoicenumber placed wrongly ..
         for(int i =0; i<this.invoiceList.size();i++){
-            if ( this.invoiceList.get(i).getOrder().getDate().toLocalDate()  != date)
+            if (! this.invoiceList.get(i).getOrder().getDate().toLocalDate().isEqual(date))
                 return false;            
         }
         return true;

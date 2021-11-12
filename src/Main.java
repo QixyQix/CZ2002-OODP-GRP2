@@ -23,6 +23,7 @@ class Main{
             
     public static void main(String arg[]) throws ClassNotFoundException, IOException{
         loadData();
+        
         MainUI.getInstance().systemBoot();  
     }  
 }

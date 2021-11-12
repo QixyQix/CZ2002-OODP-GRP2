@@ -19,7 +19,7 @@ public class Invoice implements Serializable, Entities {
         for(int i =0; i< this.priceFilters.size();i++){
             filter = this.priceFilters.get(i);
             addPrice = filter.execute(rawPrice);
-            if(print) System.out.println(filter.getDescription() + ": " + addPrice);
+            if(print) System.out.printf("%27s %.2f\n",filter.getDescription() , addPrice);
             finalPrice += addPrice;
         }
     }
@@ -74,7 +74,13 @@ public class Invoice implements Serializable, Entities {
         for (MenuItem item : items.keySet()){
             int quantity = items.get(item);
             // need somethings to know is it a package order
-            System.out.printf("  %3d  %20s %.2f\n",quantity, item.getName(), item.getPrice()*quantity);
+            if(item instanceof MenuPackage){
+                System.out.printf("  %3d  %20s %.2f\n",quantity, item.getName(), item.getPrice()*quantity);
+                for (MenuItem packageItem : ((MenuPackage)item).getItems() ){
+                    System.out.printf("         %20s\n", packageItem.getName());
+                } 
+            }
+            else System.out.printf("  %3d  %20s %.2f\n",quantity, item.getName(), item.getPrice()*quantity);
         }
 
         System.out.println("...............................................");

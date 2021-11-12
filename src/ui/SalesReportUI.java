@@ -37,7 +37,7 @@ public final class SalesReportUI extends UserInterface{
         LocalDate endDate;
         do{
             displayOptions();
-            option = super.getInputInt("Please enter your choice: ");
+            option = super.getInputInt("Please enter your choice: ",0,3);
             if(option == 0) break;
 
             startDate = super.getInputDate("Enter start date (YYYY-MM-DD)");
@@ -58,8 +58,6 @@ public final class SalesReportUI extends UserInterface{
         }while(option!=0); 
         
     }
-    
-
 
     // Second Public Method
 
@@ -67,6 +65,10 @@ public final class SalesReportUI extends UserInterface{
     public void createreport(){
         if(super.getYNOption("Are you sure it is end of the day? "))
             SalesReportMgr.getInstance().createReport(LocalDate.now() );
+
+        super.waitEnter();
     }
+
+
 
 }

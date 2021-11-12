@@ -30,13 +30,14 @@ public class MenuPackage extends MenuItem {
         }
         return mainDesc;
     }
-
+    /*
     @Override
     public String getName(){
-        String mainName = super.getName() + "\n";
+        String mainName = super.getName();
         for(MenuItem item: this.items){
-            mainName+= "  " + item.getName() +"\n";
+            mainName+= "\n          " + item.getName();
         }
         return mainName;
     }
+    */
 }

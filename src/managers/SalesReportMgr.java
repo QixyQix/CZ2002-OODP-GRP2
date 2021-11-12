@@ -20,20 +20,29 @@ public final class SalesReportMgr extends DataMgr {
     private HashMap<Integer, Report> reports;
     private HashMap<LocalDate, Integer> reports_day;
     private int nextId;
-
+   
     private SalesReportMgr() {
         try {
             this.reports = new HashMap<Integer, Report>();
             this.reports_day = new HashMap<LocalDate, Integer>();
 
             downCast(super.loadSavedData("reports"));
+
+            this.convertToDate();
             this.nextId = super.loadNextIdData("reportNextId");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.out.println("Failed to load reports data");
         }
     };
+    
 
+    private void convertToDate(){
+        for(int i : reports.keySet()){
+            Report report = reports.get(i);
+            reports_day.put(report.getDate(),report.getId());
+        }
+    }
     
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
@@ -81,7 +90,7 @@ public final class SalesReportMgr extends DataMgr {
     private void addInvoiceToReport(Report report, HashMap<Integer, Invoice> invoices, LocalDate targetDay) {
         for (HashMap.Entry<Integer, Invoice> entry : invoices.entrySet()) {
             Invoice invoice = entry.getValue();
-            if (invoice.getOrder().getDate().toLocalDate() == targetDay) {
+            if (invoice.getOrder().getDate().toLocalDate().isEqual(targetDay) ){
                 report.addInvoiceList(invoice);
             }
         }
@@ -96,8 +105,10 @@ public final class SalesReportMgr extends DataMgr {
     public void createReport(LocalDate targetDay) {
         // end of the day
         // error handling;
-        if (reports_day.containsKey(targetDay))
+        if (reports_day.containsKey(targetDay)){
+            System.out.println("Duplicated Exists");
             return;
+        }
         HashMap<Integer, Invoice> invoices = InvoiceMgr.getInstance().getInvoicesMap();
         Report report = new Report(targetDay);
         this.reports.put(nextId, report);
@@ -105,6 +116,7 @@ public final class SalesReportMgr extends DataMgr {
 
         this.addInvoiceToReport(report, invoices, targetDay);
         nextId++;
+        System.out.println("Report for date " + targetDay.toString() + " was Succesfully Created ");
     }
 
     /**
@@ -114,7 +126,8 @@ public final class SalesReportMgr extends DataMgr {
      * @return Report object
      */
     private Report findReportByDay(LocalDate targetDay) {
-        return this.reports.get(this.reports_day.get(targetDay));
+         
+        return this.reports.get( this.reports_day.get(targetDay));
     }
 
     private TreeMap<MenuItem, Double> addtomenuItemRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue,
@@ -138,8 +151,9 @@ public final class SalesReportMgr extends DataMgr {
      *
      */
     private void printTotalRevenue(double totalRevenue) {
-        System.out.println("Total Revenue : " + totalRevenue + "Sgd ");
-        System.out.println("including discounts and taxes");
+        System.out.println("==========================================");
+        System.out.printf("%30s : %.2f Sgd\n" ,"Total Revenue ", totalRevenue);
+        System.out.printf("(including discounts and taxes)\n");
     }
 
     /**
@@ -149,10 +163,11 @@ public final class SalesReportMgr extends DataMgr {
      * 
      */
     private void printMenuItemTotalRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue) {
+        System.out.println("==========================================");
         System.out.println("Details Revenue Report for each MenuItem");
         for (MenuItem item : menuItemTotalRevenue.keySet()) {
             // REpeat for invoice
-            System.out.println(item.getName() + " " + menuItemTotalRevenue.get(item) + "sgd");
+            System.out.printf("%30s : %.2f\n",item.getName() , menuItemTotalRevenue.get(item) );
         }
     }
 
@@ -174,24 +189,30 @@ public final class SalesReportMgr extends DataMgr {
       
         TreeMap<MenuItem, Double> menuItemTotalRevenue = new TreeMap<MenuItem, Double>();
 
-        for (LocalDate date = startDate; !date.isEqual(endDate.plusDays(1)); date =date.plusDays(1)) {
+        for (LocalDate date = startDate; !date.isEqual(endDate.plusDays(1)); date = date.plusDays(1)) {
             try{
                 Report report = this.findReportByDay(startDate);
+                
                 if (total)
                     totalRevenue += report.getTotalRevenue();
                 if (items)
                     menuItemTotalRevenue = addtomenuItemRevenue(menuItemTotalRevenue, report.getMenuItemRevenue());
             }catch(Exception ex){
-
+                System.out.println(ex.getMessage());
             }
         }
 
-        System.out.println("Restaurant Name ...");// Some formatting with date
-        System.out.println("Sale Revenue Report from " + startDate.toString() + " to " + endDate.toString());
+        System.out.println(" Restaurant Name ...");//TODO Some formatting with date
+        System.out.println();
+        System.out.println("Sale Revenue Report ");
+        System.out.println("from " + startDate.toString() + " to " + endDate.toString());
+        
         if (total)
             printTotalRevenue(totalRevenue);
         if (items)
-            printMenuItemTotalRevenue(menuItemTotalRevenue);// TO DO for menuitems may need * the filter.
+            printMenuItemTotalRevenue(menuItemTotalRevenue);// TODO for menuitems need the filter or not.
+        
+        System.out.println("==========================================");
     }
 
 }

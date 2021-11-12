@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import entities.Staff;
-import enums.MenuItemTypeEnum;
 public class UserInterface {
     private Scanner sc;
     private static Staff staff;

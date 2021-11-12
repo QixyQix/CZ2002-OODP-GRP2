@@ -1,10 +1,10 @@
 package enums;
 
 public enum MenuItemTypeEnum {
-    RICE,
-    NOODLE,
+
+    MAIN_DISHES,
+    SIDES,
     DRINKS,
-    SNACKS,
-    DESERT,
-    PACKAGE,
+    DESSERTS,
+    SET_LUNCH,
 }

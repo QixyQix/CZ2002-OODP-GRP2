@@ -1,7 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
-
+import enums.MenuItemTypeEnum;
 public class MenuPackage extends MenuItem {
     private ArrayList<MenuItem> items;
 
@@ -9,7 +9,7 @@ public class MenuPackage extends MenuItem {
         super();
     }
 
-    public MenuPackage(String type, String name, String description, double price, int id, ArrayList<MenuItem> items) {
+    public MenuPackage(MenuItemTypeEnum type, String name, String description, double price, int id, ArrayList<MenuItem> items) {
         super(type, name, description, price, id);
         this.items = items;
     }

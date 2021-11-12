@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.MenuItem;
 import entities.MenuPackage;
+import enums.MenuItemTypeEnum;
 import managers.MenuItemMgr;
 
 public final class MenuItemUI extends UserInterface {
@@ -61,18 +62,52 @@ public final class MenuItemUI extends UserInterface {
     }
 
     
+    private void displayType (){
+        System.out.println("==Choice of Item Type==");
+        System.out.println("1. MAIN_DISHES");
+        System.out.println("2. SIDES");
+        System.out.println("3. DRINKS");
+        System.out.println("4. DESSERTS");
+        System.out.println("5. SET_LUNCH");
+        System.out.println("=======================");
+    }
+    
+    private MenuItemTypeEnum getInputType(String prompt){
+        displayType();
+        switch(this.getInputInt(prompt,1,5)){
+            case 1:
+                return MenuItemTypeEnum.MAIN_DISHES;
+            case 2:
+                return MenuItemTypeEnum.SIDES;
+            case 3:
+                return MenuItemTypeEnum.DRINKS;
+            case 4:
+                return MenuItemTypeEnum.DESSERTS;
+            case 5:
+                return MenuItemTypeEnum.SET_LUNCH;
+        }
+        return null;
+    }
 
-    private void showCurrentMenuItems() {
+    public void showCurrentMenuItems() {
         try {
             ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
-            if(items.size()==0){
-                System.out.println("There is no MenuItems Yet");
-            }
-            System.out.println("MENU ITEMS:");
+            
+            MenuItemTypeEnum type = this.getInputType("Enter the type of MenuItem you want to show.");
+            int i =0;
+
             for (MenuItem item : items) {
+                if(item.getType() != type) continue;
+                if(i==0){
+                    System.out.println("Menu Item : ");
+                    i=1;
+                }
                 System.out.println("ID: " + item.getId() + " | Type: " + item.getType() + " | Name: " + item.getName()
                         + " $" + item.getPrice());
                 System.out.println(item.getDescription());
+            }
+            if(i==0){
+                System.out.println("There is no MenuItems of this Type Yet");
             }
         } catch (Exception ex) {
             System.out.println("An error occured while getting all Menu Items:");
@@ -80,11 +115,13 @@ public final class MenuItemUI extends UserInterface {
         }
     }
 
+
+
     private void createMenuItem() {
         boolean createPackage = false;
 
-        int id = 0;
-        String type;
+        
+        MenuItemTypeEnum type;
         String name;
         String description;
         double price = 0.0;
@@ -95,17 +132,17 @@ public final class MenuItemUI extends UserInterface {
             packageItems = new ArrayList<MenuItem>();
         }
 
-        type = super.getInputString("Enter the item type: ");
+        type = this.getInputType("Enter the item type: ");
         name = super.getInputString("Enter the item name: ");
         description = super.getInputString("Enter the item description: ");
         price = super.getInputDouble("Enter the item price: ", 0.0, Double.MAX_VALUE);
 
         if (createPackage) {
-            packageItems = buildPackageItems();
+            packageItems = this.buildPackageItems();
         }
 
         try {
-            MenuItemMgr.getInstance().createMenuItem(type, name, description, price, id, packageItems);
+            MenuItemMgr.getInstance().createMenuItem(type, name, description, price, packageItems);
             System.out.println("Menu Item Created");
         } catch (Exception ex) {
             System.out.println("An error occured while creating menu item");
@@ -117,15 +154,16 @@ public final class MenuItemUI extends UserInterface {
         MenuItem itemToEdit = null;
         boolean loop = true;
 
-        do {
-            int id = super.getInputInt("Enter ID of item to edit: ");
-            try {
-                itemToEdit = MenuItemMgr.getInstance().getMenuItemByID(id);
-                loop = false;
-            } catch (Exception ex) {
-                System.out.println("Invalid item ID");
-            }
-        } while (loop);
+      
+        int id = super.getInputInt("Enter ID of item to edit: ");
+        try {
+            itemToEdit = MenuItemMgr.getInstance().getMenuItemByID(id);
+            loop = false;
+        } catch (Exception ex) {
+            System.out.println("Invalid item ID");
+            return;
+        }
+       
 
         loop = true;
         do {
@@ -141,7 +179,7 @@ public final class MenuItemUI extends UserInterface {
             int choice = super.getInputInt("Enter number of corresponding property to edit", -1, 5);
             switch (choice) {
             case 1:
-                String newType = super.getInputString("Enter new value for type:");
+                MenuItemTypeEnum newType = this.getInputType("Enter new value for type:");
                 itemToEdit.setType(newType);
                 System.out.println("New type saved.");
                 break;
@@ -180,21 +218,22 @@ public final class MenuItemUI extends UserInterface {
         } while (loop);
     }
     
-    private void deleteMenuItem() {
-        while (true) {
-            int idToRemove = super.getInputInt("Enter ID of item to delete: ", 0, Integer.MAX_VALUE);
-            try {
-                MenuItemMgr.getInstance().deleteMenuItemByID(idToRemove);
-                System.out.println("Item removed");
-                break;
-            } catch (Exception ex) {
-                System.out.println("Invalid ID");
-            }
+    private void deleteMenuItem() {   
+        int idToRemove = super.getInputInt("Enter ID of item to delete: ", 0, Integer.MAX_VALUE);
+        try {
+            MenuItemMgr.getInstance().deleteMenuItemByID(idToRemove);
+            System.out.println("Item removed");
+        } catch (Exception ex) {
+            System.out.println("Invalid ID");
+            
         }
+        
     }
 
 
     private ArrayList<MenuItem> buildPackageItems() {
+        
+        showCurrentMenuItems();
         System.out.println("Enter the IDs of items to be included in package (-1) to end: ");
         int idToAdd = 0;
         ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();

@@ -4,15 +4,15 @@ import java.io.Serializable;
 import enums.MenuItemTypeEnum;
 
 public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, Entities{
-    private String type;
-    private MenuItemTypeEnum name;
+    private MenuItemTypeEnum type;
+    private String name;
     private String description;
     private double price;
     private int id;
 
     public MenuItem(){}
 
-    public MenuItem(String type, MenuItemTypeEnum name, String description, double price, int id) {
+    public MenuItem(MenuItemTypeEnum type, String name, String description, double price, int id) {
         this.type = type;
         this.name = name;
         this.description = description;
@@ -21,11 +21,11 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
     }
 
 
-    public String getType() {
+    public MenuItemTypeEnum getType() {
         return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(MenuItemTypeEnum type) {
         this.type = type;
     }
 
@@ -33,7 +33,7 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
         return this.name.toString();
     }
 
-    public void setName(MenuItemTypeEnum name) {
+    public void setName(String name) {
         this.name = name;
     }
 

@@ -36,11 +36,17 @@ public class Report implements Serializable, Entities{
      */
     private void addtomenuItemRevenue(TreeMap<MenuItem,Integer> orderedItems){
         for(MenuItem item : orderedItems.keySet() ){
-            double val = 0;
-            if( this.menuItemRevenue.containsKey(item)) val = menuItemRevenue.get(item);
-            val += orderedItems.get(item) * item.getPrice();
             
-            // not sure will overwrite or not
+            double val = 0;
+            if( this.menuItemRevenue.containsKey(item)) {
+                val = menuItemRevenue.get(item);
+                System.out.println(item.getName() + " " +val);
+            }
+                
+            val += orderedItems.get(item) * item.getPrice();
+
+            
+            
             this.menuItemRevenue.put(item,val);
         }
     }
@@ -68,7 +74,6 @@ public class Report implements Serializable, Entities{
      */
     private boolean validator(){
 
-        // TODO, to be able to fine out which invoicenumber placed wrongly ..
         for(int i =0; i<this.invoiceList.size();i++){
             if (! this.invoiceList.get(i).getOrder().getDate().toLocalDate().isEqual(date))
                 return false;            
@@ -100,7 +105,8 @@ public class Report implements Serializable, Entities{
      * @return total revenue
      */
     public double getTotalRevenue(){
-        calculateTotalRevenue();
+        //TODO ASK YAN KAI SEE RMB;
+        this.calculateTotalRevenue();
         return this.totalRevenue;
     }
 
@@ -119,7 +125,8 @@ public class Report implements Serializable, Entities{
      * @return Treemap of menu item revenue
      */
     public TreeMap<MenuItem, Double> getMenuItemRevenue() {
-        return menuItemRevenue;
+        this.calculateTotalRevenue();
+        return this.menuItemRevenue;
     }
 
     /**

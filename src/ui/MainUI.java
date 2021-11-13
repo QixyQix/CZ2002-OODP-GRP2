@@ -83,7 +83,7 @@ public class MainUI extends UserInterface{
     
     private void entersystem(Staff staff){
         System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); 
-        int option;
+        int option; 
         super.setStaff(staff);
         do{
             displayOptions();

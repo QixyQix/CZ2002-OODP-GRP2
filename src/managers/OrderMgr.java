@@ -139,7 +139,6 @@ public final class OrderMgr extends DataMgr {
         // deallocateTable()
         InvoiceMgr.getInstance().createInvoice(order);
     }
-
    
     /**
      * Returns Order object corresponding to order id

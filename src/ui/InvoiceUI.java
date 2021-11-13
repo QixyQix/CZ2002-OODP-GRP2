@@ -68,10 +68,10 @@ public class InvoiceUI extends UserInterface{
         
         if(!getYNOption("Are you sure you want to make payment for the order?")) return;
         invoice = InvoiceMgr.getInstance().createInvoice(order);  
-        TableMgr.getInstance().deallocateTable(order.getTable(), order.getDate());
         
         try{
             System.out.println("Invoice has been created with Invoice id = " + invoice.getId());
+            TableMgr.getInstance().deallocateTable(order.getTable(), order.getDate());
             System.out.println("Table ID= "+order.getTable().getId()+" has become available.");
         }catch(Exception ex){
             return;

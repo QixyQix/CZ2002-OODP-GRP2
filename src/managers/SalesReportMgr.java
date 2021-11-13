@@ -9,6 +9,7 @@ import entities.Entities;
 import entities.Invoice;
 import entities.Report;
 import entities.MenuItem;
+import entities.MenuPackage;
 
 /***
  * Represents a sales report manager
@@ -154,13 +155,14 @@ public final class SalesReportMgr extends DataMgr {
 
     private TreeMap<MenuItem, Double> addtomenuItemRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue,
             TreeMap<MenuItem, Double> menuItemRevenue) {
+
         for (MenuItem item : menuItemRevenue.keySet()) {
             double val = 0;
-            if (menuItemTotalRevenue.containsKey(item))
+            if (menuItemTotalRevenue.containsKey(item)){
                 val = menuItemTotalRevenue.get(item);
-            val += menuItemRevenue.get(item) * item.getPrice();
+            }
+            val += menuItemRevenue.get(item);
 
-            // not sure will overwrite or not
             menuItemTotalRevenue.put(item, val);
         }
         return menuItemTotalRevenue;
@@ -187,10 +189,23 @@ public final class SalesReportMgr extends DataMgr {
     private void printMenuItemTotalRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue) {
         System.out.println("==========================================");
         System.out.println("Details Revenue Report for each MenuItem");
+        /*
         for (MenuItem item : menuItemTotalRevenue.keySet()) {
             // REpeat for invoice
             System.out.printf("%30s : %.2f\n",item.getName() , menuItemTotalRevenue.get(item) );
         }
+        */
+        for (MenuItem item : menuItemTotalRevenue.keySet()) {
+            // REpeat for invoice
+            if(item instanceof MenuPackage){
+                System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item));
+                for (MenuItem packageItem : ((MenuPackage)item).getItems() ){
+                    System.out.printf("      %20s\n", packageItem.getName());
+                } 
+            }
+            else System.out.printf("%30s : %.2f\n",item.getName() , menuItemTotalRevenue.get(item) );
+        }
+            
     }
 
     /**
@@ -204,7 +219,6 @@ public final class SalesReportMgr extends DataMgr {
      * 
      */
     public void getReport(LocalDate startDate, LocalDate endDate, boolean total, boolean items) {
-        // TODO for UI, tranlate month to startdate to enddate)
         if (!total & !items)
             return;
         double totalRevenue = 0;
@@ -224,7 +238,7 @@ public final class SalesReportMgr extends DataMgr {
             }
         }
 
-        System.out.println(" Restaurant Name ...");//TODO Some formatting with date
+        System.out.println(" Group 2 Restaurant ");//TODO Some formatting with date
         System.out.println();
         System.out.println("Sale Revenue Report ");
         System.out.println("from " + startDate.toString() + " to " + endDate.toString());
@@ -232,7 +246,7 @@ public final class SalesReportMgr extends DataMgr {
         if (total)
             printTotalRevenue(totalRevenue);
         if (items)
-            printMenuItemTotalRevenue(menuItemTotalRevenue);// TODO for menuitems need the filter or not.
+            printMenuItemTotalRevenue(menuItemTotalRevenue);
         
         System.out.println("==========================================");
     }

@@ -3,7 +3,11 @@ import java.util.TreeMap;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
+/***
+ * Represents a order entity
+ * 
+ * @author Cho Qi Xiang
+ */
 public class Order implements Serializable, Entities{
     private Staff servedBy;
     private double totalPrice;
@@ -17,6 +21,9 @@ public class Order implements Serializable, Entities{
 
     public Order(){}
 
+    /**
+     * Constructor
+     */
     public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int id){
         this.servedBy = staff;
         this.customer = customer;
@@ -27,20 +34,39 @@ public class Order implements Serializable, Entities{
         this.pendingItems = new TreeMap<MenuItem, Integer>();
     }
 
+    /**
+     * Returns staff
+     * 
+     * @return staff
+     */
     public Staff getServeby(){
         return this.servedBy;
     }
 
+    /**
+     * Sets staff to serve the order
+     * 
+     * @param servedBy
+     */
     public void setServedby(Staff servedBy){
         this.servedBy = servedBy;
     }
 
+    /**
+     * Returns total price
+     * 
+     * @return total price
+     */
     public double getTotalPrice(){
         calculateTotalPrice();
         return this.totalPrice;
     }
     
 
+    /**
+     * Calculates total price of order
+     * 
+     */
     private void calculateTotalPrice(){
         this.totalPrice = 0;
         for (MenuItem item : this.orderedItems.keySet()){
@@ -50,6 +76,13 @@ public class Order implements Serializable, Entities{
         }
     }   
 
+    /**
+     * Adds items
+     * 
+     * @param target target
+     * @param menuitem menu item
+     * @param quantity quantity
+     */
     private void addItems(TreeMap<MenuItem,Integer> target, MenuItem menuitem, int quantity){
         int originalQuantitiy = 0;
         try{
@@ -64,6 +97,10 @@ public class Order implements Serializable, Entities{
         target.put(menuitem,quantity);
     }
 
+    /**
+     * Add items to ordered items
+     * 
+     */
     public void addToOrderedItems(){
         for( MenuItem item : pendingItems.keySet()){
             addItems(orderedItems,item,pendingItems.get(item));
@@ -71,16 +108,33 @@ public class Order implements Serializable, Entities{
         this.pendingItems.clear();
     }
 
-    public void addPendingItems(MenuItem item, int quantitiy){
-        this.addItems(pendingItems,item,quantitiy);
+    /**
+     * Adds oending items
+     * 
+     * @param item menu item
+     * @param quantity
+     */
+    public void addPendingItems(MenuItem item, int quantity){
+        this.addItems(pendingItems,item,quantity);
     }
 
+    /**
+     * Prints items
+     * 
+     * @param target target
+     * @param status order status
+     */
     private void printItem(TreeMap<MenuItem,Integer> target, String status){
         for (MenuItem item : target.keySet()) {
             int quantity = target.get(item);
             System.out.println(quantity + " " + item.getName() + " Price: " + item.getPrice()*quantity + " Status: " +status);
         }
     }
+    
+    /**
+     * prints order
+     * 
+     */
     public void printOrder() {
   
 
@@ -105,50 +159,108 @@ public class Order implements Serializable, Entities{
 
     }
 
+    /**
+     * Returns ordered items
+     * 
+     * @return Treemap of ordered items
+     */
     public TreeMap<MenuItem, Integer> getOrderedItems(){
         return this.orderedItems;
     }
 
-    
+    /**
+     * Returns pending items
+     * 
+     * @return Treemap of pending items
+     */
     public TreeMap<MenuItem, Integer> getPendingItems(){
         return this.pendingItems;
     }
 
+    /**
+     * Returns status
+     * 
+     * @return status of order
+     */
     public String getStatus(){
         return this.status;
     }
 
+    /**
+     * Sets order to close
+     * 
+     */
     public void closeStatus(){
         this.status = "Close";
     }
+    /**
+     * Returns customer
+     * 
+     * @return customer
+     */
     public Customer getCustomer(){
         return this.customer;
     }
 
+    /**
+     * Sets customer
+     * 
+     * @param customer customer
+     */
     public void setCustomer(Customer customer){
         this.customer = customer;
     }
 
+    /**
+     * Returns table
+     * 
+     * @return table
+     */
     public Table getTable(){
         return this.table;
     }
 
+    /**
+     * Sets table
+     * 
+     * @param table
+     */
     public void setTable(Table table){
         this.table = table;
     }
 
+    /**
+     * Returns date
+     * 
+     * @return date
+     */
     public LocalDateTime getDate(){
         return this.date;
     }
 
+    /**
+     * Sets date
+     * 
+     */
     public void setDate(){
         this.date = LocalDateTime.now();
     }
 
+    /**
+     * Returns id
+     * 
+     * @return id
+     */
     public int getId(){
         return this.id;
     }
 
+    /**
+     * Deletes order items
+     * 
+     * @param orderItem order item
+     * @param qty quantity
+     */
     public void deleteOrderItem(MenuItem orderItem, int qty) {
         if (this.pendingItems.get(orderItem) <= qty) {
             this.pendingItems.remove(orderItem);

@@ -6,18 +6,30 @@ import java.io.Serializable;
 
 import enums.DiscountFilterNameEnum;
 
-
+/***
+ * Represents a discountfilter entity
+ * 
+ * @author Lim Yan Kai
+ */
 public class DiscountFilter implements PriceFilter, Serializable{
     private double amount;
     private PriceFilterTypeEnum type;
     private DiscountFilterNameEnum name;
     
+    /**
+     * Constructor
+     */
     public DiscountFilter(PriceFilterTypeEnum type, DiscountFilterNameEnum name, double amount){
         this.amount = amount;
         this.type = type;
         this.name = name;
     }
 
+    /**
+     * Returns description
+     * 
+     * @return description
+     */
     @Override
     public String getDescription(){
         String description = "";
@@ -50,6 +62,11 @@ public class DiscountFilter implements PriceFilter, Serializable{
     }
 
 
+    /**
+     * Returns discounted price
+     * 
+     * @return discounted price
+     */
     @Override 
     public double execute(double rawPrice){
         switch(type){

@@ -8,11 +8,26 @@ import java.util.TreeMap;
  * Represents a invoice entity
  * 
  * @author Lim Yan Kai
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Invoice implements Serializable, Entities {
+    /**
+     * The id of this invoice 
+     */
     private int id;
+    /**
+     * The order associated with this Invoice
+     */
     private Order order;
+    /**
+     * The priceFilters that is applied to this invoice
+     */
     private ArrayList<PriceFilter> priceFilters;
+    /**
+     * Final Price of this invoice
+     */
     private double finalPrice;
 
     /**
@@ -39,6 +54,8 @@ public class Invoice implements Serializable, Entities {
 
     /**
      * Constructor
+     * @param order Order that is used to create the invoice
+     * @param id    id of the Order
      */
     public Invoice(Order order, int id) {
         this.order = order;
@@ -93,6 +110,9 @@ public class Invoice implements Serializable, Entities {
         return finalPrice;
     }
 
+    /**
+     * Print Invoice
+     */
     public void printInvoice(){
         
         System.out.println(" Group 2 Restaurant ");
@@ -101,7 +121,7 @@ public class Invoice implements Serializable, Entities {
         System.out.println("Tel: +65-XXXX-XXXX ");
         System.out.println();
         System.out.println("Server      : Staffid "+ order.getServeby().getId());
-        System.out.println("Table No    : "+ order.getTable().getId() ); // TO ADD Table
+        System.out.println("Table No    : "+ order.getTable().getId() ); 
         System.out.println("Date        : "+ order.getDate().toLocalDate().toString() );
         System.out.println("Time        : "+ order.getDate().toLocalTime().toString() );
         System.out.println("InvoiceNumber : " + this.id);
@@ -112,7 +132,7 @@ public class Invoice implements Serializable, Entities {
         TreeMap<MenuItem, Integer> items = order.getOrderedItems();
         for (MenuItem item : items.keySet()) {
             int quantity = items.get(item);
-            // need somethings to know is it a package order
+
             if(item instanceof MenuPackage){
                 System.out.printf("  %3d  %25s  %3.2f\n",quantity, item.getName(), item.getPrice()*quantity);
                 for (MenuItem packageItem : ((MenuPackage)item).getItems() ){

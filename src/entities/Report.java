@@ -9,19 +9,40 @@ import java.util.TreeMap;
  * Represents a report entity
  * 
  * @author Lim Yan Kai
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Report implements Serializable, Entities{
-
+    /**
+     * List of invoices that contained in this report of the day
+     */
     private ArrayList<Invoice> invoiceList;
+    /**
+     * the totalrevenue of this report
+     */
     private double totalRevenue;
+    /**
+     * The date of this report
+     */
     private LocalDate date;
+    /**
+     * The List MenuItem and its total Revenum of this report
+     */
     private TreeMap<MenuItem, Double> menuItemRevenue;
+    /**
+     * The id of this report
+     */
     private int id;
+
+    /**
+     * Constructor  
+     */
     public Report(){}
 
     /**
      * Constructor
+     * @param date The date of the report
      */
     public Report(LocalDate date){
         this.date = date;
@@ -55,15 +76,16 @@ public class Report implements Serializable, Entities{
      * Calculates total revenue
      * 
      */
-    private void calculateTotalRevenue(){
+    public void calculateTotalRevenue(){
         if(!validator()){
             System.out.println("There are Invoice that not belong to the date, probably insert wrongly. Please Check");
             return;
         }
         this.totalRevenue =0;
+        this.menuItemRevenue.clear();
         for (int i =0; i< this.invoiceList.size();i++){
             this.totalRevenue += this.invoiceList.get(i).getFinalPrice();
-            addtomenuItemRevenue(this.invoiceList.get(i).getOrder().getOrderedItems());
+            this.addtomenuItemRevenue(this.invoiceList.get(i).getOrder().getOrderedItems());
         }
     }
 
@@ -105,7 +127,6 @@ public class Report implements Serializable, Entities{
      * @return total revenue
      */
     public double getTotalRevenue(){
-        this.calculateTotalRevenue();
         return this.totalRevenue;
     }
 
@@ -124,7 +145,6 @@ public class Report implements Serializable, Entities{
      * @return Treemap of menu item revenue
      */
     public TreeMap<MenuItem, Double> getMenuItemRevenue() {
-        this.calculateTotalRevenue();
         return this.menuItemRevenue;
     }
 

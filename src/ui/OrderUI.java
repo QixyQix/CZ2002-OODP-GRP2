@@ -10,20 +10,39 @@ import managers.MenuItemMgr;
 
 import java.time.LocalDateTime;
 
+/***
+ * Represents a Order UI
+ * 
+ * @author Lee Zong Yu
+ * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public final class OrderUI extends UserInterface {
     private static OrderUI INSTANCE;
- 
+    
+    /**
+     * Constructor
+     */
     private OrderUI() {
         super();
     }
 
+    /**
+     * Returns the OrderUI instance and creates an instance if it does not exist
+     * 
+     * @return OrderUI Instance
+     */
     public static OrderUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new OrderUI();
         }
         return INSTANCE;
     }
-
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions(){
         System.out.println("===========Order Manager============");
         System.out.println("(0) Go Back to Main Page");
@@ -32,6 +51,10 @@ public final class OrderUI extends UserInterface {
         System.out.println("====================================");
     }
 
+    /**
+     * Show the Selection Page of Order UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int option = 0;
         do {
@@ -50,7 +73,10 @@ public final class OrderUI extends UserInterface {
         } while (option != 0);
 
     }
-
+    /** 
+     *   Get User Input to create Order Object
+     * 
+     */  
     private void createOrder() {
         LocalDateTime date = LocalDateTime.now();
 
@@ -71,7 +97,10 @@ public final class OrderUI extends UserInterface {
     }
 
 
-    // SECOND LEVEL LOGIC 
+    /**
+     *  Get User Input to get Order Object
+     * @return order
+     */
     private Order getOrder(){
         Order order;
         int orderid;
@@ -90,6 +119,10 @@ public final class OrderUI extends UserInterface {
         }
     }
 
+    /**
+     * Display the option of Selection Page
+     * 
+     */
     private void displayOrderOptions(int orderid){
         System.out.println("===========Orderid " + orderid + "============");
         System.out.println("(0) Go Back to Order Page");
@@ -100,6 +133,11 @@ public final class OrderUI extends UserInterface {
         System.out.println("(5) Confirm Order");
         System.out.println("====================================");
     }
+
+    /**
+     * Show the Selection Page of Order for User to Select Options
+     * 
+     */
     private void modifyOrderMenu(){
         int option;
         Order order = getOrder();
@@ -132,13 +170,19 @@ public final class OrderUI extends UserInterface {
         } while (option != 0);
     }
 
-
+    /**
+     *  print Order 
+     *
+     */
     private void printOrder(Order order) {     
         order.printOrder();        
     }
 
     
-
+    /**
+     *  Get User Input to add OrderItem to Order 
+     *
+     */
     private void addOrderItem(Order order) {
         int menuItemid;
         MenuItem menuItem;
@@ -153,6 +197,10 @@ public final class OrderUI extends UserInterface {
         }   
     }
 
+    /**
+     *  Get User Input to add OrderItem to Order 
+     *
+     */
     private void deleteOrderItem(Order order) {
         int menuItemid;
         int qty;
@@ -171,6 +219,10 @@ public final class OrderUI extends UserInterface {
        
     }
 
+    /**
+     *  Get User Input to confirm adding of OrderItem to Order 
+     *
+     */
     private void confirmOrder(Order order){
         if(super.getYNOption("Are you sure you want to make order?")){
             OrderMgr.getInstance().makeOrder(order);

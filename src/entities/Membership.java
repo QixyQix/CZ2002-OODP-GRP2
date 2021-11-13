@@ -6,13 +6,23 @@ import java.io.Serializable;
  * Represents a membership entity
  * 
  * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Membership implements Serializable, Entities{
+    /**
+     * The id of this Membership
+     */
     private Integer id;
+    /**
+     * The DiscountFilter associated with the discount
+     */
     private DiscountFilter discount;
 
     /**
      * Constructor
+     * @param id id of the Membership
+     * @param discount discountFilter associated with the membership
      */
     public Membership(Integer id, DiscountFilter discount) {
         this.discount = discount;

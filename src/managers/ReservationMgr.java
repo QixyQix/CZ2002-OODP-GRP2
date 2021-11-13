@@ -13,6 +13,8 @@ import entities.Table;
  * Represents a reservation manager
  * 
  * @author Eang Sokunthea
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class ReservationMgr extends DataMgr {
     private static ReservationMgr INSTANCE;
@@ -34,9 +36,9 @@ public final class ReservationMgr extends DataMgr {
     };
 
     /**
-     * Downcast from entities to reservationMgr
+     * Downcast from entities to reservation
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
@@ -47,7 +49,7 @@ public final class ReservationMgr extends DataMgr {
     }
 
     /**
-     * Upcast reservationMgr to entities in a hashmap
+     * Upcast reservation to entities in a hashmap
      * 
      * @return Hashmap object
      */

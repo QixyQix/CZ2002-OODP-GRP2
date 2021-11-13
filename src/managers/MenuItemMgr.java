@@ -15,6 +15,8 @@ import factories.MenuItemFactory;
  * Represents a menu item manager
  * 
  * @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
  * 
  */
 public final class MenuItemMgr extends DataMgr {
@@ -39,7 +41,7 @@ public final class MenuItemMgr extends DataMgr {
     /**
      * Downcast from entities to menuItem
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {

@@ -6,12 +6,36 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import entities.Staff;
+
+/***
+ * Represents a UserInterface Template for UI to get User Input
+ * 
+ *  @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class UserInterface {
+    /**
+     *  Scanner to getting User Input
+     */
     private Scanner sc;
+    /**
+     *  Staff that are using the system
+     */
     private static Staff staff;
+
+    /**
+     *  Get User Input to check in the Reservation  
+     * 
+     */
     public UserInterface() {
         sc = new Scanner(System.in);
     }
+
+    /**
+     *  Get String Input
+     *@return Input String
+     */
     private String getInputString(){
         String input;
         while(true){
@@ -20,25 +44,42 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get String Input with prompt
+     *@param prompt Printing prompt
+     *@return Input String
+     */
     public String getInputString(String prompt) {
         System.out.println(prompt);
         return getInputString();
     }
 
+    /**
+     *  Get Dummy Input with prompt
+     *@param prompt Printing prompt
+     *@return Input String
+     */
     public String getDummy(String prompt){
         System.out.println(prompt);
         return sc.nextLine().trim(); 
     }
 
-    public String getDummy(){
-        return sc.nextLine().trim();
-    }
-    
+
+    /**
+     *  Get Dummy Input with prompt
+     *@param prompt Printing prompt
+     *
+     */
     public void waitEnter(){
         getDummy("Press Enter to continue ... ");
         return;
     }
 
+    /**
+     *  Get Integer Input with prompt
+     *@param prompt Printing prompt
+     *@return Input Integer
+     */
     public int getInputInt(String prompt) {
         while (true) {
             try {
@@ -54,6 +95,13 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get Integer Input within range with prompt
+     * @param prompt Printing prompt
+     * @param min    mininum value of the input
+     * @param max    maximum value of the input 
+     * @return Input Integer
+     */
     public int getInputInt(String prompt, int min, int max) {
         while (true) {
             int input = getInputInt(prompt);
@@ -65,6 +113,11 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get Double Input with prompt
+     *@param prompt Printing prompt
+     *@return Input Double
+     */
     public double getInputDouble(String prompt) {
         while (true) {
             try {
@@ -80,6 +133,13 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get Double Input within range with prompt
+     * @param prompt Printing prompt
+     * @param min    mininum value of the input
+     * @param max    maximum value of the input 
+     * @return Input Double
+     */
     public double getInputDouble(String prompt, double min, double max) {
         while (true) {
             double input = getInputDouble(prompt);
@@ -91,6 +151,11 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get Date & Time Input with prompt
+     * @param prompt Printing prompt
+     * @return Input Date Time
+     */
     public LocalDateTime getInputDateTime(String prompt){
         while(true){
             try{
@@ -108,6 +173,11 @@ public class UserInterface {
         
     }
 
+    /**
+     *  Get Date Input with prompt
+     * @param prompt Printing prompt
+     * @return Input Date
+     */
     public LocalDate getInputDate(String prompt){
         while(true){
             try{
@@ -125,6 +195,11 @@ public class UserInterface {
         
     }
 
+    /**
+     *  Get True/False Option from User with prompt
+     * @param prompt Printing prompt
+     * @return boolean 
+     */
     public boolean getYNOption(String prompt){
         while(true){
             try{
@@ -144,6 +219,11 @@ public class UserInterface {
 
     }
 
+    /**
+     *  Get Contact from User with prompt
+     * @param prompt Printing prompt
+     * @return Contact Number (Singapore Number) of the User 
+     */
     public String getContact(String prompt){
         System.out.println(prompt);
         while(true){
@@ -162,6 +242,11 @@ public class UserInterface {
         }
     }
 
+    /**
+     *  Get Gender from User with prompt
+     * @param prompt Printing prompt
+     * @return String of Male or Female 
+     */
     public String getGender(String prompt){
         String input;
         System.out.println(prompt);
@@ -176,14 +261,18 @@ public class UserInterface {
         
     }
     
-    
-    public void print(String prompt){
-        System.out.println(prompt);
-    }
-    
+    /**
+     *  Getter of the Staff
+     * @return Staff 
+     */
     public static Staff getStaff(){
         return staff;
     }
+    
+    /**
+     *  Setter of the Staff
+     * 
+     */
     public static void setStaff(Staff s){
         staff = s;
     }

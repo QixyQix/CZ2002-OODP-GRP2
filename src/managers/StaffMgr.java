@@ -10,12 +10,14 @@ import exceptions.IDNotFoundException;
 /***
  * Represents a staff manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class StaffMgr extends DataMgr{
     private static StaffMgr INSTANCE;
     private HashMap<Integer, Staff> staffs;
-    private int nextId; // will be delete afterward
+    private int nextId; 
 
     /**
      * Constructor
@@ -32,9 +34,9 @@ public final class StaffMgr extends DataMgr{
     }
 
     /**
-     * Downcast from entities to salesReportMgr
+     * Downcast from entities to Staff
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
@@ -45,7 +47,7 @@ public final class StaffMgr extends DataMgr{
     }
 
     /**
-     * Upcast reservationMgr to entities in a hashmap
+     * Upcast Staff to entities in a hashmap
      * 
      * @return Hashmap object
      */

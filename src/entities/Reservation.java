@@ -7,20 +7,44 @@ import java.io.Serializable;
  * Represents a reservation entity
  * 
  * @author Eang Sokunthea
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Reservation implements Serializable, Entities {
+	/**
+	 * The customer that book this reservation
+	 */
 	private Customer customer;
+	/**
+	 * The checkInTime of this reservation
+	 */
 	private LocalDateTime checkInTime;
+	/**
+	 * The Number of Pax of this reservation
+	 */
 	private int noOfPax;
+	/**
+	 * The table that is allocated to this reservation
+	 */
 	private Table table;
+	/**
+	 * The id of the reservation
+	 */
 	private int id;
+	/**
+	 * The check in status of this reservation (True represent check in already)
+	 */
 	private boolean checkInStatus;
 
-	public Reservation() {
-	}
+	public Reservation() {}
 
 	/**
 	 * Constructor
+	 * @param customer		Customer that book the reservation
+	 * @param checkInTime	Check In Time of the reservation
+	 * @param noOfPax		Number of Pax of the reservation
+	 * @param table			Table allocated to the reservation
+	 * @param id			id of the reservation
 	 */
 	public Reservation(Customer customer, LocalDateTime checkInTime, Integer noOfPax, Table table, int id) {
 		this.customer = customer;

@@ -9,17 +9,33 @@ import enums.TableState;
  * Represents a report entity
  * 
  * @author Benjamin Ho JunHao
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Table implements Serializable, Entities {
+    /**
+     * The seating Capacity of this table
+     */
     private int seatingCapacity;
+    /**
+     * The Bookings contains the Date and its TableState (Available/Reserved) of this table
+     */
     private HashMap<LocalDateTime, TableState> bookings;
+    /**
+     * The id of this Table
+     */
     private int id;
 
+    /**
+     * Constructor
+     */
     public Table() {
     }
 
     /**
      * Constructor
+     * @param seatingCapacity   Seating Capacity of the table
+     * @param id                Id of the table
      */
     public Table(int seatingCapacity, int id) {
         this.seatingCapacity = seatingCapacity;

@@ -11,10 +11,26 @@ import java.util.*;
 import java.time.LocalDateTime;
 
 
+/***
+ * Represents a Reservation UI
+ * 
+ * @author Eang Sokunthea
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class ReservationUI extends UserInterface {
     private static ReservationUI INSTANCE;
+    
+    /**
+     * Constructor
+     */
     private ReservationUI() {}
 
+    /**
+     * Returns the ReservationUI instance and creates an instance if it does not exist
+     * 
+     * @return ReservationUI Instance
+     */
     public static ReservationUI getInstance()
     {
         if (INSTANCE == null)
@@ -22,6 +38,10 @@ public class ReservationUI extends UserInterface {
         return INSTANCE;
     }
 
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions(){
         System.out.println("==========Reservation Manager==========");
         System.out.println("(0) Go back to Main Page");
@@ -32,6 +52,10 @@ public class ReservationUI extends UserInterface {
         System.out.println("=======================================");
     }
 
+    /**
+     * Show the Selection Page of Reservation UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int choice;
         do{
@@ -59,7 +83,10 @@ public class ReservationUI extends UserInterface {
     }
 
     
-    
+    /**
+     *  Get User Input to create Reservation Object 
+     * 
+     */
     private void createReservationUI() {
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
@@ -94,12 +121,20 @@ public class ReservationUI extends UserInterface {
         }
     }
 
+    /**
+     *  Get User Input to print Reservation  
+     * 
+     */
     private void printReservation(Reservation res){
         System.out.println("There is a reservation made by the customer");
         System.out.println(res.toString());
         System.out.println();
     }
 
+    /**
+     *  Get User Input to check in the Reservation  
+     * 
+     */
     private void checkInUI(){
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
@@ -118,11 +153,15 @@ public class ReservationUI extends UserInterface {
             }
         }
         else{
-            System.out.println("The current time now is "+ LocalDateTime.now() );
+            System.out.println("The current time now is "+ LocalDateTime.now().toString().replace("T"," "));
             System.out.println("Sorry please wait until "+res.getCheckInTime().toString().replace("T", " ") + " to check in");
         }
     }
     
+    /**
+     *  Get User Input to check and Remove Reservation  
+     * 
+     */
     private void checkRemoveReservationUI(){
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
@@ -140,6 +179,10 @@ public class ReservationUI extends UserInterface {
         }
     }
 
+    /**
+     *  Print all the Reservation  
+     * 
+     */
     private void printAllReservationUI(){
         HashMap<Integer, Reservation> reservations = ReservationMgr.getInstance().getAllReservations();
 		if (reservations.isEmpty()) {

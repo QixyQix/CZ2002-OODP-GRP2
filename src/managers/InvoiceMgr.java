@@ -16,7 +16,9 @@ import exceptions.IDNotFoundException;
 /***
  * Represents an invoice manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class InvoiceMgr extends DataMgr {
 
@@ -41,7 +43,7 @@ public final class InvoiceMgr extends DataMgr {
     /**
      * Downcast from entities to invoice
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -77,7 +79,7 @@ public final class InvoiceMgr extends DataMgr {
     /**
      * Returns the InvoiceMgr instance and creates an instance if it does not exist
      * 
-     * @return instance
+     * @return InvoiceMgr instance 
      */
     public static InvoiceMgr getInstance() {
         if (INSTANCE == null) {

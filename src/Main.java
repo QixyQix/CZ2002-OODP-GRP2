@@ -4,6 +4,13 @@ import java.io.IOException;
 import global.AvailPriceFilter;
 import managers.*;
 
+/***
+ * Represents a MainApplication
+ * 
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
+ */
 class Main{
     
     public static void loadData(){

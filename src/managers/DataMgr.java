@@ -66,7 +66,6 @@ public abstract class DataMgr {
             nextId = (int) objectInputStream.readInt();
             objectInputStream.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             nextId = 1;
         }
         return nextId;

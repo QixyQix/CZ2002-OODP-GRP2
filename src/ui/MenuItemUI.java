@@ -136,7 +136,7 @@ public final class MenuItemUI extends UserInterface {
         double price = 0.0;
         ArrayList<MenuItem> packageItems = null;
        
-        if (super.getYNOption("Is this a package?")) {
+        if (super.getYNOption("Is this a promotional package?")) {
             createPackage = true;
         }
     
@@ -184,7 +184,7 @@ public final class MenuItemUI extends UserInterface {
             System.out.println("(3) description: " + itemToEdit.getDescription());
             System.out.println("(4) price: " + itemToEdit.getPrice());
             if (itemToEdit instanceof MenuPackage) {
-                System.out.println("(5) Change package items");
+                System.out.println("(5) Change Promotional Package Items");
             }
             System.out.println("(0) Exit");
             int choice = super.getInputInt("Enter number of corresponding property to edit", 0, 5);
@@ -205,7 +205,7 @@ public final class MenuItemUI extends UserInterface {
                 System.out.println("New description saved.");
                 break;
             case 4:
-                double newPrice = super.getInputDouble("Enter new valuue for price: ", 0.1, Double.MAX_VALUE);
+                double newPrice = super.getInputDouble("Enter new value for price: ", 0.1, Double.MAX_VALUE);
                 itemToEdit.setPrice(newPrice);
                 System.out.println("New price saved.");
                 break;
@@ -217,7 +217,7 @@ public final class MenuItemUI extends UserInterface {
                     packageItem.setItems(items);
                     System.out.println("Items updated.");
                 }else{
-                    System.out.println("This is not a package");
+                    System.out.println("This is not a promotional package");
                 }
             case 0:
                 loop = false;
@@ -242,7 +242,7 @@ public final class MenuItemUI extends UserInterface {
     private ArrayList<MenuItem> buildPackageItems() {
         
         
-        System.out.println("Enter the IDs of items to be included in package (0 to end): ");
+        System.out.println("Enter the IDs of items to be included in promotional package (0 to end): ");
         int idToAdd = 0;
         ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();
         do {
@@ -253,7 +253,7 @@ public final class MenuItemUI extends UserInterface {
                     System.out.println("Not allowed to add a package to a package");
                 } else {
                     packageItems.add(itemToAdd);
-                    System.out.println("Added item " + itemToAdd.getName() + " to package");
+                    System.out.println("Added item " + itemToAdd.getName() + " to the package");
                 }
             } catch (Exception ex) {
                 if(idToAdd!=0)

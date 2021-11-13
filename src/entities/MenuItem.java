@@ -128,7 +128,6 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
      * @return cloned menu item
      */
     @Override
-    // Haven,t test yet TODO
     public Object clone() {// throws CloneNotSupportedException {
         try {
             MenuItem menuItem = (MenuItem) super.clone();

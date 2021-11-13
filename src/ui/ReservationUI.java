@@ -119,7 +119,7 @@ public class ReservationUI extends UserInterface {
         }
         else{
             System.out.println("The current time now is "+ LocalDateTime.now() );
-            System.out.println("Sorry please wait until "+res.getCheckInTime()+" to check in");
+            System.out.println("Sorry please wait until "+res.getCheckInTime().toString().replace("T", " ") + " to check in");
         }
     }
     

@@ -69,13 +69,13 @@ public class MainUI extends UserInterface{
     private void displayOptions(){
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
         System.out.println("(0) Log Out");
-        System.out.println("(1) Alter MenuItem/Promotion");
-        System.out.println("(2) Open Order");
-        System.out.println("(3) Open Reservation");
+        System.out.println("(1) Create/Modify MenuItem/Promotion");
+        System.out.println("(2) Create/Modify Order");
+        System.out.println("(3) Create/Modify Reservation");
         System.out.println("(4) Create/Check Table Availability");
-        System.out.println("(5) Print Order invoice");
-        System.out.println("(6) Print Sale Revenue Report");
-        System.out.println("(7) End of the day (report)");
+        System.out.println("(5) Make Payment");
+        System.out.println("(6) Show Sale Revenue Report");
+        System.out.println("(7) Generate today's report ");
         System.out.println("(8) Update Membership");
         System.out.println("===========================================================================");
         System.out.println(" ");

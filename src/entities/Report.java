@@ -40,7 +40,7 @@ public class Report implements Serializable, Entities{
             double val = 0;
             if( this.menuItemRevenue.containsKey(item)) {
                 val = menuItemRevenue.get(item);
-                System.out.println(item.getName() + " " +val);
+                //System.out.println(item.getName() + " " +val);
             }
                 
             val += orderedItems.get(item) * item.getPrice();
@@ -105,7 +105,6 @@ public class Report implements Serializable, Entities{
      * @return total revenue
      */
     public double getTotalRevenue(){
-        //TODO ASK YAN KAI SEE RMB;
         this.calculateTotalRevenue();
         return this.totalRevenue;
     }

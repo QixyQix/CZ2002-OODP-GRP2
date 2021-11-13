@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import entities.Entities;
+import exceptions.DuplicateIDException;
 
 /***
  * Represents a data manager
@@ -25,10 +26,11 @@ public abstract class DataMgr {
      *                                closed
      * @throws ClassNotFoundException if serialized data is not of the Customer
      *                                class
+     * @throws DuplicateIDException   if duplicate ID Exists
      */
-    public HashMap<Integer, Entities> loadSavedData(String name_o) throws IOException, ClassNotFoundException {
-        HashMap<Integer, Entities> entities = new HashMap<Integer, Entities>();
-        File dataDirectory = new File("./data/" + name_o);
+    public HashMap<Integer,Entities> loadSavedData( String name_o) throws IOException, ClassNotFoundException, DuplicateIDException {
+        HashMap<Integer,Entities> entities = new HashMap<Integer, Entities>();
+        File dataDirectory = new File("./data/"+ name_o);
         File fileList[] = dataDirectory.listFiles();
 
         if (fileList == null)
@@ -39,6 +41,11 @@ public abstract class DataMgr {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             Entities entity = (Entities) objectInputStream.readObject();
+            if(entities.containsKey(entity.getId()))  {
+                objectInputStream.close();
+                throw new DuplicateIDException();
+            } 
+                
             entities.put(entity.getId(), entity);
             objectInputStream.close();
         }

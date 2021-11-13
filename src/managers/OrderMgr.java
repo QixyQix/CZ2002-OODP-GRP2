@@ -8,6 +8,7 @@ import entities.MenuItem;
 import entities.Customer;
 import entities.Entities;
 import entities.Table;
+import exceptions.IDNotFoundException;
 import entities.Staff;
 
 /***
@@ -139,24 +140,17 @@ public final class OrderMgr extends DataMgr {
         InvoiceMgr.getInstance().createInvoice(order);
     }
 
-    /**
-     * Returns true or false depending on whether the order corresponding to the
-     * order id exists
-     * 
-     * @param orderId id of order
-     * @return true if order exists, false if order does not exist
-     */
-    public boolean checkAvailableOrder(int orderId) {
-        return this.orders.containsKey(orderId);
-    }
-
+   
     /**
      * Returns Order object corresponding to order id
      * 
      * @param orderId id of order
      * @return Order object
+     * @throws IDNotFoundException
      */
-    public Order getOrder(int orderId) {
+    public Order getOrder(int orderId) throws IDNotFoundException {
+        if(!this.orders.containsKey(orderId))
+            throw new IDNotFoundException();
         return this.orders.get(orderId);
     }
 

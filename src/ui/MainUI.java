@@ -82,7 +82,7 @@ public class MainUI extends UserInterface{
     }
     
     private void entersystem(Staff staff){
-        System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); // TODO Mr/Ms based on the gender
+        System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); 
         int option;
         super.setStaff(staff);
         do{

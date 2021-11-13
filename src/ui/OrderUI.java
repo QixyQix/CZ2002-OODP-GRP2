@@ -56,7 +56,7 @@ public final class OrderUI extends UserInterface {
 
         Integer noofpax = super.getInputInt("No of pax");
         Table table = TableMgr.getInstance().findAvailTable(date, noofpax);
-        // TODO: ??Want to throw an error and catch with self define exception???
+        
         if(table == null){
             System.out.println("Order is not created, Table are full.");
             return;
@@ -78,7 +78,7 @@ public final class OrderUI extends UserInterface {
         orderid = super.getInputInt("Enter your order id");
         try {
             order = OrderMgr.getInstance().getOrder(orderid);
-            // TODO ask yan kai seee or others seeee.
+            
             if(order.getStatus()=="Close"){
                 System.out.println("You should not modify this order anymore");
                 return null;

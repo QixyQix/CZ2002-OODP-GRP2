@@ -112,15 +112,6 @@ public final class MenuItemMgr extends DataMgr {
 
     }
 
-    /**
-     * Returns true or false depending on whether id is in use
-     * 
-     * @param id menu item id
-     * @return true if id can be assigned to new object, false if id already in use
-     */
-    public boolean checkIDAvailable(int id) {
-        return !this.items.containsKey(id);
-    }
 
     /**
      * Returns a MenuItem object corresponding to the menu item id

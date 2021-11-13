@@ -11,6 +11,7 @@ import entities.Order;
 import entities.Membership;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
+import exceptions.IDNotFoundException;
 
 /***
  * Represents an invoice manager
@@ -132,24 +133,18 @@ public final class InvoiceMgr extends DataMgr {
         invoice.addPriceFilters(serviceChargeFilter);
     }
 
-    /**
-     * Returns true or false depending on whether the invoice corresponding to the
-     * invoice id exists
-     * 
-     * @param invoiceid id of invoice
-     * @return true if invoice exists, false if invoice does not exist
-     */
-    public boolean checkInvoice(int invoiceid) {
-        return this.invoices.containsKey(invoiceid);
-    }
 
     /**
      * Returns Invoice object corresponding to the invoice id
      * 
      * @param invoiceid id of invoice
      * @return Invoice object
+     * @throws IDNotFoundException if no such order corresponding to the id
+     *                             exists
      */
-    public Invoice getOrder(int invoiceid) {
+    public Invoice getOrder(int invoiceid) throws IDNotFoundException {
+        if(!this.invoices.containsKey(invoiceid))
+            throw new IDNotFoundException();
         return this.invoices.get(invoiceid);
     }
 

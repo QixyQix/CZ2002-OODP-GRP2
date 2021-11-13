@@ -5,6 +5,7 @@ import java.util.HashMap;
 import entities.Customer;
 import entities.Entities;
 import entities.Membership;
+import exceptions.IDNotFoundException;
 
 /***
  * Represents a customer manager
@@ -153,15 +154,11 @@ public final class CustomerMgr extends DataMgr {
      * 
      * @param phoneNumber customer contact number
      * @param membership  customer membership
-     * 
+     * @throws IDNotFoundException if no such Customer corresponding to the id
+     *                             exists
      */
-    public void updateMembership(String phoneNumber, Membership membership) {
+    public void updateMembership(String phoneNumber, Membership membership) throws IDNotFoundException {
         Customer customer = getExistingCustomer(phoneNumber);
-
-        if (customer == null) {
-            System.out.println("Customer not found");
-            return;
-        }
 
         customer.setMembership(membership);
         return;

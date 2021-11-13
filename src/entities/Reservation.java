@@ -135,12 +135,17 @@ public class Reservation implements Serializable, Entities {
 	 * 
 	 * @return string
 	 */
-	// depends on CustomerMgr and TableMgr
-	@Override
-	public String toString() {
-		return "\n" + "Reservation ID= " + this.getId() + "Customer= " + customer.getName() + '\n' + "customerContact= "
-				+ customer.getContact() + '\n' + "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n'
-				+ "noOfPax= " + noOfPax + '\n' + "tableID= " + table.getId() + '\n' + "Check In= " + getCheckInStatus()
-				+ '\n' + '}';
-	}
+    // depends on CustomerMgr and TableMgr
+    @Override 
+    public String toString() {
+        return  "\n" +
+				"Reservation ID= " + this.getId()+ '\n' +
+                "Customer= " + customer.getName() + '\n' +
+                "customerContact= " + customer.getContact() + '\n' +
+                "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
+                "noOfPax= " + noOfPax + '\n' +
+                "tableID= " + table.getId() + '\n' +
+				"Check In= " + getCheckInStatus()+ '\n' +
+                '\n';
+    }
 }

@@ -72,13 +72,13 @@ public class Reservation implements Serializable, Entities {
     @Override 
     public String toString() {
         return  "\n" +
-				"Reservation ID= " + this.getId()+ 
+				"Reservation ID= " + this.getId()+ '\n' +
                 "Customer= " + customer.getName() + '\n' +
                 "customerContact= " + customer.getContact() + '\n' +
                 "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
                 "noOfPax= " + noOfPax + '\n' +
                 "tableID= " + table.getId() + '\n' +
 				"Check In= " + getCheckInStatus()+ '\n' +
-                '}';
+                '\n';
     }
 }

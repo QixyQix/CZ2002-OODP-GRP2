@@ -15,11 +15,14 @@ import entities.Staff;
  * 
  * @author Eang Sokunthea
  */
-public final class OrderMgr extends DataMgr{
+public final class OrderMgr extends DataMgr {
     private static OrderMgr INSTANCE;
     private HashMap<Integer, Order> orders;
     private int nextId;
 
+    /**
+     * Constructor
+     */
     private OrderMgr() {
         try {
             this.orders = new HashMap<Integer, Order>();
@@ -31,22 +34,38 @@ public final class OrderMgr extends DataMgr{
         }
     }
 
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Order)
-                this.orders.put(id,(Order) object.get(id));
-            else throw new ClassCastException();
+    /**
+     * Downcast from entities to order
+     * 
+     * @param object
+     */
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Order)
+                this.orders.put(id, (Order) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
-    public HashMap<Integer, Entities> upCast(){
+    /**
+     * Upcast order to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: orders.keySet()){
-           object.put(id,orders.get(id)); 
+        for (int id : orders.keySet()) {
+            object.put(id, orders.get(id));
         }
         return object;
     }
-    
+
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "orders", "orderNextId");
     }
@@ -75,11 +94,11 @@ public final class OrderMgr extends DataMgr{
      */
     public Order createOrder(Staff staff, Customer customer, LocalDateTime date, int noOfPax, Table table) {
         // Table table = this.allocateTable(date, noOfPax);
-        if(table == null) {
-            
+        if (table == null) {
+
             return null;
         }
-        
+
         Order order = new Order(staff, customer, table, date, nextId);
         orders.put(nextId, order);
 
@@ -95,7 +114,7 @@ public final class OrderMgr extends DataMgr{
      * 
      */
     public void addItem(MenuItem menuItem, Order order) {
-        order.addPendingItems(menuItem,1);
+        order.addPendingItems(menuItem, 1);
     }
 
     /**

@@ -1,6 +1,5 @@
 package managers;
 
-
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -19,11 +18,14 @@ import enums.TaxFilterNameEnum;
  * @author Zong Yu Lee
  */
 public final class InvoiceMgr extends DataMgr {
-    
+
     private static InvoiceMgr INSTANCE;
     private HashMap<Integer, Invoice> invoices;
     private int nextId;
 
+    /**
+     * Constructor
+     */
     private InvoiceMgr() {
         try {
             this.invoices = new HashMap<Integer, Invoice>();
@@ -34,23 +36,39 @@ public final class InvoiceMgr extends DataMgr {
             System.out.println("Failed to load invoices data");
         }
     }
-    
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Invoice)
-                this.invoices.put(id,(Invoice) object.get(id));
-            else throw new ClassCastException();
+
+    /**
+     * Downcast from entities to invoice
+     * 
+     * @param object
+     */
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Invoice)
+                this.invoices.put(id, (Invoice) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
-    public HashMap<Integer, Entities> upCast(){
+    /**
+     * Upcast invoice to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: invoices.keySet()){
-           object.put(id,invoices.get(id)); 
+        for (int id : invoices.keySet()) {
+            object.put(id, invoices.get(id));
         }
         return object;
     }
-    
+
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "invoices", "invoiceNextId");
     }
@@ -74,13 +92,13 @@ public final class InvoiceMgr extends DataMgr {
      * @return created invoice
      */
     public Invoice createInvoice(Order order) {
-        if(order.getPendingItems().size() !=0){
+        if (order.getPendingItems().size() != 0) {
             // ask see should I print this at UI?
             System.out.println("The order contains Pending Items. You are not allowed to create invoice.");
             return null;
-            
+
         }
-        if(order.getStatus()=="Close"){
+        if (order.getStatus() == "Close") {
             System.out.println("The order have been paid");
         }
         Invoice invoice = new Invoice(order, this.nextId);

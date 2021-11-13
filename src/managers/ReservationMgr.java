@@ -19,6 +19,9 @@ public final class ReservationMgr extends DataMgr {
     private HashMap<Integer, Reservation> reservations;
     private int nextId=1;
 
+    /**
+     * Constructor
+     */
     private ReservationMgr() {
         this.reservations = new HashMap<Integer, Reservation>();
         try {

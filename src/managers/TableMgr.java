@@ -132,7 +132,7 @@ public class TableMgr extends DataMgr {
     public void printTableAvailability(int noOfPax, LocalDateTime date) {
         boolean flag = false;
         for (Table table : tables.values()) {
-            if ((noOfPax < table.getSeatingCapacity()) && (table.getTableState(date) != TableState.RESERVED)) {
+            if ((noOfPax <= table.getSeatingCapacity()) && (table.getTableState(date) != TableState.RESERVED)) {
                 System.out.println(table.toString());
                 flag = true;
             }

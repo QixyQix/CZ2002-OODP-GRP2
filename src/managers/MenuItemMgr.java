@@ -17,10 +17,14 @@ import factories.MenuItemFactory;
  * @author Cho Qi Xiang
  * 
  */
-public final class MenuItemMgr extends DataMgr{
+public final class MenuItemMgr extends DataMgr {
     private static MenuItemMgr INSTANCE;
     private HashMap<Integer, MenuItem> items;
     private int nextId;
+
+    /**
+     * Constructor
+     */
     private MenuItemMgr() {
         this.items = new HashMap<Integer, MenuItem>();
         try {
@@ -32,29 +36,44 @@ public final class MenuItemMgr extends DataMgr{
         }
     }
 
+    /**
+     * Downcast from entities to menuItem
+     * 
+     * @param object
+     */
     public void downCast(HashMap<Integer, Entities> object) {
-        for(int id: object.keySet()){
-            try{
-                MenuItem item = MenuItemFactory.getInstance().createMenuItemFromSerializedData( object.get(id));
+        for (int id : object.keySet()) {
+            try {
+                MenuItem item = MenuItemFactory.getInstance().createMenuItemFromSerializedData(object.get(id));
                 this.items.put(id, item);
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Failed to downCast Data");
             }
         }
     }
 
-    public HashMap<Integer, Entities> upCast(){
+    /**
+     * Upcast menuItem to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: items.keySet()){
-           object.put(id,items.get(id)); 
+        for (int id : items.keySet()) {
+            object.put(id, items.get(id));
         }
         return object;
     }
 
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "menuitems", "menuItemNextId");
     }
-    
+
     /**
      * Returns the MenuItemMgr instance and creates an instance if it does not exist
      * 
@@ -80,10 +99,11 @@ public final class MenuItemMgr extends DataMgr{
      * 
      */
     public void createMenuItem(MenuItemTypeEnum type, String name, String description, double price,
-            ArrayList<MenuItem> packageItems)  {
+            ArrayList<MenuItem> packageItems) {
 
         try {
-            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, nextId,packageItems);
+            MenuItem newItem = MenuItemFactory.getInstance().createMenuItem(type, name, description, price, nextId,
+                    packageItems);
             this.items.put(newItem.getId(), newItem);
             nextId++;
         } catch (Exception ex) {
@@ -161,6 +181,4 @@ public final class MenuItemMgr extends DataMgr{
         // TODO Remove alacarte items from packages
     }
 
-   
-    
 }

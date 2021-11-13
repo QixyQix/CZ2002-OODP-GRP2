@@ -12,20 +12,23 @@ import entities.Membership;
  * @author Zong Yu Lee
  * @author Lim Yan Kai
  */
-public final class CustomerMgr extends DataMgr{
+public final class CustomerMgr extends DataMgr {
 
     private static CustomerMgr INSTANCE;
     private HashMap<Integer, Customer> customers;
     private HashMap<String, Integer> phonetoid;
     private int nextId;
 
+    /**
+     * Constructor
+     */
     private CustomerMgr() {
         try {
             this.customers = new HashMap<Integer, Customer>();
             this.phonetoid = new HashMap<String, Integer>();
-            
+
             downCast(super.loadSavedData("customers"));
-            this.nextId  = super.loadNextIdData("CustomerNextId");
+            this.nextId = super.loadNextIdData("CustomerNextId");
 
             this.convertToPhone();
         } catch (Exception ex) {
@@ -34,29 +37,49 @@ public final class CustomerMgr extends DataMgr{
         }
     };
 
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Customer)
-                this.customers.put(id,(Customer) object.get(id));
-            else throw new ClassCastException();
+    /**
+     * Downcast from entities to customer
+     * 
+     * @param object
+     */
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Customer)
+                this.customers.put(id, (Customer) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
-    public  HashMap<Integer, Entities> upCast(){
+    /**
+     * Upcast customer to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: customers.keySet()){
-           object.put(id,customers.get(id)); 
+        for (int id : customers.keySet()) {
+            object.put(id, customers.get(id));
         }
         return object;
     }
 
-    public void saveData() throws IOException{
-        super.saveDataSerialize(upCast(), nextId, "customers","CustomernextId");
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
+    public void saveData() throws IOException {
+        super.saveDataSerialize(upCast(), nextId, "customers", "CustomernextId");
     }
 
-    private void convertToPhone(){
-        for(int id : customers.keySet()){
-            Customer cus = (Customer)customers.get(id);
+    /**
+     * Convert phone number to customer id
+     * 
+     */
+    private void convertToPhone() {
+        for (int id : customers.keySet()) {
+            Customer cus = (Customer) customers.get(id);
             phonetoid.put(cus.getContact(), id);
         }
     }
@@ -111,10 +134,10 @@ public final class CustomerMgr extends DataMgr{
      */
     public Customer getExistingCustomer(String phoneNumber) {
         int cusid = this.phonetoid.get(phoneNumber);
-        
+
         return this.customers.get(cusid);
     }
-    
+
     /**
      * Check if customer exists by contact number
      * 
@@ -122,10 +145,9 @@ public final class CustomerMgr extends DataMgr{
      * @return true if Customer object exists, false if customer does not exist
      */
     /*
-    public boolean checkExistingCustomer(String phoneNumber) {
-        return this.phonetoid.containsKey(phoneNumber);
-    }
-    */
+     * public boolean checkExistingCustomer(String phoneNumber) { return
+     * this.phonetoid.containsKey(phoneNumber); }
+     */
     /**
      * Update customer membership
      * 

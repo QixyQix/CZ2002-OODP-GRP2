@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 
 
 public class ReservationUI extends UserInterface {
-    private static ReservationUI singleInstance = null;
+    private static ReservationUI INSTANCE;
     private ReservationUI() {}
 
     public static ReservationUI getInstance()
     {
-        if (singleInstance == null)
-            singleInstance = new ReservationUI();
-        return singleInstance;
+        if (INSTANCE == null)
+            INSTANCE = new ReservationUI();
+        return INSTANCE;
     }
 
     private void displayOptions(){

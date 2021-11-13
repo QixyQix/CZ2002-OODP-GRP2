@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @author Benjamin Ho JunHao
  */
 public class TableMgr extends DataMgr {
-    private static TableMgr instance;
+    private static TableMgr INSTANCE;
     private HashMap<Integer, Table> tables;
     private int nextId;
 
@@ -57,10 +57,10 @@ public class TableMgr extends DataMgr {
      * @return instance
      */
     public static TableMgr getInstance() {
-        if (instance == null) {
-            instance = new TableMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new TableMgr();
         }
-        return instance;
+        return INSTANCE;
     }
 
     /**

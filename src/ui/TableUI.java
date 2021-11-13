@@ -5,7 +5,7 @@ import managers.TableMgr;
 import java.time.LocalDateTime;
 
 public class TableUI extends UserInterface {
-    private static TableUI instance;
+    private static TableUI INSTANCE;
 
     private TableUI() {
     };
@@ -16,10 +16,10 @@ public class TableUI extends UserInterface {
      * @return instance
      */
     public static TableUI getInstance() {
-        if (instance == null) {
-            instance = new TableUI();
+        if (INSTANCE == null) {
+            INSTANCE = new TableUI();
         }
-        return instance;
+        return INSTANCE;
     }
 
     public void displayOptions() {

@@ -16,7 +16,7 @@ import entities.Staff;
  * @author Eang Sokunthea
  */
 public final class OrderMgr extends DataMgr{
-    private static OrderMgr instance;
+    private static OrderMgr INSTANCE;
     private HashMap<Integer, Order> orders;
     private int nextId;
 
@@ -57,11 +57,11 @@ public final class OrderMgr extends DataMgr{
      * @return instance
      */
     public static OrderMgr getInstance() {
-        if (instance == null) {
-            instance = new OrderMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new OrderMgr();
         }
 
-        return instance;
+        return INSTANCE;
     }
 
     /**

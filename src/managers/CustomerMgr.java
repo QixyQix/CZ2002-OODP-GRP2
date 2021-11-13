@@ -14,7 +14,7 @@ import entities.Membership;
  */
 public final class CustomerMgr extends DataMgr{
 
-    private static CustomerMgr instance;
+    private static CustomerMgr INSTANCE;
     private HashMap<Integer, Customer> customers;
     private HashMap<String, Integer> phonetoid;
     private int nextId;
@@ -67,10 +67,10 @@ public final class CustomerMgr extends DataMgr{
      * @return instance
      */
     public static CustomerMgr getInstance() {
-        if (instance == null) {
-            instance = new CustomerMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new CustomerMgr();
         }
-        return instance;
+        return INSTANCE;
     }
 
     /**

@@ -15,7 +15,7 @@ import entities.Table;
  * @author Eang Sokunthea
  */
 public final class ReservationMgr extends DataMgr {
-    private static ReservationMgr instance;
+    private static ReservationMgr INSTANCE;
     private HashMap<Integer, Reservation> reservations;
     private int nextId;
 
@@ -57,10 +57,10 @@ public final class ReservationMgr extends DataMgr {
      * @return instance
      */
     public static ReservationMgr getInstance() {
-        if (instance == null) {
-            instance = new ReservationMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new ReservationMgr();
         }
-        return instance;
+        return INSTANCE;
     }
 
     /**

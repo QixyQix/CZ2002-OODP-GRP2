@@ -18,7 +18,7 @@ import factories.MenuItemFactory;
  * 
  */
 public final class MenuItemMgr extends DataMgr{
-    private static MenuItemMgr instance;
+    private static MenuItemMgr INSTANCE;
     private HashMap<Integer, MenuItem> items;
     private int nextId;
     private MenuItemMgr() {
@@ -61,11 +61,11 @@ public final class MenuItemMgr extends DataMgr{
      * @return instance
      */
     public static MenuItemMgr getInstance() {
-        if (instance == null) {
-            instance = new MenuItemMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new MenuItemMgr();
         }
 
-        return instance;
+        return INSTANCE;
     }
 
     /**

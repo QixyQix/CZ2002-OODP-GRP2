@@ -13,7 +13,7 @@ import exceptions.IDNotFoundException;
  * @author Zong Yu Lee
  */
 public final class StaffMgr extends DataMgr{
-    private static StaffMgr instance;
+    private static StaffMgr INSTANCE;
     private HashMap<Integer, Staff> staffs;
     private int nextId; // will be delete afterward
 
@@ -54,11 +54,11 @@ public final class StaffMgr extends DataMgr{
      * @return instance
      */
     public static StaffMgr getInstance() {
-        if (instance == null) {
-            instance = new StaffMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new StaffMgr();
         }
 
-        return instance;
+        return INSTANCE;
     }
 
     /**

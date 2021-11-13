@@ -16,7 +16,7 @@ import entities.MenuItem;
  * @author Zong Yu Lee
  */
 public final class SalesReportMgr extends DataMgr {
-    private static SalesReportMgr instance;
+    private static SalesReportMgr INSTANCE;
     private HashMap<Integer, Report> reports;
     private HashMap<LocalDate, Integer> reports_day;
     private int nextId;
@@ -73,10 +73,10 @@ public final class SalesReportMgr extends DataMgr {
      * @return instance
      */
     public static SalesReportMgr getInstance() {
-        if (instance == null) {
-            instance = new SalesReportMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new SalesReportMgr();
         }
-        return instance;
+        return INSTANCE;
     }
 
     /**

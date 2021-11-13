@@ -20,7 +20,7 @@ import enums.TaxFilterNameEnum;
  */
 public final class InvoiceMgr extends DataMgr {
     
-    private static InvoiceMgr instance;
+    private static InvoiceMgr INSTANCE;
     private HashMap<Integer, Invoice> invoices;
     private int nextId;
 
@@ -61,10 +61,10 @@ public final class InvoiceMgr extends DataMgr {
      * @return instance
      */
     public static InvoiceMgr getInstance() {
-        if (instance == null) {
-            instance = new InvoiceMgr();
+        if (INSTANCE == null) {
+            INSTANCE = new InvoiceMgr();
         }
-        return instance;
+        return INSTANCE;
     }
 
     /**

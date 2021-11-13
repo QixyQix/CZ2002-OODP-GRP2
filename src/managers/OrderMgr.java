@@ -65,18 +65,6 @@ public final class OrderMgr extends DataMgr{
     }
 
     /**
-     * Returns a Table object that is available
-     * 
-     * @param date    date and time
-     * @param noOfPax number of pax at the table
-     * @return Table object if available, null if no available tables
-     */
-    public Table allocateTable(LocalDateTime date, int noOfPax) {
-        Table table = TableMgr.getInstance().findAvailTable(date, noOfPax);
-        return table;
-    }
-
-    /**
      * Creates and returns Order object
      * 
      * @param staff    staff object
@@ -127,9 +115,9 @@ public final class OrderMgr extends DataMgr{
      * @param invoiceMgr InvoiceMgr obejct
      * 
      */
-    public void closeOrder(Order order, InvoiceMgr invoiceMgr) {
+    public void closeOrder(Order order) {
         // deallocateTable()
-        invoiceMgr.createInvoice(order);
+        InvoiceMgr.getInstance().createInvoice(order);
     }
 
     /**

@@ -5,6 +5,7 @@ import entities.Table;
 import entities.Customer;
 import entities.MenuItem;
 import managers.OrderMgr;
+import managers.TableMgr;
 import managers.MenuItemMgr;
 
 import java.time.LocalDateTime;
@@ -54,7 +55,7 @@ public final class OrderUI extends UserInterface {
         LocalDateTime date = LocalDateTime.now();
 
         Integer noofpax = super.getInputInt("No of pax");
-        Table table = OrderMgr.getInstance().allocateTable(date, noofpax);
+        Table table = TableMgr.getInstance().findAvailTable(date, noofpax);
         // TODO: ??Want to throw an error and catch with self define exception???
         if(table == null){
             System.out.println("Order is not created, Table are full.");

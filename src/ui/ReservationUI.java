@@ -48,7 +48,7 @@ public class ReservationUI extends UserInterface {
                     this.checkRemoveReservationUI();
                     break;
                 case 3: 
-                    this.printReservationUI();
+                    this.printAllReservationUI();
                     break;  
                 case 4: 
                     this.checkInUI();
@@ -139,7 +139,7 @@ public class ReservationUI extends UserInterface {
         }
     }
 
-    private void printReservationUI(){
+    private void printAllReservationUI(){
         HashMap<Integer, Reservation> reservations = ReservationMgr.getInstance().getAllReservations();
 		if (reservations.isEmpty()) {
         	System.out.println("No records found!");

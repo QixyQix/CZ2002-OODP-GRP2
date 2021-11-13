@@ -22,7 +22,7 @@ public class TableUI extends UserInterface {
         return INSTANCE;
     }
 
-    public void displayOptions() {
+    private void displayOptions() {
         System.out.println("==========Table Manager==========");
         System.out.println("(0) Go Back to Main Page Exit");
         System.out.println("(1) Check table availability");

@@ -17,7 +17,7 @@ import entities.Table;
 public final class ReservationMgr extends DataMgr {
     private static ReservationMgr INSTANCE;
     private HashMap<Integer, Reservation> reservations;
-    private int nextId;
+    private int nextId=1;
 
     private ReservationMgr() {
         this.reservations = new HashMap<Integer, Reservation>();
@@ -72,8 +72,8 @@ public final class ReservationMgr extends DataMgr {
      * @param table           Table object
      * @return Reservation object
      */
-    public Reservation createReservation(Customer customer, LocalDateTime checkInDateTime, int noOfPax, Table table) {
-        Reservation reservation = new Reservation(customer, checkInDateTime, noOfPax, table, this.nextId);
+    public Reservation createReservation(Customer customer, LocalDateTime date, int noOfPax, Table table) {
+        Reservation reservation = new Reservation(customer, date, noOfPax, table, this.nextId);
         reservations.put(this.nextId, reservation);
         this.nextId += 1;
         return reservation;
@@ -116,10 +116,10 @@ public final class ReservationMgr extends DataMgr {
      * 
      * @param reservationMade Reservation object
      */
-    public void removeReservation(Reservation reservationMade) {
-        this.reservations.remove(reservationMade.getId());
-        TableMgr.getInstance().deallocateTable(reservationMade.getTable(), reservationMade.getCheckInTime());
-        this.reservations.remove(reservationMade.getId());
+    public void removeReservation(Reservation reservation) {
+        this.reservations.remove(reservation.getId());
+        TableMgr.getInstance().deallocateTable(reservation.getTable(), reservation.getCheckInTime());
+        this.reservations.remove(reservation.getId());
     }
 
     /**

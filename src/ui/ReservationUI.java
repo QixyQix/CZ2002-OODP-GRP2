@@ -64,7 +64,8 @@ public class ReservationUI extends UserInterface {
         Customer customer = CustomerUI.getInstance().getCustomer();
         Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         if(res != null) {
-            printReservation(res);
+            System.out.println("Ongoing reservation (You are not allowed to make more than 1 reservation at a time):");
+            this.printReservation(res);
             return;
         }        
 
@@ -76,7 +77,7 @@ public class ReservationUI extends UserInterface {
             checkInTime = super.getInputDateTime("Check In time (yyyy-MM-dd HH:mm): ");
         }
 
-	    int noOfPax = super.getInputInt("Number Of people: ");
+	    int noOfPax = super.getInputInt("Number of Pax: ");
 
         Table table = TableMgr.getInstance().findAvailTable(checkInTime, noOfPax);
         if (table==null){ 
@@ -147,6 +148,7 @@ public class ReservationUI extends UserInterface {
 		else {
 			System.out.println("\n"+ "Printing all reservations in the system record...");
 			for(Reservation reservation: reservations.values()) {
+                System.out.println("_____________________________________________");
 				System.out.println(reservation.toString());
 
 			}

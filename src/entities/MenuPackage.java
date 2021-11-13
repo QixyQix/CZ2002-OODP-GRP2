@@ -49,10 +49,11 @@ public class MenuPackage extends MenuItem {
      */
     @Override
     public String getDescription() {
-        String mainDesc = super.getDescription() + "\nThis package consists of the following items:\n";
+        String mainDesc = super.getDescription() + " Package consists of ";
         for (MenuItem item : this.items) {
-            mainDesc += item.getName() + ", ";
+            mainDesc += item.getName() + "  ";
         }
+
         return mainDesc;
     }
     /*

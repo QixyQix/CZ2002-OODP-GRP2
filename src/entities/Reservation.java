@@ -138,14 +138,18 @@ public class Reservation implements Serializable, Entities {
     // depends on CustomerMgr and TableMgr
     @Override 
     public String toString() {
-        return  "\n" +
-				"Reservation ID= " + this.getId()+ '\n' +
-                "Customer= " + customer.getName() + '\n' +
-                "customerContact= " + customer.getContact() + '\n' +
-                "checkInTime= " + checkInTime.toString().replace("T", " ") + '\n' +
-                "noOfPax= " + noOfPax + '\n' +
-                "tableID= " + table.getId() + '\n' +
-				"Check In= " + getCheckInStatus()+ '\n' +
-                '\n';
+		String information = "";
+		information += String.format("%-20s : %d\n", "Reservation ID" , this.getId());
+		information += String.format("%-20s : %s\n", "Customer" , customer.getName());
+		information += String.format("%-20s : %s\n", "Customer Contact" , customer.getContact());
+		information += String.format("%-20s : %s\n", "Check In Time" , checkInTime.toString().replace("T", " "));
+		information += String.format("%-20s : %d\n", "Number of Pax  " , this.noOfPax );
+		information += String.format("%-20s : %d\n", "Table ID " , table.getId());
+		if(this.getCheckInStatus())
+			information += String.format("%-20s : %s\n", "Check In Status" , "Checked-In Succesfully" );
+        else 
+			information += String.format("%-20s : %s\n", "Check In Status" , "Not Yet Check-In" );    
+     
+		return information;
     }
 }

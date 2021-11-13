@@ -91,6 +91,6 @@ public class Table implements Serializable, Entities {
      * @return string
      */
     public String toString() {
-        return "\n" + "Table ID = " + getId() + '\n' + "Seating Capacity = " + getSeatingCapacity() + '\n';
+        return String.format("Table ID = %-3d| Seating Capacity = %-2d", this.getId(), this.getSeatingCapacity());
     }
 }

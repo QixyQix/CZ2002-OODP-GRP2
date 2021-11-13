@@ -10,7 +10,7 @@ import managers.MembershipMgr;
 
 public final class CustomerUI extends UserInterface {
     private static CustomerUI INSTANCE;
-
+    
     private CustomerUI() {
         super();
     }

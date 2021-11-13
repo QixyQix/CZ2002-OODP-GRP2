@@ -147,14 +147,14 @@ public final class ReservationMgr extends DataMgr {
      */
     public HashMap<Integer, Reservation> getAllReservations() {
         LocalDateTime current = LocalDateTime.now();
-        System.out.println("Current Time now is= " + current);
+        System.out.println("Current Time now is " + current.toString() );
         ArrayList<Integer> IDsToRemove = new ArrayList<Integer>();
         for (Reservation reservation : reservations.values()) {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
-                System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime());
+                System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime().toString());
             }
         }
         int counter=0;

@@ -149,6 +149,7 @@ public class TableMgr extends DataMgr {
      */
     public void printTableAvailability(int noOfPax, LocalDateTime date) {
         boolean flag = false;
+        System.out.println("The following tables are available for reservations based on your requirements.");
         for (Table table : tables.values()) {
             if ((noOfPax <= table.getSeatingCapacity()) && (table.getTableState(date) != TableState.RESERVED)) {
                 System.out.println(table.toString());
@@ -168,6 +169,7 @@ public class TableMgr extends DataMgr {
         if (tables.isEmpty()) {
             System.out.println("No tables have been created");
         } else {
+            System.out.println("The following is the list of tables.");
             for (Table table : tables.values()) {
                 System.out.println(table.toString());
             }

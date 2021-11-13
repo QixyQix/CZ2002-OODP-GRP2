@@ -92,23 +92,32 @@ public final class MenuItemUI extends UserInterface {
     public void showCurrentMenuItems() {
         try {
             ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
+            if(items.size()==0){
+                System.out.println("Currently, there is no menuItems");
+                return;
+            }
             
-            MenuItemTypeEnum type = this.getInputType("Enter the type of MenuItem you want to show.");
-            int i =0;
-
-            for (MenuItem item : items) {
-                if(item.getType() != type) continue;
-                if(i==0){
-                    System.out.println("Menu Item : ");
-                    i=1;
+            System.out.println("These are our available MenuItems");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            for (MenuItemTypeEnum type : MenuItemTypeEnum.values()){
+                Boolean flag = true;
+                System.out.println("Menu Item Type : " + type.toString());
+                for (MenuItem item : items) {
+                    if(item.getType() != type) continue;
+                    if(flag){
+                        System.out.printf(" %-3s  %-25s  %-8s  %s\n", "ID", "Name", "Price(Sgd)" , "  Desription " );
+                        flag = false;
+                    }
+                    System.out.printf( " %-3d  %-25s  %-3.2f         %s\n" , item.getId() ,  item.getName(), item.getPrice() , item.getDescription());
                 }
-                System.out.println("ID: " + item.getId() + " | Type: " + item.getType() + " | Name: " + item.getName()
-                        + " $" + item.getPrice());
-                System.out.println(item.getDescription());
+                if(flag){
+                    System.out.println("There is no MenuItems of type " + type.toString());
+                }
+                System.out.println("----------------------------------------------------------------------------------------------------");
             }
-            if(i==0){
-                System.out.println("There is no MenuItems of this Type Yet");
-            }
+            
+            
+            
         } catch (Exception ex) {
             System.out.println("An error occured while getting all Menu Items:");
             System.out.println(ex.getMessage());

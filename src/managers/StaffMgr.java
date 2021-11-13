@@ -17,6 +17,9 @@ public final class StaffMgr extends DataMgr{
     private HashMap<Integer, Staff> staffs;
     private int nextId; // will be delete afterward
 
+    /**
+     * Constructor
+     */
     private StaffMgr() {
         try {
             this.staffs = new HashMap<Integer, Staff>();
@@ -28,6 +31,11 @@ public final class StaffMgr extends DataMgr{
         }
     }
 
+    /**
+     * Downcast from entities to salesReportMgr
+     * 
+     * @param object
+     */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Staff)
@@ -36,6 +44,11 @@ public final class StaffMgr extends DataMgr{
         }
     }
 
+    /**
+     * Upcast reservationMgr to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
     public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: staffs.keySet()){
@@ -44,6 +57,11 @@ public final class StaffMgr extends DataMgr{
         return object;
     }
     
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "staffs", "staffNextId");
     }

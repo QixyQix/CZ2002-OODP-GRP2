@@ -33,6 +33,11 @@ public final class ReservationMgr extends DataMgr {
         }
     };
 
+    /**
+     * Downcast from entities to reservationMgr
+     * 
+     * @param object
+     */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Reservation)
@@ -41,6 +46,11 @@ public final class ReservationMgr extends DataMgr {
         }
     }
 
+    /**
+     * Upcast reservationMgr to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
     public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: reservations.keySet()){
@@ -49,6 +59,11 @@ public final class ReservationMgr extends DataMgr {
         return object;
     }
     
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "reservations", "reservationNextId");
     }

@@ -18,6 +18,9 @@ public class TableMgr extends DataMgr {
     private HashMap<Integer, Table> tables;
     private int nextId;
 
+    /**
+     * Constructor
+     */
     private TableMgr() {
         try {
             tables = new HashMap<Integer, Table>();
@@ -30,6 +33,11 @@ public class TableMgr extends DataMgr {
 
     };
 
+    /**
+     * Downcast from entities to salesReportMgr
+     * 
+     * @param object
+     */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
             if (object.get(id) instanceof Table)
@@ -39,6 +47,11 @@ public class TableMgr extends DataMgr {
         }
     }
 
+    /**
+     * Upcast reservationMgr to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
     public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for (int id : tables.keySet()) {
@@ -47,6 +60,11 @@ public class TableMgr extends DataMgr {
         return object;
     }
 
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "tables", "tableNextId");
     }

@@ -20,7 +20,10 @@ public final class SalesReportMgr extends DataMgr {
     private HashMap<Integer, Report> reports;
     private HashMap<LocalDate, Integer> reports_day;
     private int nextId;
-   
+
+    /**
+     * Constructor
+     */
     private SalesReportMgr() {
         try {
             this.reports = new HashMap<Integer, Report>();
@@ -37,6 +40,10 @@ public final class SalesReportMgr extends DataMgr {
     };
     
 
+    /**
+     * Convert to date
+     * 
+     */
     private void convertToDate(){
         for(int i : reports.keySet()){
             Report report = reports.get(i);
@@ -44,6 +51,11 @@ public final class SalesReportMgr extends DataMgr {
         }
     }
     
+    /**
+     * Downcast from entities to salesReportMgr
+     * 
+     * @param object
+     */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
             if(object.get(id) instanceof Report)
@@ -52,6 +64,11 @@ public final class SalesReportMgr extends DataMgr {
         }
     }
 
+    /**
+     * Upcast reservationMgr to entities in a hashmap
+     * 
+     * @return Hashmap object
+     */
     public HashMap<Integer, Entities> upCast(){
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
         for(int id: reports.keySet()){
@@ -60,6 +77,11 @@ public final class SalesReportMgr extends DataMgr {
         return object;
     }
     
+    /***
+     * Save data
+     * 
+     * @throws IOException if stream to file cannot be written to or closed
+     */
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "reports", "reportNextId");
     }

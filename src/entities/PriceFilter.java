@@ -12,7 +12,7 @@ public interface PriceFilter {
      * Apply price filter
      * 
      * @param rawPrice 
-     * @return discounted price
+     * @return adjusted price
      */
     public double execute(double rawPrice);
     /**

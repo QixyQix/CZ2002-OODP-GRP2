@@ -111,12 +111,7 @@ public class Invoice implements Serializable, Entities {
     }
 
     /**
-<<<<<<< HEAD
-     * Prints invoice
-     * 
-=======
      * Print Invoice
->>>>>>> 77f06ce26dd33a50b8d30e4add3f40fbc0916411
      */
     public void printInvoice(){
         

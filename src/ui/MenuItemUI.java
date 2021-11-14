@@ -16,7 +16,7 @@ import managers.MenuItemMgr;
  */
 public final class MenuItemUI extends UserInterface {
     private static MenuItemUI INSTANCE;
-    
+
     /**
      * Constructor
      */
@@ -36,6 +36,7 @@ public final class MenuItemUI extends UserInterface {
 
         return INSTANCE;
     }
+
     /**
      * Display the options of Selection Page
      * 
@@ -77,8 +78,11 @@ public final class MenuItemUI extends UserInterface {
         } while (option != 0);
     }
 
-    
-    private void displayType (){
+    /**
+     * Show the type of items
+     * 
+     */
+    private void displayType() {
         System.out.println("==Choice of Item Type==");
         System.out.println("1. MAIN_DISHES");
         System.out.println("2. SIDES");
@@ -87,82 +91,96 @@ public final class MenuItemUI extends UserInterface {
         System.out.println("5. SET_LUNCH");
         System.out.println("=======================");
     }
-    
-    private MenuItemTypeEnum getInputType(String prompt){
+
+    /**
+     * Selects enum from input
+     * 
+     * @param prompt
+     * @return MenuItemTypeEnum
+     */
+    private MenuItemTypeEnum getInputType(String prompt) {
         displayType();
-        switch(this.getInputInt(prompt,1,5)){
-            case 1:
-                return MenuItemTypeEnum.MAIN_DISHES;
-            case 2:
-                return MenuItemTypeEnum.SIDES;
-            case 3:
-                return MenuItemTypeEnum.DRINKS;
-            case 4:
-                return MenuItemTypeEnum.DESSERTS;
-            case 5:
-                return MenuItemTypeEnum.SET_LUNCH;
+        switch (this.getInputInt(prompt, 1, 5)) {
+        case 1:
+            return MenuItemTypeEnum.MAIN_DISHES;
+        case 2:
+            return MenuItemTypeEnum.SIDES;
+        case 3:
+            return MenuItemTypeEnum.DRINKS;
+        case 4:
+            return MenuItemTypeEnum.DESSERTS;
+        case 5:
+            return MenuItemTypeEnum.SET_LUNCH;
         }
         return null;
     }
 
+    /**
+     * Shows current menu items
+     * 
+     */
     public void showCurrentMenuItems() {
         try {
             ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
-            if(items.size()==0){
+            if (items.size() == 0) {
                 System.out.println("Currently, there is no menuItems");
                 return;
             }
-            
+
             System.out.println("These are our available MenuItems");
-            System.out.println("----------------------------------------------------------------------------------------------------");
-            for (MenuItemTypeEnum type : MenuItemTypeEnum.values()){
+            System.out.println(
+                    "----------------------------------------------------------------------------------------------------");
+            for (MenuItemTypeEnum type : MenuItemTypeEnum.values()) {
                 Boolean flag = true;
                 System.out.println("Menu Item Type : " + type.toString());
                 for (MenuItem item : items) {
-                    if(item.getType() != type) continue;
-                    if(flag){
-                        System.out.printf(" %-3s  %-25s  %-8s  %s\n", "ID", "Name", "Price(Sgd)" , "  Desription " );
+                    if (item.getType() != type)
+                        continue;
+                    if (flag) {
+                        System.out.printf(" %-3s  %-25s  %-8s  %s\n", "ID", "Name", "Price(Sgd)", "  Desription ");
                         flag = false;
                     }
-                    System.out.printf( " %-3d  %-25s  %-3.2f         %s\n" , item.getId() ,  item.getName(), item.getPrice() , item.getDescription());
+                    System.out.printf(" %-3d  %-25s  %-3.2f         %s\n", item.getId(), item.getName(),
+                            item.getPrice(), item.getDescription());
                 }
-                if(flag){
+                if (flag) {
                     System.out.println("There is no MenuItems of type " + type.toString());
                 }
-                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "----------------------------------------------------------------------------------------------------");
             }
-            
-            
-            
+
         } catch (Exception ex) {
             System.out.println("An error occured while getting all Menu Items:");
             System.out.println(ex.getMessage());
         }
     }
 
-
-
+    /**
+     * Creates menu items
+     * 
+     */
     private void createMenuItem() {
         boolean createPackage = false;
 
-        
         MenuItemTypeEnum type;
         String name;
         String description;
         double price = 0.0;
         ArrayList<MenuItem> packageItems = null;
-       
+
         if (super.getYNOption("Is this a promotional package?")) {
             createPackage = true;
         }
-    
+
         type = this.getInputType("Enter the item type: ");
         name = super.getInputString("Enter the item name: ");
         description = super.getInputString("Enter the item description: ");
         price = super.getInputDouble("Enter the item price: ", 0.0, Double.MAX_VALUE);
 
-        if( !super.getYNOption("Do you confirm with the selection. " )) return;
-        
+        if (!super.getYNOption("Do you confirm with the selection. "))
+            return;
+
         if (createPackage) {
             packageItems = new ArrayList<MenuItem>();
             packageItems = this.buildPackageItems();
@@ -176,12 +194,14 @@ public final class MenuItemUI extends UserInterface {
         }
     }
 
-    
+    /**
+     * Edits current menu items
+     * 
+     */
     private void editMenuItem() {
         MenuItem itemToEdit = null;
         boolean loop = true;
 
-      
         int id = super.getInputInt("Enter ID of item to edit: ");
         try {
             itemToEdit = MenuItemMgr.getInstance().getMenuItemByID(id);
@@ -190,7 +210,6 @@ public final class MenuItemUI extends UserInterface {
             System.out.println("Invalid item ID");
             return;
         }
-       
 
         loop = true;
         do {
@@ -232,7 +251,7 @@ public final class MenuItemUI extends UserInterface {
                     items = buildPackageItems();
                     packageItem.setItems(items);
                     System.out.println("Items updated.");
-                }else{
+                } else {
                     System.out.println("This is not a promotional package");
                 }
             case 0:
@@ -241,23 +260,29 @@ public final class MenuItemUI extends UserInterface {
             }
         } while (loop);
     }
-    
-    private void deleteMenuItem() {   
+
+    /**
+     * Deletes a menu item
+     * 
+     */
+    private void deleteMenuItem() {
         int idToRemove = super.getInputInt("Enter ID of item to delete: ", 0, Integer.MAX_VALUE);
         try {
             MenuItemMgr.getInstance().deleteMenuItemByID(idToRemove);
             System.out.println("Item removed");
         } catch (Exception ex) {
             System.out.println("Invalid ID");
-            
+
         }
-        
+
     }
 
-
+    /**
+     * Builds package menu items
+     * 
+     */
     private ArrayList<MenuItem> buildPackageItems() {
-        
-        
+
         System.out.println("Enter the IDs of items to be included in promotional package (0 to end): ");
         int idToAdd = 0;
         ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();
@@ -272,7 +297,7 @@ public final class MenuItemUI extends UserInterface {
                     System.out.println("Added item " + itemToAdd.getName() + " to the package");
                 }
             } catch (Exception ex) {
-                if(idToAdd!=0)
+                if (idToAdd != 0)
                     System.out.println("Please enter a valid ID");
             }
         } while (idToAdd > 0);

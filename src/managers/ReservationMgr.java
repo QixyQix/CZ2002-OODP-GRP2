@@ -156,13 +156,7 @@ public final class ReservationMgr extends DataMgr {
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
-<<<<<<< HEAD
-                System.out.println("Reservation ID:  " + reservation.getId()
-                        + " has been removed because it has passed 15mins from the supposed Check In Time of "
-                        + reservation.getCheckInTime());
-=======
                 System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime().toString());
->>>>>>> 77f06ce26dd33a50b8d30e4add3f40fbc0916411
             }
         }
         int counter = 0;

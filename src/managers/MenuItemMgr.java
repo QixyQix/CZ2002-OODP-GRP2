@@ -94,7 +94,6 @@ public final class MenuItemMgr extends DataMgr {
      * @param name         menu item name
      * @param description  menu item description
      * @param price        menu item price
-     * @param id           menu item id
      * @param packageItems menu items in a package
      * 
      */
@@ -111,7 +110,6 @@ public final class MenuItemMgr extends DataMgr {
         }
 
     }
-
 
     /**
      * Returns a MenuItem object corresponding to the menu item id

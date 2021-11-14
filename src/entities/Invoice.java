@@ -97,7 +97,6 @@ public class Invoice implements Serializable, Entities {
     /**
      * Prints invoice
      * 
-     * @return invoice
      */
     public void printInvoice() {
         // TODO: Formatting, Restaurant Name, Address, TEl, Server,

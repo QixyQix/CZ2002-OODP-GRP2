@@ -42,7 +42,7 @@ public class Membership implements Serializable, Entities{
     /**
      * Set discount
      * 
-     * @return discount
+     * @param discount discount
      */
     public void setDiscount(DiscountFilter discount) {
         this.discount = discount;

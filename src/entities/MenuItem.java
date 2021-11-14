@@ -95,7 +95,7 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
     /**
      * Sets price
      * 
-     * @return price
+     * @param price price
      */
     public void setPrice(double price) {
         this.price = price;

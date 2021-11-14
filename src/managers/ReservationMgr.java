@@ -17,7 +17,7 @@ import entities.Table;
 public final class ReservationMgr extends DataMgr {
     private static ReservationMgr INSTANCE;
     private HashMap<Integer, Reservation> reservations;
-    private int nextId=1;
+    private int nextId = 1;
 
     /**
      * Constructor
@@ -38,11 +38,12 @@ public final class ReservationMgr extends DataMgr {
      * 
      * @param object
      */
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Reservation)
-                this.reservations.put(id,(Reservation) object.get(id));
-            else throw new ClassCastException();
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Reservation)
+                this.reservations.put(id, (Reservation) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
@@ -51,14 +52,14 @@ public final class ReservationMgr extends DataMgr {
      * 
      * @return Hashmap object
      */
-    public HashMap<Integer, Entities> upCast(){
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: reservations.keySet()){
-           object.put(id,reservations.get(id)); 
+        for (int id : reservations.keySet()) {
+            object.put(id, reservations.get(id));
         }
         return object;
     }
-    
+
     /***
      * Save data
      * 
@@ -84,10 +85,10 @@ public final class ReservationMgr extends DataMgr {
     /**
      * Creates and returns Reservation object
      * 
-     * @param customer        Customer object
-     * @param checkInDateTime date and time
-     * @param noOfPax         number of pax at the table
-     * @param table           Table object
+     * @param customer Customer object
+     * @param date     date and time
+     * @param noOfPax  number of pax at the table
+     * @param table    Table object
      * @return Reservation object
      */
     public Reservation createReservation(Customer customer, LocalDateTime date, int noOfPax, Table table) {
@@ -101,7 +102,7 @@ public final class ReservationMgr extends DataMgr {
     /**
      * Returns Reservation object or null
      * 
-     * @param contact customer contact number
+     * @param customer customer
      * @return Reservation object if Reservation object corresponding to customer
      *         contact number exists, null if it does not exist
      */
@@ -114,13 +115,12 @@ public final class ReservationMgr extends DataMgr {
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
-            } 
-            else if (reservation.getCustomer().getContact() == customer.getContact()){
+            } else if (reservation.getCustomer().getContact() == customer.getContact()) {
                 result = reservation;
             }
         }
-        int counter=0;
-        while(IDsToRemove.size()>counter){
+        int counter = 0;
+        while (IDsToRemove.size() > counter) {
             Reservation resToRemoved = this.reservations.get(IDsToRemove.get(counter));
             removeReservation(resToRemoved);
             counter++;
@@ -132,7 +132,7 @@ public final class ReservationMgr extends DataMgr {
      * 
      * Removes a reservation
      * 
-     * @param reservationMade Reservation object
+     * @param reservation Reservation object
      */
     public void removeReservation(Reservation reservation) {
         this.reservations.remove(reservation.getId());
@@ -154,11 +154,13 @@ public final class ReservationMgr extends DataMgr {
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
-                System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime());
+                System.out.println("Reservation ID:  " + reservation.getId()
+                        + " has been removed because it has passed 15mins from the supposed Check In Time of "
+                        + reservation.getCheckInTime());
             }
         }
-        int counter=0;
-        while(IDsToRemove.size()>counter){
+        int counter = 0;
+        while (IDsToRemove.size() > counter) {
             Reservation resToRemoved = this.reservations.get(IDsToRemove.get(counter));
             removeReservation(resToRemoved);
             counter++;

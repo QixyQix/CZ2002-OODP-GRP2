@@ -71,7 +71,7 @@ public class Person implements Serializable{
     /**
      * Sets contact
      * 
-     * @return contact
+     * @param contact contact
      */
     public void setContact(String contact) {
         this.contact = contact;

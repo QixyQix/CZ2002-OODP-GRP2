@@ -131,8 +131,7 @@ public final class OrderMgr extends DataMgr {
     /**
      * Close order and create invoice by calling invoiceMgr
      * 
-     * @param order      Order object
-     * @param invoiceMgr InvoiceMgr obejct
+     * @param order Order object
      * 
      */
     public void closeOrder(Order order) {
@@ -140,7 +139,6 @@ public final class OrderMgr extends DataMgr {
         InvoiceMgr.getInstance().createInvoice(order);
     }
 
-   
     /**
      * Returns Order object corresponding to order id
      * 
@@ -149,7 +147,7 @@ public final class OrderMgr extends DataMgr {
      * @throws IDNotFoundException
      */
     public Order getOrder(int orderId) throws IDNotFoundException {
-        if(!this.orders.containsKey(orderId))
+        if (!this.orders.containsKey(orderId))
             throw new IDNotFoundException();
         return this.orders.get(orderId);
     }

@@ -53,29 +53,29 @@ public final class SalesReportMgr extends DataMgr {
             System.out.println("Failed to load reports data");
         }
     };
-    
 
     /**
      * Convert reports to a HashMap of Key Date and Value Id
      * 
      */
-    private void convertToDate(){
-        for(int i : reports.keySet()){
+    private void convertToDate() {
+        for (int i : reports.keySet()) {
             Report report = reports.get(i);
-            reports_day.put(report.getDate(),report.getId());
+            reports_day.put(report.getDate(), report.getId());
         }
     }
-    
+
     /**
      * Downcast from entities to SalesReport
      * 
      * @param object the entities to downcast
      */
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Report)
-                this.reports.put(id,(Report) object.get(id));
-            else throw new ClassCastException();
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Report)
+                this.reports.put(id, (Report) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
@@ -84,14 +84,14 @@ public final class SalesReportMgr extends DataMgr {
      * 
      * @return Hashmap object
      */
-    public HashMap<Integer, Entities> upCast(){
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: reports.keySet()){
-           object.put(id,reports.get(id)); 
+        for (int id : reports.keySet()) {
+            object.put(id, reports.get(id));
         }
         return object;
     }
-    
+
     /***
      * Save data
      * 
@@ -100,8 +100,6 @@ public final class SalesReportMgr extends DataMgr {
     public void saveData() throws IOException {
         saveDataSerialize(upCast(), nextId, "reports", "reportNextId");
     }
-
-    
 
     /**
      * Returns the SalesReportMgr instance and creates an instance if it does not
@@ -119,15 +117,15 @@ public final class SalesReportMgr extends DataMgr {
     /**
      * Add Invoice object to report
      * 
-     * @param report   Report object to add Invoice object to
-     * @param invoices hashmap of invoiceId and Invoice object
-     * @param date     date
+     * @param report    Report object to add Invoice object to
+     * @param invoices  hashmap of invoiceId and Invoice object
+     * @param targetDay date
      * 
      */
     private void addInvoiceToReport(Report report, HashMap<Integer, Invoice> invoices, LocalDate targetDay) {
         for (HashMap.Entry<Integer, Invoice> entry : invoices.entrySet()) {
             Invoice invoice = entry.getValue();
-            if (invoice.getOrder().getDate().toLocalDate().isEqual(targetDay) ){
+            if (invoice.getOrder().getDate().toLocalDate().isEqual(targetDay)) {
                 report.addInvoiceList(invoice);
             }
         }
@@ -142,7 +140,7 @@ public final class SalesReportMgr extends DataMgr {
     public void createReport(LocalDate targetDay) {
         // end of the day
         // error handling;
-        if (reports_day.containsKey(targetDay)){
+        if (reports_day.containsKey(targetDay)) {
             System.out.println("Duplicated Exists");
             return;
         }
@@ -160,19 +158,19 @@ public final class SalesReportMgr extends DataMgr {
     /**
      * Returns a report corresponding to the date
      * 
-     * @param date date
+     * @param targetDay date
      * @return Report object
      */
     private Report findReportByDay(LocalDate targetDay) {
-         
-        return this.reports.get( this.reports_day.get(targetDay));
+
+        return this.reports.get(this.reports_day.get(targetDay));
     }
 
     /**
      * Add menuitemrevenue to existing menu item revenue
      * 
-     * @param menuItemTotalRevenue  total revenue made for each item
-     * @param menuItemRevenue       total revenue to be added   
+     * @param menuItemTotalRevenue total revenue made for each item
+     * @param menuItemRevenue      total revenue to be added
      * @return treemap of menu item revenue
      *
      */
@@ -181,7 +179,7 @@ public final class SalesReportMgr extends DataMgr {
 
         for (MenuItem item : menuItemRevenue.keySet()) {
             double val = 0;
-            if (menuItemTotalRevenue.containsKey(item)){
+            if (menuItemTotalRevenue.containsKey(item)) {
                 val = menuItemTotalRevenue.get(item);
             }
             val += menuItemRevenue.get(item);
@@ -199,7 +197,7 @@ public final class SalesReportMgr extends DataMgr {
      */
     private void printTotalRevenue(double totalRevenue) {
         System.out.println("==========================================");
-        System.out.printf("%30s : %.2f Sgd\n" ,"Total Revenue ", totalRevenue);
+        System.out.printf("%30s : %.2f Sgd\n", "Total Revenue ", totalRevenue);
         System.out.printf("(including discounts and taxes)\n");
     }
 
@@ -215,20 +213,19 @@ public final class SalesReportMgr extends DataMgr {
 
         for (MenuItem item : menuItemTotalRevenue.keySet()) {
             // REpeat for invoice
-            if(item instanceof MenuPackage){
-                System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item) );
-                for (MenuItem packageItem : ((MenuPackage)item).getItems() ){
+            if (item instanceof MenuPackage) {
+                System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item));
+                for (MenuItem packageItem : ((MenuPackage) item).getItems()) {
                     System.out.printf("      %20s\n", packageItem.getName());
-                } 
-            }
-            else {
-                if(item.getId()==1)
-                System.out.printf("%30s : %.2f\n",item.getName() ,  menuItemTotalRevenue.get(item)) ;
-                else 
-                System.out.printf("%30s : %.2f\n",item.getName() ,  menuItemTotalRevenue.get(item)) ;
+                }
+            } else {
+                if (item.getId() == 1)
+                    System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item));
+                else
+                    System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item));
             }
         }
-            
+
     }
 
     /**
@@ -245,19 +242,19 @@ public final class SalesReportMgr extends DataMgr {
         if (!total & !items)
             return;
         double totalRevenue = 0;
-      
+
         TreeMap<MenuItem, Double> menuItemTotalRevenue = new TreeMap<MenuItem, Double>();
 
         for (LocalDate date = startDate; !date.isEqual(endDate.plusDays(1)); date = date.plusDays(1)) {
-            try{
+            try {
                 Report report = this.findReportByDay(startDate);
-                
+
                 if (total)
                     totalRevenue += report.getTotalRevenue();
                 if (items)
                     menuItemTotalRevenue = addtomenuItemRevenue(menuItemTotalRevenue, report.getMenuItemRevenue());
-            }catch(Exception ex){
-                
+            } catch (Exception ex) {
+
             }
         }
 
@@ -265,12 +262,12 @@ public final class SalesReportMgr extends DataMgr {
         System.out.println();
         System.out.println("Sale Revenue Report ");
         System.out.println("from " + startDate.toString() + " to " + endDate.toString());
-        
+
         if (total)
             printTotalRevenue(totalRevenue);
         if (items)
             printMenuItemTotalRevenue(menuItemTotalRevenue);
-        
+
         System.out.println("==========================================");
     }
 

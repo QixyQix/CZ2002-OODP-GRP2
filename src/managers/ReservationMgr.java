@@ -105,7 +105,7 @@ public final class ReservationMgr extends DataMgr {
      * @return Reservation object if Reservation object corresponding to customer
      *         contact number exists, null if it does not exist
      */
-    public Reservation checkReservation(Customer customer) {
+    public Reservation checkReservation(String contact) {
         Reservation result = null;
         LocalDateTime current = LocalDateTime.now();
         ArrayList<Integer> IDsToRemove = new ArrayList<Integer>();
@@ -115,7 +115,7 @@ public final class ReservationMgr extends DataMgr {
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
             } 
-            else if (reservation.getCustomer().getContact() == customer.getContact()){
+            else if (reservation.getCustomer().getContact() == contact){
                 result = reservation;
             }
         }

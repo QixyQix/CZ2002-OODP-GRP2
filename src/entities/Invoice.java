@@ -34,7 +34,6 @@ public class Invoice implements Serializable, Entities {
      * Returns final price
      * 
      * @param print boolean
-     * @return final price
      */
     private void calculateFinalPrice(boolean print) {
         this.finalPrice = order.getTotalPrice();

@@ -169,9 +169,10 @@ public final class SalesReportMgr extends DataMgr {
     }
 
     /**
-     * Return treemap of menu item revenue
+     * Add menuitemrevenue to existing menu item revenue
      * 
-     * @param menuItemTotalRevenue total revenue made
+     * @param menuItemTotalRevenue  total revenue made for each item
+     * @param menuItemRevenue       total revenue to be added   
      * @return treemap of menu item revenue
      *
      */
@@ -236,8 +237,8 @@ public final class SalesReportMgr extends DataMgr {
      * 
      * @param startDate start date
      * @param endDate   end date
-     * @param total     total revenue
-     * @param items     menu items
+     * @param total     boolean to print total revenue
+     * @param items     boolean to print menu items
      * 
      */
     public void getReport(LocalDate startDate, LocalDate endDate, boolean total, boolean items) {

@@ -22,8 +22,7 @@ public final class MenuItemFactory {
     /**
      * Constructor
      */
-    private MenuItemFactory() {
-    }
+    private MenuItemFactory() {}
 
     /**
      * Returns the MenuItemFactory instance and creates an instance if it does not

@@ -96,7 +96,7 @@ public class Reservation implements Serializable, Entities {
 	 * 
 	 * @return number of pax
 	 */
-	public Integer getnoOfPax() {
+	public int getnoOfPax() {
 		return noOfPax;
 	}
 
@@ -105,7 +105,7 @@ public class Reservation implements Serializable, Entities {
 	 * 
 	 * @param noOfPax number of pax
 	 */
-	public void setnoOfPax(Integer noOfPax) {
+	public void setnoOfPax(int noOfPax) {
 		this.noOfPax = noOfPax;
 	}
 

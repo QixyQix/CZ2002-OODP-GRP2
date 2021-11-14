@@ -28,7 +28,7 @@ public final class ReservationMgr extends DataMgr {
     /**
      * The next Id to be use in creating reservation
      */
-    private int nextId = 1;
+    private int nextId;
 
     /**
      * Constructor

@@ -2,6 +2,7 @@ package ui;
 import java.io.IOException;
 
 import entities.Staff;
+import global.AvailPriceFilter;
 import managers.*;
 
 /***
@@ -62,12 +63,29 @@ public class MainUI extends UserInterface{
         }
         
     }
-
+    /**
+     * Load the data by getting the first Instance of all Managers
+     */
+    private void loadData(){
+        AvailPriceFilter.createPriceFilters();
+        OrderMgr.getInstance();
+        CustomerMgr.getInstance();
+        StaffMgr.getInstance();
+        MenuItemMgr.getInstance();
+        TableMgr.getInstance();
+        ReservationMgr.getInstance();
+        
+    
+        SalesReportMgr.getInstance();
+        InvoiceMgr.getInstance();
+        MembershipMgr.getInstance();
+    }
     /** 
      *   Initial Booting of System
      * 
      */  
     public void systemBoot(){
+        this.loadData();
         Staff staff;
         do{
             staff = StaffUI.getInstance().showSelection();

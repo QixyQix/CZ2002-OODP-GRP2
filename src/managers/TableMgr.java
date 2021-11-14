@@ -136,22 +136,6 @@ public class TableMgr extends DataMgr {
     }
 
     /**
-     * Creates Table object from serialized data Returns Table object
-     * 
-     * @param o serialized Table object
-     * @return Table object
-     * @throws ClassNotFoundException if o is not of the Table class
-     * 
-     */
-    public Table createTableFromSerializedData(Object o) throws ClassNotFoundException {
-        if (o instanceof Table) {
-            return (Table) o;
-        } else {
-            throw new ClassNotFoundException();
-        }
-    }
-
-    /**
      * Prints the available tables' seating capacity and table id if there exists an
      * available table
      * 

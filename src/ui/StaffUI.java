@@ -3,11 +3,25 @@ import managers.StaffMgr;
 import entities.Staff;
 import exceptions.IDNotFoundException;
 
+/***
+ * Represents a Staff UI
+ * 
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class StaffUI extends UserInterface {
     private static StaffUI INSTANCE;
-
+    /**
+     * Constructor
+     */
     private StaffUI(){}
 
+    /**
+     * Returns the StaffUI instance and creates an instance if it does not exist
+     * 
+     * @return StaffUI Instance
+     */
     public static StaffUI getInstance(){
         if (INSTANCE == null) {
             INSTANCE = new StaffUI();
@@ -16,6 +30,10 @@ public class StaffUI extends UserInterface {
         return INSTANCE;
     }
     
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions() {
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
         System.out.println("(0) End System");
@@ -25,6 +43,10 @@ public class StaffUI extends UserInterface {
         System.out.println(" ");
     }
 
+    /**
+     * Show the Selection Page of Staff UI for User to Select Options
+     * @return return Staff, return none if End System
+     */
     public Staff showSelection(){
         int option;
         do{
@@ -48,13 +70,22 @@ public class StaffUI extends UserInterface {
         return null;
     }
     
-    
+    /**
+     *  Get User Input to get the staff to enter the system
+     * 
+     * @throws IDNotFoundException
+     * @return Staff entering the system
+     */
     private Staff enterSystem() throws IDNotFoundException{
         int staffID;
         staffID = super.getInputInt("Please enter your StaffID: ");
         return StaffMgr.getInstance().checkexisitingStaff(staffID);
     }
 
+    /**
+     *  Get User Input to register a Staff Account  
+     * 
+     */
     private void registerAccount(){
         String jobTitle;
         String name;

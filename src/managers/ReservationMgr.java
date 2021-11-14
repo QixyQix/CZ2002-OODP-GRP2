@@ -13,6 +13,8 @@ import entities.Table;
  * Represents a reservation manager
  * 
  * @author Eang Sokunthea
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class ReservationMgr extends DataMgr {
     private static ReservationMgr INSTANCE;
@@ -34,9 +36,9 @@ public final class ReservationMgr extends DataMgr {
     };
 
     /**
-     * Downcast from entities to reservationMgr
+     * Downcast from entities to reservation
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -48,7 +50,7 @@ public final class ReservationMgr extends DataMgr {
     }
 
     /**
-     * Upcast reservationMgr to entities in a hashmap
+     * Upcast reservation to entities in a hashmap
      * 
      * @return Hashmap object
      */
@@ -147,16 +149,20 @@ public final class ReservationMgr extends DataMgr {
      */
     public HashMap<Integer, Reservation> getAllReservations() {
         LocalDateTime current = LocalDateTime.now();
-        System.out.println("Current Time now is= " + current);
+        System.out.println("Current Time now is " + current.toString() );
         ArrayList<Integer> IDsToRemove = new ArrayList<Integer>();
         for (Reservation reservation : reservations.values()) {
             // remove expired reservations
             LocalDateTime expiredTime = reservation.getCheckInTime().plusMinutes(15);
             if (current.isAfter(expiredTime) == true && reservation.getCheckInStatus() == false) {
                 IDsToRemove.add(reservation.getId());
+<<<<<<< HEAD
                 System.out.println("Reservation ID:  " + reservation.getId()
                         + " has been removed because it has passed 15mins from the supposed Check In Time of "
                         + reservation.getCheckInTime());
+=======
+                System.out.println("Reservation ID:  " + reservation.getId()+ " has been removed because it has passed 15mins from the supposed Check In Time of "+ reservation.getCheckInTime().toString());
+>>>>>>> 77f06ce26dd33a50b8d30e4add3f40fbc0916411
             }
         }
         int counter = 0;

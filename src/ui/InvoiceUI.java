@@ -6,15 +6,29 @@ import managers.InvoiceMgr;
 import managers.OrderMgr;
 import managers.TableMgr;
 
-
+/***
+ * Represents a Invoice UI
+ * 
+  * @author Lee Zong Yu 
+ *  @author Lim Yan Kai
+ *  @version 1.0
+ *  @since 2021-11-14
+ */
 public class InvoiceUI extends UserInterface{
     private static InvoiceUI INSTANCE;
 
-
+    /**
+     * Constructor
+     */
     private InvoiceUI() {
         super();
     }
 
+    /**
+     * Returns the InvoiceUI instance and creates an instance if it does not exist
+     * 
+     * @return InvoiceUI instance
+     */
     public static InvoiceUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new InvoiceUI();
@@ -22,7 +36,10 @@ public class InvoiceUI extends UserInterface{
 
         return INSTANCE;
     }
-
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions() {
         System.out.println("====Payment Manager================");
         System.out.println("(0) Exit");
@@ -32,6 +49,10 @@ public class InvoiceUI extends UserInterface{
         System.out.println();
     }
 
+    /**
+     * Show the Selection Page of Invoice UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int option = 0;
         do {
@@ -51,6 +72,10 @@ public class InvoiceUI extends UserInterface{
         } while (option != 0);
     }
 
+    /** 
+     *   Get User Input to create Invoice Object
+     * 
+     */  
     private void createInvoice() {
         
         int orderid;
@@ -68,16 +93,20 @@ public class InvoiceUI extends UserInterface{
         
         if(!getYNOption("Are you sure you want to make payment for the order?")) return;
         invoice = InvoiceMgr.getInstance().createInvoice(order);  
-        TableMgr.getInstance().deallocateTable(order.getTable(), order.getDate());
         
         try{
             System.out.println("Invoice has been created with Invoice id = " + invoice.getId());
+            TableMgr.getInstance().deallocateTable(order.getTable(), order.getDate());
             System.out.println("Table ID= "+order.getTable().getId()+" has become available.");
         }catch(Exception ex){
             return;
         }
     }
 
+    /** 
+     *   Get User Input to print Invoice
+     * 
+     */  
     private void printOrderInvoice() {
         int invoiceid;
         invoiceid = super.getInputInt("Enter your invoice id");

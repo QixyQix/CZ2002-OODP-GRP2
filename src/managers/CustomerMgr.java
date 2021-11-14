@@ -10,14 +10,27 @@ import exceptions.IDNotFoundException;
 /***
  * Represents a customer manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu 
  * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class CustomerMgr extends DataMgr {
-
+    /**
+     * The Instance of this CustomerMgr
+     */
     private static CustomerMgr INSTANCE;
+    /**
+     * The mapping of Customer ID to its respective object
+     */
     private HashMap<Integer, Customer> customers;
+    /**
+     * The mapping of Contact Number to its respective Customer ID
+     */
     private HashMap<String, Integer> phonetoid;
+    /**
+     * The next Id to be use in creating Customer
+     */
     private int nextId;
 
     /**
@@ -41,7 +54,7 @@ public final class CustomerMgr extends DataMgr {
     /**
      * Downcast from entities to customer
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -88,7 +101,7 @@ public final class CustomerMgr extends DataMgr {
     /**
      * Returns the CustomerMgr instance and creates an instance if it does not exist
      * 
-     * @return instance
+     * @return CustomerMgr instance
      */
     public static CustomerMgr getInstance() {
         if (INSTANCE == null) {

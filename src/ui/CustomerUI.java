@@ -8,13 +8,29 @@ import global.AvailPriceFilter;
 import managers.CustomerMgr;
 import managers.MembershipMgr;
 
+/***
+ * Represents a Customer UI
+ * 
+  * @author Lee Zong Yu 
+ *  @author Lim Yan Kai
+ *  @version 1.0
+ *  @since 2021-11-14
+ */
 public final class CustomerUI extends UserInterface {
     private static CustomerUI INSTANCE;
-
+    
+    /**
+     * Constructor
+     */
     private CustomerUI() {
         super();
     }
-
+    
+    /**
+     * Returns the CustomerUI instance and creates an instance if it does not exist
+     * 
+     * @return CustomerUI instance
+     */
     public static CustomerUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new CustomerUI();
@@ -22,13 +38,22 @@ public final class CustomerUI extends UserInterface {
 
         return INSTANCE;
     }
-    
+
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions(){
         System.out.println("==========Customer Manager==========");
         System.out.println("(0) Go Back to Main Page Exit");
         System.out.println("(1) Update Membership");
         System.out.println("=================================");
     }
+
+    /**
+     * Show the Selection Page of Customer UI for User to Select Options
+     * 
+     */
     public void showSelection(){
         int option = 0;
         do {
@@ -44,7 +69,10 @@ public final class CustomerUI extends UserInterface {
             super.waitEnter();
         } while (option != 0);
     }
-
+    /**
+     * 
+     *  Get User Input to update Membership
+     */
     private void updateMembership(){
         try{
             String contact = super.getContact("Please enter customer contact: ");
@@ -57,6 +85,11 @@ public final class CustomerUI extends UserInterface {
         }
     }
     
+    /**
+     * 
+     *   Get User Input to get the Customer Object
+     * @return Customer Object
+     */  
     public Customer getCustomer() {
         String contact = super.getContact("Please enter customer contact: ");
         try {
@@ -68,7 +101,10 @@ public final class CustomerUI extends UserInterface {
                 return null;
         }
     }
-
+    /**
+     *   Get User Input to create Customer Object
+     * @return Customer Object
+     */  
     private Customer createCustomer(String contact) {
         String name = super.getInputString("Customer name: ");
         String gender = super.getGender("Customer gender: ");
@@ -76,7 +112,10 @@ public final class CustomerUI extends UserInterface {
 
         return CustomerMgr.getInstance().createCustomer(membership, name, gender, contact);
     }
-
+    /** 
+     *  Get User Input to get Membership Object
+     * @return Membership Object
+     */  
     private Membership getMembershipInput() {
 
         int validMembershipOption;
@@ -85,6 +124,10 @@ public final class CustomerUI extends UserInterface {
         return membership;
     }
 
+    /** 
+     *   Get User Input to create Membership Object
+     * @return Membership Object
+     */  
     private Membership createMembership(int validMembershipOption) {
         DiscountFilter discountFilter;
         Membership membership;

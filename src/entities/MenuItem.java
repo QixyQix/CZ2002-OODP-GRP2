@@ -7,19 +7,43 @@ import enums.MenuItemTypeEnum;
  * Represents a menu item entity
  * 
  * @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, Entities {
+    /**
+     * The Type of the MenuItem
+     */
     private MenuItemTypeEnum type;
+    /**
+     * The Name of the MenuItem
+     */
     private String name;
+    /**
+     * The Description of the MenuItem
+     */
     private String description;
+    /**
+     * The Price of the MenuItem
+     */
     private double price;
+    /**
+     * The id of the MenuItem
+     */
     private int id;
-
-    public MenuItem() {
-    }
 
     /**
      * Constructor
+     */
+    public MenuItem() {}
+
+    /**
+     * Constructor
+     * @param type          The type of the MenuItem
+     * @param name          The name of the MenuItem
+     * @param description   The description of the MenuItem
+     * @param price         The price of the MenuItem
+     * @param id            The id of the MenuItem
      */
     public MenuItem(MenuItemTypeEnum type, String name, String description, double price, int id) {
         this.type = type;
@@ -128,8 +152,7 @@ public class MenuItem implements Serializable, Comparable<MenuItem>, Cloneable, 
      * @return cloned menu item
      */
     @Override
-    // Haven,t test yet TODO
-    public Object clone() {// throws CloneNotSupportedException {
+    public Object clone() {
         try {
             MenuItem menuItem = (MenuItem) super.clone();
             return menuItem;

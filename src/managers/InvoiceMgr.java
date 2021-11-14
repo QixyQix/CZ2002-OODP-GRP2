@@ -16,7 +16,9 @@ import exceptions.IDNotFoundException;
 /***
  * Represents an invoice manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class InvoiceMgr extends DataMgr {
 
@@ -41,7 +43,7 @@ public final class InvoiceMgr extends DataMgr {
     /**
      * Downcast from entities to invoice
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -77,7 +79,7 @@ public final class InvoiceMgr extends DataMgr {
     /**
      * Returns the InvoiceMgr instance and creates an instance if it does not exist
      * 
-     * @return instance
+     * @return InvoiceMgr instance 
      */
     public static InvoiceMgr getInstance() {
         if (INSTANCE == null) {
@@ -94,13 +96,13 @@ public final class InvoiceMgr extends DataMgr {
      */
     public Invoice createInvoice(Order order) {
         if (order.getPendingItems().size() != 0) {
-            // ask see should I print this at UI?
             System.out.println("The order contains Pending Items. You are not allowed to create invoice.");
             return null;
 
         }
         if (order.getStatus() == "Close") {
             System.out.println("The order have been paid");
+            return null;
         }
         Invoice invoice = new Invoice(order, this.nextId);
         invoices.put(this.nextId, invoice);
@@ -118,14 +120,13 @@ public final class InvoiceMgr extends DataMgr {
      */
     private void choosePriceFilter(int invoiceid) {
         Invoice invoice = this.invoices.get(invoiceid);
-        // Need depends on KT & Ben
+        
         Membership membership = invoice.getOrder().getCustomer().getMembership();
         PriceFilter membershipDiscountFilter = membership.getDiscount();
-        // System.out.println(membership.getDiscount());
+        
         // we noted this for membership class
         invoice.addPriceFilters(membershipDiscountFilter);
-        // System.out.println(invoice.getPriceFilters());
-
+        
         PriceFilter gstFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE, TaxFilterNameEnum.GST, 7);
         PriceFilter serviceChargeFilter = new TaxFilter(PriceFilterTypeEnum.PERCENTAGE,
                 TaxFilterNameEnum.SERVICE_CHARGE, 10);

@@ -7,10 +7,19 @@ import entities.MenuPackage;
 import enums.MenuItemTypeEnum;
 import managers.MenuItemMgr;
 
+/***
+ * Represents a MenuItem UI
+ * 
+ * @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public final class MenuItemUI extends UserInterface {
     private static MenuItemUI INSTANCE;
     
-
+    /**
+     * Constructor
+     */
     private MenuItemUI() {
         super();
     }
@@ -18,7 +27,7 @@ public final class MenuItemUI extends UserInterface {
     /**
      * Returns the MenuItemUI instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return MenuItemUI Instance
      */
     public static MenuItemUI getInstance() {
         if (INSTANCE == null) {
@@ -27,7 +36,10 @@ public final class MenuItemUI extends UserInterface {
 
         return INSTANCE;
     }
-
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions() {
         System.out.println("======Menu Item Manager======");
         System.out.println("(0) Go Back to Main Page");
@@ -38,6 +50,10 @@ public final class MenuItemUI extends UserInterface {
         System.out.println("=============================");
     }
 
+    /**
+     * Show the Selection Page of MenuItem UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int option = 0;
         do {
@@ -92,23 +108,32 @@ public final class MenuItemUI extends UserInterface {
     public void showCurrentMenuItems() {
         try {
             ArrayList<MenuItem> items = MenuItemMgr.getInstance().getAllMenuItems();
+            if(items.size()==0){
+                System.out.println("Currently, there is no menuItems");
+                return;
+            }
             
-            MenuItemTypeEnum type = this.getInputType("Enter the type of MenuItem you want to show.");
-            int i =0;
-
-            for (MenuItem item : items) {
-                if(item.getType() != type) continue;
-                if(i==0){
-                    System.out.println("Menu Item : ");
-                    i=1;
+            System.out.println("These are our available MenuItems");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            for (MenuItemTypeEnum type : MenuItemTypeEnum.values()){
+                Boolean flag = true;
+                System.out.println("Menu Item Type : " + type.toString());
+                for (MenuItem item : items) {
+                    if(item.getType() != type) continue;
+                    if(flag){
+                        System.out.printf(" %-3s  %-25s  %-8s  %s\n", "ID", "Name", "Price(Sgd)" , "  Desription " );
+                        flag = false;
+                    }
+                    System.out.printf( " %-3d  %-25s  %-3.2f         %s\n" , item.getId() ,  item.getName(), item.getPrice() , item.getDescription());
                 }
-                System.out.println("ID: " + item.getId() + " | Type: " + item.getType() + " | Name: " + item.getName()
-                        + " $" + item.getPrice());
-                System.out.println(item.getDescription());
+                if(flag){
+                    System.out.println("There is no MenuItems of type " + type.toString());
+                }
+                System.out.println("----------------------------------------------------------------------------------------------------");
             }
-            if(i==0){
-                System.out.println("There is no MenuItems of this Type Yet");
-            }
+            
+            
+            
         } catch (Exception ex) {
             System.out.println("An error occured while getting all Menu Items:");
             System.out.println(ex.getMessage());
@@ -127,7 +152,7 @@ public final class MenuItemUI extends UserInterface {
         double price = 0.0;
         ArrayList<MenuItem> packageItems = null;
        
-        if (super.getYNOption("Is this a package?")) {
+        if (super.getYNOption("Is this a promotional package?")) {
             createPackage = true;
         }
     
@@ -175,7 +200,7 @@ public final class MenuItemUI extends UserInterface {
             System.out.println("(3) description: " + itemToEdit.getDescription());
             System.out.println("(4) price: " + itemToEdit.getPrice());
             if (itemToEdit instanceof MenuPackage) {
-                System.out.println("(5) Change package items");
+                System.out.println("(5) Change Promotional Package Items");
             }
             System.out.println("(0) Exit");
             int choice = super.getInputInt("Enter number of corresponding property to edit", 0, 5);
@@ -196,7 +221,7 @@ public final class MenuItemUI extends UserInterface {
                 System.out.println("New description saved.");
                 break;
             case 4:
-                double newPrice = super.getInputDouble("Enter new valuue for price: ", 0.1, Double.MAX_VALUE);
+                double newPrice = super.getInputDouble("Enter new value for price: ", 0.1, Double.MAX_VALUE);
                 itemToEdit.setPrice(newPrice);
                 System.out.println("New price saved.");
                 break;
@@ -208,7 +233,7 @@ public final class MenuItemUI extends UserInterface {
                     packageItem.setItems(items);
                     System.out.println("Items updated.");
                 }else{
-                    System.out.println("This is not a package");
+                    System.out.println("This is not a promotional package");
                 }
             case 0:
                 loop = false;
@@ -233,7 +258,7 @@ public final class MenuItemUI extends UserInterface {
     private ArrayList<MenuItem> buildPackageItems() {
         
         
-        System.out.println("Enter the IDs of items to be included in package (0 to end): ");
+        System.out.println("Enter the IDs of items to be included in promotional package (0 to end): ");
         int idToAdd = 0;
         ArrayList<MenuItem> packageItems = new ArrayList<MenuItem>();
         do {
@@ -244,7 +269,7 @@ public final class MenuItemUI extends UserInterface {
                     System.out.println("Not allowed to add a package to a package");
                 } else {
                     packageItems.add(itemToAdd);
-                    System.out.println("Added item " + itemToAdd.getName() + " to package");
+                    System.out.println("Added item " + itemToAdd.getName() + " to the package");
                 }
             } catch (Exception ex) {
                 if(idToAdd!=0)

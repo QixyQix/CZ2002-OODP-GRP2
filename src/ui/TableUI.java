@@ -4,16 +4,26 @@ import managers.TableMgr;
 
 import java.time.LocalDateTime;
 
+/***
+ * Represents a Table UI
+ * 
+ * @author Benjamin Ho JunHao
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class TableUI extends UserInterface {
     private static TableUI INSTANCE;
 
+    /**
+     * Constructor
+     */
     private TableUI() {
     };
 
     /**
-     * Returns the TableMgr instance and creates an instance if it does not exist
+     * Returns the TableUI instance and creates an instance if it does not exist
      * 
-     * @return instance
+     * @return TableUI instance
      */
     public static TableUI getInstance() {
         if (INSTANCE == null) {
@@ -22,6 +32,10 @@ public class TableUI extends UserInterface {
         return INSTANCE;
     }
 
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions() {
         System.out.println("==========Table Manager==========");
         System.out.println("(0) Go Back to Main Page Exit");
@@ -31,6 +45,10 @@ public class TableUI extends UserInterface {
         System.out.println("=================================");
     }
 
+    /**
+     * Show the Selection Page of Table UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int option = 0;
         
@@ -53,6 +71,10 @@ public class TableUI extends UserInterface {
         } while (option != 0);
     }
 
+    /**
+     *  Get User Input to check Availbility of Table
+     * 
+     */
     private void checkTableAvailblility(){
         int noOfPax;
         LocalDateTime date;
@@ -62,6 +84,10 @@ public class TableUI extends UserInterface {
         TableMgr.getInstance().printTableAvailability(noOfPax, date);
     }
     
+    /**
+     *  Get User Input to create Tables 
+     * 
+     */
     private void createTable(){
         
         if( ! super.getYNOption("Do you sure you want to overide the current Tables Object?")) 

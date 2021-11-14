@@ -14,7 +14,10 @@ import entities.Staff;
 /***
  * Represents an order manager
  * 
- * @author Eang Sokunthea
+ * @author Lee Zong Yu
+ * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class OrderMgr extends DataMgr {
     private static OrderMgr INSTANCE;
@@ -38,7 +41,7 @@ public final class OrderMgr extends DataMgr {
     /**
      * Downcast from entities to order
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -138,7 +141,11 @@ public final class OrderMgr extends DataMgr {
         // deallocateTable()
         InvoiceMgr.getInstance().createInvoice(order);
     }
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> 77f06ce26dd33a50b8d30e4add3f40fbc0916411
     /**
      * Returns Order object corresponding to order id
      * 

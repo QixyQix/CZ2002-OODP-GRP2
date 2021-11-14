@@ -14,7 +14,9 @@ import exceptions.DuplicateIDException;
 /***
  * Represents a data manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public abstract class DataMgr {
 
@@ -66,7 +68,6 @@ public abstract class DataMgr {
             nextId = (int) objectInputStream.readInt();
             objectInputStream.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             nextId = 1;
         }
         return nextId;

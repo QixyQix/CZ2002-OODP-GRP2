@@ -7,7 +7,7 @@ import entities.MenuPackage;
 import enums.MenuItemTypeEnum;
 
 /***
- * Represents a id not found exception
+ * Represents a menu item factory
  * 
  * @author Cho Qi Xiang
  * @version 1.0

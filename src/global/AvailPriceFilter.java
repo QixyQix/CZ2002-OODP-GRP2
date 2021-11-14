@@ -8,7 +8,13 @@ import enums.DiscountFilterNameEnum;
 import enums.PriceFilterTypeEnum;
 import enums.TaxFilterNameEnum;
 
-
+/***
+ * Represents a id not found exception
+ * 
+ * @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class AvailPriceFilter {
     public static HashMap<DiscountFilterNameEnum, DiscountFilter> discountFilter = new HashMap<DiscountFilterNameEnum, DiscountFilter>();
     public static HashMap<TaxFilterNameEnum, TaxFilter> taxFilter = new HashMap<TaxFilterNameEnum, TaxFilter>();

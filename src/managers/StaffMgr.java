@@ -14,10 +14,19 @@ import exceptions.IDNotFoundException;
  * @version 1.0
  * @since 2021-11-14
  */
-public final class StaffMgr extends DataMgr{
+public final class StaffMgr extends DataMgr {
+    /**
+     * The Instance of this StaffMgr
+     */
     private static StaffMgr INSTANCE;
+    /**
+     * The mapping of Staff ID to its respective object
+     */
     private HashMap<Integer, Staff> staffs;
-    private int nextId; 
+    /**
+     * The next Id to be use in creating staff
+     */
+    private int nextId;
 
     /**
      * Constructor
@@ -38,11 +47,12 @@ public final class StaffMgr extends DataMgr{
      * 
      * @param object the entities to downcast
      */
-    public void downCast(HashMap<Integer, Entities> object){
-        for(int id: object.keySet()){
-            if(object.get(id) instanceof Staff)
-                this.staffs.put(id,(Staff) object.get(id));
-            else throw new ClassCastException();
+    public void downCast(HashMap<Integer, Entities> object) {
+        for (int id : object.keySet()) {
+            if (object.get(id) instanceof Staff)
+                this.staffs.put(id, (Staff) object.get(id));
+            else
+                throw new ClassCastException();
         }
     }
 
@@ -51,14 +61,14 @@ public final class StaffMgr extends DataMgr{
      * 
      * @return Hashmap object
      */
-    public HashMap<Integer, Entities> upCast(){
+    public HashMap<Integer, Entities> upCast() {
         HashMap<Integer, Entities> object = new HashMap<Integer, Entities>();
-        for(int id: staffs.keySet()){
-           object.put(id,staffs.get(id)); 
+        for (int id : staffs.keySet()) {
+            object.put(id, staffs.get(id));
         }
         return object;
     }
-    
+
     /***
      * Save data
      * 
@@ -88,14 +98,15 @@ public final class StaffMgr extends DataMgr{
      * @return Staff object if staff exists, null if staff does not exist
      */
     public Staff checkexisitingStaff(int staffId) throws IDNotFoundException {
-        
+
         Staff staff = this.staffs.get(staffId);
-        
-        if(staff == null) throw new IDNotFoundException();
+
+        if (staff == null)
+            throw new IDNotFoundException();
         return staff;
-    
+
     }
-    
+
     /**
      * Returns true or false depending if staff corresponding to the contact number
      * exists
@@ -104,11 +115,10 @@ public final class StaffMgr extends DataMgr{
      * @return true if staff exists, false if staff does not exist
      */
     /*
-    public boolean checkexisitingStaff(String phoneNumber) {
-
-        return true;
-    }
-    */
+     * public boolean checkexisitingStaff(String phoneNumber) {
+     * 
+     * return true; }
+     */
     /**
      * Creates and returns Staff object
      * 

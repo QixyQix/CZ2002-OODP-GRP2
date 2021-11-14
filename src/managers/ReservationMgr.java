@@ -17,8 +17,17 @@ import entities.Table;
  * @since 2021-11-14
  */
 public final class ReservationMgr extends DataMgr {
+    /**
+     * The Instance of this ReservationMgr
+     */
     private static ReservationMgr INSTANCE;
+    /**
+     * The mapping of Reservation ID to its respective object
+     */
     private HashMap<Integer, Reservation> reservations;
+    /**
+     * The next Id to be use in creating reservation
+     */
     private int nextId = 1;
 
     /**

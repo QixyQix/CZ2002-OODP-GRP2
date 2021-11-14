@@ -20,8 +20,17 @@ import factories.MenuItemFactory;
  * 
  */
 public final class MenuItemMgr extends DataMgr {
+    /**
+     * The Instance of this MenuItemMgr
+     */
     private static MenuItemMgr INSTANCE;
+    /**
+     * The mapping of MenuItem ID to its respective object
+     */
     private HashMap<Integer, MenuItem> items;
+    /**
+     * The next Id to be use in creating Menu Item
+     */
     private int nextId;
 
     /**

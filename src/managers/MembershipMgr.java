@@ -16,8 +16,17 @@ import entities.Membership;
  */
 public class MembershipMgr extends DataMgr {
 
+    /**
+     * The Instance of this MembershipMgr
+     */
     private static MembershipMgr INSTANCE;
+    /**
+     * The mapping of Membership ID to its respective object
+     */
     private HashMap<Integer, Membership> membership;
+    /**
+     * The next Id to be use in creating Membership
+     */
     private int nextId;
 
     /**

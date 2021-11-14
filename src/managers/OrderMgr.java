@@ -20,8 +20,17 @@ import entities.Staff;
  * @since 2021-11-14
  */
 public final class OrderMgr extends DataMgr {
+    /**
+     * The Instance of this Ordermgr
+     */
     private static OrderMgr INSTANCE;
+    /**
+     * The mapping of Order ID to its respective object
+     */
     private HashMap<Integer, Order> orders;
+    /**
+     * The next Id to be use in creating Order
+     */
     private int nextId;
 
     /**

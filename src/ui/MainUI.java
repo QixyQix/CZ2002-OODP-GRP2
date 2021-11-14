@@ -129,7 +129,7 @@ public class MainUI extends UserInterface{
     
     /**
      *  Show the Selection Page of Customer UI for User to Select Options
-     * @param Staff Staff that uses the system
+     * @param staff Staff that uses the system
      */
     private void entersystem(Staff staff){
         System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); 

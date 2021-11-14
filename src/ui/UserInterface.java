@@ -33,7 +33,7 @@ public class UserInterface {
     }
 
     /**
-     *  Get String Input
+     *  Helper Method to Get String Input
      *@return Input String
      */
     private String getInputString(){

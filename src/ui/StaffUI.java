@@ -11,6 +11,9 @@ import exceptions.IDNotFoundException;
  * @since 2021-11-14
  */
 public class StaffUI extends UserInterface {
+    /**
+     * The Instance of this StaffUI
+     */
     private static StaffUI INSTANCE;
     /**
      * Constructor

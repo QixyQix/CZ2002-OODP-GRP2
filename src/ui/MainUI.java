@@ -12,6 +12,9 @@ import managers.*;
  * @since 2021-11-14
  */
 public class MainUI extends UserInterface{
+    /**
+     * The Instance of this MainUI
+     */
     private static MainUI INSTANCE;
 
     /**

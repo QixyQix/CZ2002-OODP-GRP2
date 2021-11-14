@@ -15,6 +15,9 @@ import managers.TableMgr;
  *  @since 2021-11-14
  */
 public class InvoiceUI extends UserInterface{
+    /**
+     * The Instance of this InvoiceUI
+     */
     private static InvoiceUI INSTANCE;
 
     /**

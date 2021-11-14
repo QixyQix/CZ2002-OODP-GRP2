@@ -15,6 +15,9 @@ import managers.MenuItemMgr;
  * @since 2021-11-14
  */
 public final class MenuItemUI extends UserInterface {
+    /**
+     * The Instance of this MenuItemUI
+     */
     private static MenuItemUI INSTANCE;
 
     /**

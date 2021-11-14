@@ -13,6 +13,9 @@ import java.time.LocalDate;
  * @since 2021-11-14
  */
 public final class SalesReportUI extends UserInterface{
+    /**
+     * The Instance of this SalesReportUI
+     */
     private static SalesReportUI INSTANCE;
 
     /**

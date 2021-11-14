@@ -14,7 +14,9 @@ import entities.MenuPackage;
 /***
  * Represents a sales report manager
  * 
- * @author Zong Yu Lee
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
  */
 public final class SalesReportMgr extends DataMgr {
     private static SalesReportMgr INSTANCE;
@@ -42,7 +44,7 @@ public final class SalesReportMgr extends DataMgr {
     
 
     /**
-     * Convert to date
+     * Convert reports to a HashMap of Key Date and Value Id
      * 
      */
     private void convertToDate(){
@@ -53,9 +55,9 @@ public final class SalesReportMgr extends DataMgr {
     }
     
     /**
-     * Downcast from entities to salesReportMgr
+     * Downcast from entities to SalesReport
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object){
         for(int id: object.keySet()){
@@ -66,7 +68,7 @@ public final class SalesReportMgr extends DataMgr {
     }
 
     /**
-     * Upcast reservationMgr to entities in a hashmap
+     * Upcast SalesReport to entities in a hashmap
      * 
      * @return Hashmap object
      */
@@ -138,6 +140,7 @@ public final class SalesReportMgr extends DataMgr {
         this.reports_day.put(targetDay, nextId);
 
         this.addInvoiceToReport(report, invoices, targetDay);
+        report.calculateTotalRevenue();
         nextId++;
         System.out.println("Report for date " + targetDay.toString() + " was Succesfully Created ");
     }
@@ -189,25 +192,20 @@ public final class SalesReportMgr extends DataMgr {
     private void printMenuItemTotalRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue) {
         System.out.println("==========================================");
         System.out.println("Details Revenue Report for each MenuItem");
-        /*
-        for (MenuItem item : menuItemTotalRevenue.keySet()) {
-            // REpeat for invoice
-            System.out.printf("%30s : %.2f\n",item.getName() , menuItemTotalRevenue.get(item) );
-        }
-        */
+
         for (MenuItem item : menuItemTotalRevenue.keySet()) {
             // REpeat for invoice
             if(item instanceof MenuPackage){
-                System.out.printf("%30s : %.2f\n", item.getName(), 10.00 );
+                System.out.printf("%30s : %.2f\n", item.getName(), menuItemTotalRevenue.get(item) );
                 for (MenuItem packageItem : ((MenuPackage)item).getItems() ){
                     System.out.printf("      %20s\n", packageItem.getName());
                 } 
             }
             else {
                 if(item.getId()==1)
-                System.out.printf("%30s : %.2f\n",item.getName() , 10.00) ;
+                System.out.printf("%30s : %.2f\n",item.getName() ,  menuItemTotalRevenue.get(item)) ;
                 else 
-                System.out.printf("%30s : %.2f\n",item.getName() , 3.00) ;
+                System.out.printf("%30s : %.2f\n",item.getName() ,  menuItemTotalRevenue.get(item)) ;
             }
         }
             
@@ -239,7 +237,7 @@ public final class SalesReportMgr extends DataMgr {
                 if (items)
                     menuItemTotalRevenue = addtomenuItemRevenue(menuItemTotalRevenue, report.getMenuItemRevenue());
             }catch(Exception ex){
-                System.out.println(ex.getMessage());
+                
             }
         }
 

@@ -1,7 +1,6 @@
 package ui;
 
 import managers.TableMgr;
-import managers.CustomerMgr;
 import managers.OrderMgr;
 import managers.ReservationMgr;
 import entities.Reservation;
@@ -63,7 +62,7 @@ public class ReservationUI extends UserInterface {
     
     private void createReservationUI() {
         Customer customer = CustomerUI.getInstance().getCustomer();
-        Reservation res = ReservationMgr.getInstance().checkReservation(customer.getContact());	
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         if(res != null) {
             System.out.println("Ongoing reservation (You are not allowed to make more than 1 reservation at a time):");
             this.printReservation(res);
@@ -103,7 +102,7 @@ public class ReservationUI extends UserInterface {
 
     private void checkInUI(){
         Customer customer = CustomerUI.getInstance().getCustomer();
-        Reservation res = ReservationMgr.getInstance().checkReservation(customer.getContact());	
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         
         if(res == null){
             System.out.println("There is no reservation made by the customer");
@@ -125,8 +124,8 @@ public class ReservationUI extends UserInterface {
     }
     
     private void checkRemoveReservationUI(){
-        String contact = super.getContact("Please enter customer contact: ");
-        Reservation res = ReservationMgr.getInstance().checkReservation(contact);	
+        Customer customer = CustomerUI.getInstance().getCustomer();
+        Reservation res = ReservationMgr.getInstance().checkReservation(customer);	
         
         if(res == null){
             System.out.println("There is no reservation made by the customer");

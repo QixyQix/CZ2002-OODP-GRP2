@@ -11,6 +11,8 @@ import entities.Membership;
  * Represents a membership manager
  * 
  * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class MembershipMgr extends DataMgr {
 
@@ -35,7 +37,7 @@ public class MembershipMgr extends DataMgr {
     /**
      * Downcast from entities to membership
      * 
-     * @param object
+     * @param object the entities to downcast
      */
     public void downCast(HashMap<Integer, Entities> object) {
         for (int id : object.keySet()) {
@@ -69,10 +71,10 @@ public class MembershipMgr extends DataMgr {
     }
 
     /**
-     * Returns the Membership instance and creates an instance if it does not exist
+     * Returns the MembershipMgr instance and creates an instance if it does not exist
      * 
      * @param discountFilter discount filter
-     * @return Membership instance
+     * @return MembershipMgr instance
      */
     public Membership createMembership(DiscountFilter discountFilter) {
         Membership membership = new Membership(this.nextId, discountFilter);

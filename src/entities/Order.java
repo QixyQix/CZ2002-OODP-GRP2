@@ -4,25 +4,63 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /***
- * Represents a order entity
+ * Represents an order entity
  * 
- * @author Cho Qi Xiang
+ * @author Lee Zong Yu
+ * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Order implements Serializable, Entities{
+    /**
+     * The staff that serve this Order
+     */
     private Staff servedBy;
+    /**
+     * The totalPrice of this Order
+     */
     private double totalPrice;
+    /**
+     * The MenuItems that are confirmed ordered and its Quantity
+     */
     private TreeMap<MenuItem, Integer> orderedItems;
+    /**
+     * The MenuItems that are pending to be ordered and its Quantity
+     */
     private TreeMap<MenuItem, Integer> pendingItems;
+    /**
+     * The Customer of this Order
+     */
     private Customer customer;
+    /**
+     * The table allocated to order
+     */
     private Table table;
-    private LocalDateTime date;     
+    /**
+     * The Date of this order
+     */
+    private LocalDateTime date;   
+    /**
+     * The Id of this order
+    */  
     private int id;
+    /**
+     * The status of this order ("Open" or "Close")
+     */
     private String status = "Open";
 
+    /**
+     * Constructor
+     */
     public Order(){}
 
     /**
      * Constructor
+     * @param staff     Staff that serve the order
+     * @param customer  Customer of the order
+     * @param table     Table allocated to the order
+     * @param date      Date of the order
+     * @param id        Id of the order
      */
     public Order(Staff staff, Customer customer, Table table, LocalDateTime date, int id){
         this.servedBy = staff;
@@ -127,7 +165,7 @@ public class Order implements Serializable, Entities{
     private void printItem(TreeMap<MenuItem,Integer> target, String status){
         for (MenuItem item : target.keySet()) {
             int quantity = target.get(item);
-            System.out.println(quantity + " " + item.getName() + " Price: " + item.getPrice()*quantity + " Status: " +status);
+            System.out.printf("%-3d   %-25s  %-10.2f  %s\n", quantity , item.getName() , item.getPrice()*quantity , status);
         }
     }
     
@@ -144,18 +182,20 @@ public class Order implements Serializable, Entities{
         }
 
         System.out.println("Your current order contains:");
+        
         if(this.orderedItems.size() !=0){
+
             System.out.println(".............[Confirmed]................");
             System.out.println();
-        
-            printItem(this.orderedItems, "Confirmed");
+            System.out.printf("%-2s   %-25s  %-10s  %s\n", "qty" , "Item Name" , "Price(Sgd)" , "Status");
+            this.printItem(this.orderedItems, "Confirmed");
         }
         if(this.pendingItems.size()!=0){
             System.out.println("..............[Pending].................");
-            
-            printItem(this.pendingItems, "Pending");
+            System.out.printf("%-2s   %-25s  %-10s %s\n", "qty" , "Item Name" , "Price(Sgd)" , "Status");
+            this.printItem(this.pendingItems, "Pending");
         }
-        System.out.println("................................");
+        System.out.println("............................................");
 
     }
 

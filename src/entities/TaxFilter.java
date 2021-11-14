@@ -10,17 +10,33 @@ import enums.PriceFilterTypeEnum;
  * Represents a report entity
  * 
  * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class TaxFilter implements PriceFilter, Serializable {
+    /**
+     * (Absolute/Percentage) Amount of this Tax Filter
+     */
     private double amount;
+    /**
+     * Applied Type (by absolute/by Percentage) of this Tax Filter
+     */
     private PriceFilterTypeEnum type;
+    /**
+     * Name of this Tax Filter
+     */
     private TaxFilterNameEnum name;
-
-    public TaxFilter() {
-    }
 
     /**
      * Constructor
+     */
+    public TaxFilter() {}
+
+    /**
+     * Constructor
+     * @param type      Applying Type (by absolute/by Percentage) of the Tax Filter
+     * @param name      Name of the Tax Filter
+     * @param amount    Amount of the Tax (absolute/Percentage)
      */
     public TaxFilter(PriceFilterTypeEnum type, TaxFilterNameEnum name, double amount) {
         this.amount = amount;

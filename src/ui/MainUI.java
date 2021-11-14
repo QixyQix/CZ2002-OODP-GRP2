@@ -3,11 +3,27 @@ import java.io.IOException;
 
 import entities.Staff;
 import managers.*;
+
+/***
+ * Represents a Main UI
+ * 
+ * @author Lee Zong Yu 
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class MainUI extends UserInterface{
     private static MainUI INSTANCE;
 
+    /**
+     * Constructor
+     */
     private MainUI(){}
 
+    /**
+     * Returns the MainUI instance and creates an instance if it does not exist
+     * 
+     * @return MainUI instance
+     */
     public static MainUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new MainUI();
@@ -16,9 +32,12 @@ public class MainUI extends UserInterface{
         return INSTANCE;
     }
     
+    /** 
+     *   return true if Data succesfully Saved
+     * @return boolean
+     */  
     private boolean endsystem() {
-        // will it be better if we have a polymorphism, a Singleton Interface  and below when we get instance, we store all the Managers..
-        
+       
         try{
             
             CustomerMgr.getInstance().saveData();
@@ -41,7 +60,10 @@ public class MainUI extends UserInterface{
         
     }
 
-    
+    /** 
+     *   Initial Booting of System
+     * 
+     */  
     public void systemBoot(){
         Staff staff;
         do{
@@ -65,7 +87,10 @@ public class MainUI extends UserInterface{
 
 
     }
-
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions(){
         System.out.println("====Welcome to Restaurant Reservation and Point of Sale System (RRPSS) ====");
         System.out.println("(0) Log Out");
@@ -81,6 +106,10 @@ public class MainUI extends UserInterface{
         System.out.println(" ");
     }
     
+    /**
+     *  Show the Selection Page of Customer UI for User to Select Options
+     * @param Staff Staff that uses the system
+     */
     private void entersystem(Staff staff){
         System.out.println(" Hello Mr/Ms " + staff.getName() + " Staff id : " + staff.getId()); 
         int option; 

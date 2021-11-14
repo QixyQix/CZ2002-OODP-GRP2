@@ -7,10 +7,19 @@ import entities.MenuPackage;
 import enums.MenuItemTypeEnum;
 import managers.MenuItemMgr;
 
+/***
+ * Represents a MenuItem UI
+ * 
+ * @author Cho Qi Xiang
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public final class MenuItemUI extends UserInterface {
     private static MenuItemUI INSTANCE;
     
-
+    /**
+     * Constructor
+     */
     private MenuItemUI() {
         super();
     }
@@ -18,7 +27,7 @@ public final class MenuItemUI extends UserInterface {
     /**
      * Returns the MenuItemUI instance and creates an instance if it does not exist
      * 
-     * @return
+     * @return MenuItemUI Instance
      */
     public static MenuItemUI getInstance() {
         if (INSTANCE == null) {
@@ -27,7 +36,10 @@ public final class MenuItemUI extends UserInterface {
 
         return INSTANCE;
     }
-
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions() {
         System.out.println("======Menu Item Manager======");
         System.out.println("(0) Go Back to Main Page");
@@ -38,6 +50,10 @@ public final class MenuItemUI extends UserInterface {
         System.out.println("=============================");
     }
 
+    /**
+     * Show the Selection Page of MenuItem UI for User to Select Options
+     * 
+     */
     public void showSelection() {
         int option = 0;
         do {

@@ -4,14 +4,29 @@ import managers.SalesReportMgr;
 
 import java.time.LocalDate;
 
+
+/***
+ * Represents a Sales Report UI
+ * 
+ * @author Lee Zong Yu
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public final class SalesReportUI extends UserInterface{
     private static SalesReportUI INSTANCE;
 
-
+    /**
+     * Constructor
+     */
     private SalesReportUI() {
         super();
     }
 
+    /**
+     * Returns the SalesReportUI instance and creates an instance if it does not exist
+     * 
+     * @return SalesReportUI Instance
+     */
     public static SalesReportUI getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new SalesReportUI();
@@ -20,6 +35,10 @@ public final class SalesReportUI extends UserInterface{
         return INSTANCE;
     }
 
+    /**
+     * Display the options of Selection Page
+     * 
+     */
     private void displayOptions(){
         System.out.println("=========SalesReport Manager==========");
         System.out.println("(0) Go Back to Main Page");
@@ -29,8 +48,10 @@ public final class SalesReportUI extends UserInterface{
         System.out.println("======================================");
     }
 
-    
-
+    /**
+     * Show the Selection Page of SaleReport UI for User to Select Options
+     * 
+     */
     public void showSelection(){
         int option;
         LocalDate startDate;
@@ -59,9 +80,11 @@ public final class SalesReportUI extends UserInterface{
         
     }
 
-    // Second Public Method
-
     
+    /**
+     *  Get User Input to confirm creation of report
+     * 
+     */
     public void createreport(){
         if(super.getYNOption("Are you sure it is end of the day? "))
             SalesReportMgr.getInstance().createReport(LocalDate.now() );

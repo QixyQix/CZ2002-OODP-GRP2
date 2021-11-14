@@ -1,23 +1,35 @@
 package entities;
 
 import enums.PriceFilterTypeEnum;
-
-import java.io.Serializable;
-
 import enums.DiscountFilterNameEnum;
 
+import java.io.Serializable;
 /***
- * Represents a discountfilter entity
+ * Represents a Discount Filter entity
  * 
  * @author Lim Yan Kai
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class DiscountFilter implements PriceFilter, Serializable{
+    /**
+     * (Absolute/Percentage) Amount of this Discount Filter
+     */
     private double amount;
+    /**
+     * Applied Type (by absolute/by Percentage) of this Discount Filter
+     */
     private PriceFilterTypeEnum type;
+    /**
+     * Name of this Discount Filter
+     */
     private DiscountFilterNameEnum name;
     
     /**
      * Constructor
+     * @param type      Applying Type (by absolute/by Percentage) of the Discount Filter
+     * @param name      Name of the Discount Filter
+     * @param amount    Amount of the Discount (absolute/Percentage)
      */
     public DiscountFilter(PriceFilterTypeEnum type, DiscountFilterNameEnum name, double amount){
         this.amount = amount;

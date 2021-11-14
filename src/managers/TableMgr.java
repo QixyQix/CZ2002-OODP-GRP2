@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
  */
 public class TableMgr extends DataMgr {
     /**
-     * The Instance of this StaffMgr
+     * The Instance of this TableMgr
      */
     private static TableMgr INSTANCE;
     /**
      * The mapping of Table ID to its respective object
      */
     private HashMap<Integer, Table> tables;
-     /**
-     * The next Id to be use in creating sales report
+    /**
+     * The next Id to be use in creating table
      */
     private int nextId;
 

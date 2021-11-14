@@ -17,6 +17,9 @@ import managers.MembershipMgr;
  *  @since 2021-11-14
  */
 public final class CustomerUI extends UserInterface {
+    /**
+     * The Instance of this StaffMgr
+     */
     private static CustomerUI INSTANCE;
     
     /**

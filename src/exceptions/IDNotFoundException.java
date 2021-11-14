@@ -1,7 +1,7 @@
 package exceptions;
 
 /***
- * Represents a discount filter enum
+ * Represents a id not found exception
  * 
  * @author Cho Qi Xiang
  * @version 1.0

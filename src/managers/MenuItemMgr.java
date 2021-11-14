@@ -20,8 +20,17 @@ import factories.MenuItemFactory;
  * 
  */
 public final class MenuItemMgr extends DataMgr {
+    /**
+     * The Instance of this MenuItemMgr
+     */
     private static MenuItemMgr INSTANCE;
+    /**
+     * The mapping of MenuItem ID to its respective object
+     */
     private HashMap<Integer, MenuItem> items;
+    /**
+     * The next Id to be use in creating Menu Item
+     */
     private int nextId;
 
     /**
@@ -96,7 +105,6 @@ public final class MenuItemMgr extends DataMgr {
      * @param name         menu item name
      * @param description  menu item description
      * @param price        menu item price
-     * @param id           menu item id
      * @param packageItems menu items in a package
      * 
      */
@@ -113,7 +121,6 @@ public final class MenuItemMgr extends DataMgr {
         }
 
     }
-
 
     /**
      * Returns a MenuItem object corresponding to the menu item id

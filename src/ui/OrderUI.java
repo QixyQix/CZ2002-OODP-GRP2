@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
  * @since 2021-11-14
  */
 public final class OrderUI extends UserInterface {
+    /**
+     * The Instance of this OrderUI
+     */
     private static OrderUI INSTANCE;
     
     /**

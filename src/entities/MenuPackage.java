@@ -30,6 +30,7 @@ public class MenuPackage extends MenuItem {
      * @param description   The description of the MenuPackage
      * @param price         The price of the MenuPackage
      * @param id            The id of the MenuPackage
+     * @param items         The items of the MenuPackage
      */
     public MenuPackage(MenuItemTypeEnum type, String name, String description, double price, int id,
             ArrayList<MenuItem> items) {
@@ -69,10 +70,5 @@ public class MenuPackage extends MenuItem {
 
         return mainDesc;
     }
-    //TODO
-    /*
-     * @Override public String getName(){ String mainName = super.getName();
-     * for(MenuItem item: this.items){ mainName+= "\n          " + item.getName(); }
-     * return mainName; }
-     */
+    
 }

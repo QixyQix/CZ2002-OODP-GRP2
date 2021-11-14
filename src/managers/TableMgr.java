@@ -16,8 +16,17 @@ import java.time.LocalDateTime;
  * @since 2021-11-14
  */
 public class TableMgr extends DataMgr {
+    /**
+     * The Instance of this TableMgr
+     */
     private static TableMgr INSTANCE;
+    /**
+     * The mapping of Table ID to its respective object
+     */
     private HashMap<Integer, Table> tables;
+    /**
+     * The next Id to be use in creating table
+     */
     private int nextId;
 
     /**
@@ -124,22 +133,6 @@ public class TableMgr extends DataMgr {
     public void deallocateTable(Table table, LocalDateTime date) {
         table.setTableToAvailable(date);
         table.setTableToAvailable(date.plusHours(1));
-    }
-
-    /**
-     * Creates Table object from serialized data Returns Table object
-     * 
-     * @param o serialized Table object
-     * @return Table object
-     * @throws ClassNotFoundException if o is not of the Table class
-     * 
-     */
-    public Table createTableFromSerializedData(Object o) throws ClassNotFoundException {
-        if (o instanceof Table) {
-            return (Table) o;
-        } else {
-            throw new ClassNotFoundException();
-        }
     }
 
     /**

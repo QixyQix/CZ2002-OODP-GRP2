@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
  * @since 2021-11-14
  */
 public class TableUI extends UserInterface {
+    /**
+     * The Instance of this TableUI
+     */
     private static TableUI INSTANCE;
 
     /**

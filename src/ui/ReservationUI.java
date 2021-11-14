@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 
 
 public class ReservationUI extends UserInterface {
+    /**
+     * The Instance of this ReservationUI
+     */
     private static ReservationUI INSTANCE;
     private ReservationUI() {}
 

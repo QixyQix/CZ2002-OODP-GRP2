@@ -20,8 +20,17 @@ import entities.Staff;
  * @since 2021-11-14
  */
 public final class OrderMgr extends DataMgr {
+    /**
+     * The Instance of this Ordermgr
+     */
     private static OrderMgr INSTANCE;
+    /**
+     * The mapping of Order ID to its respective object
+     */
     private HashMap<Integer, Order> orders;
+    /**
+     * The next Id to be use in creating Order
+     */
     private int nextId;
 
     /**
@@ -134,15 +143,13 @@ public final class OrderMgr extends DataMgr {
     /**
      * Close order and create invoice by calling invoiceMgr
      * 
-     * @param order      Order object
-     * @param invoiceMgr InvoiceMgr obejct
+     * @param order Order object
      * 
      */
     public void closeOrder(Order order) {
         // deallocateTable()
         InvoiceMgr.getInstance().createInvoice(order);
     }
-   
     /**
      * Returns Order object corresponding to order id
      * 
@@ -151,7 +158,7 @@ public final class OrderMgr extends DataMgr {
      * @throws IDNotFoundException
      */
     public Order getOrder(int orderId) throws IDNotFoundException {
-        if(!this.orders.containsKey(orderId))
+        if (!this.orders.containsKey(orderId))
             throw new IDNotFoundException();
         return this.orders.get(orderId);
     }

@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,22 +9,22 @@ import entities.Staff;
 /***
  * Represents a UserInterface Template for UI to get User Input
  * 
- *  @author Cho Qi Xiang
+ * @author Cho Qi Xiang
  * @version 1.0
  * @since 2021-11-14
  */
 public class UserInterface {
     /**
-     *  Scanner to getting User Input
+     * Scanner to getting User Input
      */
     private Scanner sc;
     /**
-     *  Staff that are using the system
+     * Staff that are using the system
      */
     private static Staff staff;
 
     /**
-     *  Get User Input to check in the Reservation  
+     * Get User Input to check in the Reservation
      * 
      */
     public UserInterface() {
@@ -33,21 +32,24 @@ public class UserInterface {
     }
 
     /**
-     *  Helper Method to Get String Input
-     *@return Input String
+     * Helper Method to Get String Input
+     * 
+     * @return Input String
      */
-    private String getInputString(){
+    private String getInputString() {
         String input;
-        while(true){
+        while (true) {
             input = sc.nextLine().trim();
-            if(!input.isEmpty()) return input;
+            if (!input.isEmpty())
+                return input;
         }
     }
 
     /**
-     *  Get String Input with prompt
-     *@param prompt Printing prompt
-     *@return Input String
+     * Get String Input with prompt
+     * 
+     * @param prompt Printing prompt
+     * @return Input String
      */
     public String getInputString(String prompt) {
         System.out.println(prompt);
@@ -55,30 +57,30 @@ public class UserInterface {
     }
 
     /**
-     *  Get Dummy Input with prompt
-     *@param prompt Printing prompt
-     *@return Input String
+     * Get Dummy Input with prompt
+     * 
+     * @param prompt Printing prompt
+     * @return Input String
      */
-    public String getDummy(String prompt){
+    public String getDummy(String prompt) {
         System.out.println(prompt);
-        return sc.nextLine().trim(); 
+        return sc.nextLine().trim();
     }
 
-
     /**
-     *  Get Dummy Input with prompt
-     *@param prompt Printing prompt
-     *
+     * Wait enter
+     * 
      */
-    public void waitEnter(){
+    public void waitEnter() {
         getDummy("Press Enter to continue ... ");
         return;
     }
 
     /**
-     *  Get Integer Input with prompt
-     *@param prompt Printing prompt
-     *@return Input Integer
+     * Get Integer Input with prompt
+     * 
+     * @param prompt Printing prompt
+     * @return Input Integer
      */
     public int getInputInt(String prompt) {
         while (true) {
@@ -96,10 +98,11 @@ public class UserInterface {
     }
 
     /**
-     *  Get Integer Input within range with prompt
+     * Get Integer Input within range with prompt
+     * 
      * @param prompt Printing prompt
      * @param min    mininum value of the input
-     * @param max    maximum value of the input 
+     * @param max    maximum value of the input
      * @return Input Integer
      */
     public int getInputInt(String prompt, int min, int max) {
@@ -114,9 +117,10 @@ public class UserInterface {
     }
 
     /**
-     *  Get Double Input with prompt
-     *@param prompt Printing prompt
-     *@return Input Double
+     * Get Double Input with prompt
+     * 
+     * @param prompt Printing prompt
+     * @return Input Double
      */
     public double getInputDouble(String prompt) {
         while (true) {
@@ -134,10 +138,11 @@ public class UserInterface {
     }
 
     /**
-     *  Get Double Input within range with prompt
+     * Get Double Input within range with prompt
+     * 
      * @param prompt Printing prompt
      * @param min    mininum value of the input
-     * @param max    maximum value of the input 
+     * @param max    maximum value of the input
      * @return Input Double
      */
     public double getInputDouble(String prompt, double min, double max) {
@@ -152,67 +157,72 @@ public class UserInterface {
     }
 
     /**
-     *  Get Date & Time Input with prompt
+     * Get Date and Time Input with prompt
+     * 
      * @param prompt Printing prompt
      * @return Input Date Time
      */
-    public LocalDateTime getInputDateTime(String prompt){
-        while(true){
-            try{
+    public LocalDateTime getInputDateTime(String prompt) {
+        while (true) {
+            try {
                 System.out.println(prompt);
                 String input = this.getInputString().trim().replace(" ", "T");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");//input format:yyyy-mm-ddThh:mm	
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");// input
+                                                                                                // format:yyyy-mm-ddThh:mm
                 LocalDateTime input_date = LocalDateTime.parse(input, formatter);
-                
+
                 return input_date;
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Please enter a valid Date");
-                
+
             }
         }
-        
+
     }
 
     /**
-     *  Get Date Input with prompt
+     * Get Date Input with prompt
+     * 
      * @param prompt Printing prompt
      * @return Input Date
      */
-    public LocalDate getInputDate(String prompt){
-        while(true){
-            try{
+    public LocalDate getInputDate(String prompt) {
+        while (true) {
+            try {
                 System.out.println(prompt);
                 String input = this.getInputString().replace(" ", "");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//input format:yyyy-mm-ddThh:mm	
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// input format:yyyy-mm-ddThh:mm
                 LocalDate input_date = LocalDate.parse(input, formatter);
-                
+
                 return input_date;
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Please enter a valid Date");
-                
+
             }
         }
-        
+
     }
 
     /**
-     *  Get True/False Option from User with prompt
+     * Get True/False Option from User with prompt
+     * 
      * @param prompt Printing prompt
-     * @return boolean 
+     * @return boolean
      */
-    public boolean getYNOption(String prompt){
-        while(true){
-            try{
+    public boolean getYNOption(String prompt) {
+        while (true) {
+            try {
                 System.out.println(prompt + " (Enter 'Y' for Yes, 'N' for N) ");
                 char choice = this.getInputString().charAt(0);
-                if(choice =='Y'||choice == 'y') return true;
-                else if (choice =='N' || choice == 'n') return false;
+                if (choice == 'Y' || choice == 'y')
+                    return true;
+                else if (choice == 'N' || choice == 'n')
+                    return false;
                 else {
                     System.out.println("Please enter valid option, Y or N");
                 }
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Please enter valid option, Y or N");
-                
 
             }
         }
@@ -220,60 +230,65 @@ public class UserInterface {
     }
 
     /**
-     *  Get Contact from User with prompt
+     * Get Contact from User with prompt
+     * 
      * @param prompt Printing prompt
-     * @return Contact Number (Singapore Number) of the User 
+     * @return Contact Number (Singapore Number) of the User
      */
-    public String getContact(String prompt){
+    public String getContact(String prompt) {
         System.out.println(prompt);
-        while(true){
-            try{   
-                String input = this.getInputString().replace(" ", "").replace("-","").replace("+","");
-                if(input.length()==10 && input.charAt(0)=='6' && input.charAt(1)=='5' ){
-                    input = input.substring(2,10);
+        while (true) {
+            try {
+                String input = this.getInputString().replace(" ", "").replace("-", "").replace("+", "");
+                if (input.length() == 10 && input.charAt(0) == '6' && input.charAt(1) == '5') {
+                    input = input.substring(2, 10);
                 }
-                if(input.matches("[0-9]+") && input.length()==8 )
+                if (input.matches("[0-9]+") && input.length() == 8)
                     return input;
 
                 System.out.println("Please enter valid Phone Number (Singapore Number)");
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Please enter valid Phone Number (Singapore Number)");
             }
         }
     }
 
     /**
-     *  Get Gender from User with prompt
+     * Get Gender from User with prompt
+     * 
      * @param prompt Printing prompt
-     * @return String of Male or Female 
+     * @return String of Male or Female
      */
-    public String getGender(String prompt){
+    public String getGender(String prompt) {
         String input;
         System.out.println(prompt);
-        while (true){
+        while (true) {
             input = this.getInputString().toLowerCase();
-            
-            if (input.equalsIgnoreCase("male") ) return "Male";
-            else if (input.equalsIgnoreCase("female")) return "Female";
+
+            if (input.equalsIgnoreCase("male"))
+                return "Male";
+            else if (input.equalsIgnoreCase("female"))
+                return "Female";
 
             System.out.println("Please enter Valid Gender (Male or Female) ");
         }
-        
+
     }
-    
+
     /**
-     *  Getter of the Staff
-     * @return Staff 
+     * Getter of the Staff
+     * 
+     * @return Staff
      */
-    public static Staff getStaff(){
+    public static Staff getStaff() {
         return staff;
     }
-    
+
     /**
-     *  Setter of the Staff
+     * Setter of the Staff
      * 
      */
-    public static void setStaff(Staff s){
+    public static void setStaff(Staff s) {
         staff = s;
     }
 

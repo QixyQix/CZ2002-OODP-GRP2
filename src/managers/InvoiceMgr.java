@@ -22,8 +22,17 @@ import exceptions.IDNotFoundException;
  */
 public final class InvoiceMgr extends DataMgr {
 
+    /**
+     * The Instance of this InvoiceMgr
+     */
     private static InvoiceMgr INSTANCE;
+    /**
+     * The mapping of Invoice ID to its respective object
+     */
     private HashMap<Integer, Invoice> invoices;
+    /**
+     * The next Id to be use in creating Invoice
+     */
     private int nextId;
 
     /**

@@ -13,7 +13,7 @@ public class Membership implements Serializable, Entities{
     /**
      * The id of this Membership
      */
-    private Integer id;
+    private int id;
     /**
      * The DiscountFilter associated with the discount
      */
@@ -24,7 +24,7 @@ public class Membership implements Serializable, Entities{
      * @param id id of the Membership
      * @param discount discountFilter associated with the membership
      */
-    public Membership(Integer id, DiscountFilter discount) {
+    public Membership(int id, DiscountFilter discount) {
         this.discount = discount;
         this.id = id;
     }
@@ -52,7 +52,7 @@ public class Membership implements Serializable, Entities{
     /**
      * Set discount
      * 
-     * @return discount
+     * @param discount discount
      */
     public void setDiscount(DiscountFilter discount) {
         this.discount = discount;

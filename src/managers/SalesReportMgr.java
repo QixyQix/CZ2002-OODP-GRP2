@@ -19,9 +19,21 @@ import entities.MenuPackage;
  * @since 2021-11-14
  */
 public final class SalesReportMgr extends DataMgr {
+    /**
+     * The Instance of this SalesReportMgr
+     */
     private static SalesReportMgr INSTANCE;
+    /**
+     * The mapping of Report ID to its respective object
+     */
     private HashMap<Integer, Report> reports;
+    /**
+     * The mapping of report date to its respective report id
+     */
     private HashMap<LocalDate, Integer> reports_day;
+    /**
+     * The next Id to be use in creating sales report
+     */
     private int nextId;
 
     /**
@@ -156,6 +168,14 @@ public final class SalesReportMgr extends DataMgr {
         return this.reports.get( this.reports_day.get(targetDay));
     }
 
+    /**
+     * Add menuitemrevenue to existing menu item revenue
+     * 
+     * @param menuItemTotalRevenue  total revenue made for each item
+     * @param menuItemRevenue       total revenue to be added   
+     * @return treemap of menu item revenue
+     *
+     */
     private TreeMap<MenuItem, Double> addtomenuItemRevenue(TreeMap<MenuItem, Double> menuItemTotalRevenue,
             TreeMap<MenuItem, Double> menuItemRevenue) {
 
@@ -217,8 +237,8 @@ public final class SalesReportMgr extends DataMgr {
      * 
      * @param startDate start date
      * @param endDate   end date
-     * @param total     total revenue
-     * @param items     menu items
+     * @param total     boolean to print total revenue
+     * @param items     boolean to print menu items
      * 
      */
     public void getReport(LocalDate startDate, LocalDate endDate, boolean total, boolean items) {
